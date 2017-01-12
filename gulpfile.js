@@ -6,7 +6,7 @@ const gulpLoadPlugins = require('gulp-load-plugins');
 const del = require('del');
 const runSequence = require('run-sequence');
 const inquirer = require('inquirer');
-const generatePage = require('./utils/generate-weapp-page');
+const generatePage = require('./utils/generate-page');
 /**
  *  gulpLoadPlugins 自动加载 gulp 相关模块
  *  del 删除文件、文件夹
