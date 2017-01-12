@@ -15,24 +15,24 @@
 ├── .babelrc
 ├── .eslintrc
 ├── gulpfile.js
-├── src                   		# 源码
+├── src                         # 源码
 │   ├── images
 │   │   └── xxx.png
 │   ├── pages
-│	│   ├── index
-│	│   │   ├── index.js		
+│   │   ├── index
+│   │   │   ├── index.js
 │   │   │   ├── index.json
-│   │   │   ├── index.xml		# 打包成 .wxml
-│   │   │   └── index.less		# 打包成 .wxss
+│   │   │   ├── index.xml       # 打包成 .wxml
+│   │   │   └── index.less      # 打包成 .wxss
 │   │   └── user
 │   │       └── 略
-│   ├── utils					# 项目内部要用的工具函数
-│   │   ├── bluebird.js			
+│   ├── utils                   # 项目内部要用的工具函数
+│   │   ├── bluebird.js         
 │   │   └── andSoOn.js
-│   ├── app.js					# 小程序顶层配置	
-│   ├── app.json				# 小程序顶层配置
-│   └── app.less				# 小程序顶层配置
-└── utils                    	# 开发依赖但项目不依赖的库
+│   ├── app.js                  # 小程序顶层配置   
+│   ├── app.json                # 小程序顶层配置
+│   └── app.less                # 小程序顶层配置
+└── utils                       # 开发依赖但项目不依赖的库
     └── 略
 ```
 
