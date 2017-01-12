@@ -1,0 +1,8 @@
+{
+  "navigationBarBackgroundColor": "#35495e",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "Index Page",
+  "backgroundColor": "#000000",
+  "backgroundTextStyle": "light",
+  "enablePullDownRefresh": true
+}
