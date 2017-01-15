@@ -14,3 +14,17 @@
     margin: 50rpx;
   }
 }
+
+.function {
+    .rp(@x) {
+        return: @x * 2;
+    }
+}
+.function-test() {
+  return: red;
+}
+div {
+  width: rp(21px);
+  color: test();
+}
+

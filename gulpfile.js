@@ -7,6 +7,9 @@ const del = require('del');
 const runSequence = require('run-sequence');
 const inquirer = require('inquirer');
 const generatePage = require('./utils/generate-page');
+
+const LessFunctions = require('less-plugin-functions');
+const lessFunction = new LessFunctions();
 /**
  *  gulpLoadPlugins 自动加载 gulp 相关模块
  *  del 删除文件、文件夹
@@ -102,7 +105,9 @@ gulp.task('compile:xml', () => {
 gulp.task('compile:less', () => {
   return gulp.src(['src/**/*.less'])
   .pipe(plugins.sourcemaps.init())
-  .pipe(plugins.less())
+  .pipe(plugins.less({
+    plugins: [lessFunction]
+  }))
   .pipe(plugins.if(isProduction, plugins.cssnano({ compatibility: '*' })))
   .pipe(plugins.rename({ extname: '.wxss' }))
   .pipe(plugins.sourcemaps.write('.'))
