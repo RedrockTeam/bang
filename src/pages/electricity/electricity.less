@@ -1,3 +1,36 @@
-.title {
-  font-size: 40rpx;
+.function {
+  .r(@x) {
+    return: 2 * @x + 0rpx;
+  }
+}
+
+.wrapper {
+  margin: 0 auto;
+  margin-top: r(16);
+  width: r(343);
+  // background: red;
+}
+.header {
+  width: 100%;
+  height: r(136);
+  border-bottom: r(2) dashed #ECF2F2;
+}
+.main {
+  width: 100%;
+  height: r(408);
+  background: red;
+}
+.footer {
+  margin: r(-22) r(117-16) 0 r(118-16);
+  width: r(140);
+  height: r(44);
+  background: -webkit-linear-gradient(left, #00C5E2 , #0FF3DF); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, #00C5E2, #0FF3DF); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, #00C5E2, #0FF3DF); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, #00C5E2 , #0FF3DF); /* 标准的语法 */
+  border-radius: r(22);
+  text-align: center;
+  line-height: r(44);
+  box-shadow: 0 0 r(5) #00C5E2, 0 r(20) r(20) rgba(6, 242, 222, .25);
+  // box-shadow:;
 }

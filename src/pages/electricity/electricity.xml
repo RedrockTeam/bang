@@ -1,3 +1,11 @@
-<view class="container">
-  <text class="title">{{ title }}</text>
+<view class="wrapper">
+  <view class="header">
+    header
+  </view>
+  <view class="main">
+    main
+  </view>
+  <view class="footer">
+    footer
+  </view>
 </view>
