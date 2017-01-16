@@ -10,6 +10,7 @@ const generatePage = require('./utils/generate-page');
 
 const LessFunctions = require('less-plugin-functions');
 const lessFunction = new LessFunctions();
+const plumber = require('gulp-plumber');
 /**
  *  gulpLoadPlugins 自动加载 gulp 相关模块
  *  del 删除文件、文件夹
@@ -105,6 +106,7 @@ gulp.task('compile:xml', () => {
 gulp.task('compile:less', () => {
   return gulp.src(['src/**/*.less'])
   .pipe(plugins.sourcemaps.init())
+  .pipe(plumber())
   .pipe(plugins.less({
     plugins: [lessFunction]
   }))
