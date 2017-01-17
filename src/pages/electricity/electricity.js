@@ -19,7 +19,6 @@ Page({
       success: (res) => {
         if (res.statusCode === 200) {
           if (res.data.status === 200) {
-            console.log(res);
             this.setData({
               elecState: res.data.data
             });

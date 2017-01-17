@@ -2,7 +2,7 @@
 
 Page({
   data: {
-    title: 'starttoend',
+    title: 'starttoend'
   },
   onLoad () {
     // TODO: onLoad

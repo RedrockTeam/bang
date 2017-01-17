@@ -8,7 +8,7 @@
   </view>
   <view class="main">
     <template is="starttoend" data="{{elecState}}"></template>
-    <canvas width="332" height="343"></canvas>
+    <canvas canvas-id="pastCost" id="pastCost" disable-scroll="true" bindtouchstart="pastCostChange" binderror="canvasError"></canvas>
   </view>
   <navigator class="footer" url="/pages/electricity/electricity">
     查往月用电
