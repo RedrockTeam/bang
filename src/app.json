@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/electricity/electricity",
     "pages/index/index",
-    "pages/user/user",
-    "pages/electricity/electricity"
+    "pages/user/user"
     // Dont remove this comment
   ],
   "window": {

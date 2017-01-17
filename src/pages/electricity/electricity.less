@@ -4,22 +4,147 @@
   }
 }
 
+page {
+  background: #F8F8F8;
+  font-family: 'PingFangSC-Medium', "Helvetica Neue", Helvetica, Arial, sans-serif, '冬青黑';
+}
 .wrapper {
   margin: 0 auto;
   margin-top: r(16);
   width: r(343);
-  // background: red;
 }
+/* 电费主页头部总 */
 .header {
+  display: flex;
+  position: relative;
   width: 100%;
   height: r(136);
   border-bottom: r(2) dashed #ECF2F2;
+  background: #fff;
+  border-top-left-radius: r(5);
+  border-top-right-radius: r(5);
 }
+.header::before {
+  position: absolute;
+  content: '';
+  left: r(-(11 / 2));
+  bottom: r(-(11 / 2));
+  width: r(11);
+  height: r(11);
+  border-radius: 50%;
+  background: #F8F8F8;
+}
+.header::after {
+  position: absolute;
+  content: '';
+  right: r(-(11 / 2));
+  bottom: r(-(11 / 2));
+  width: r(11);
+  height: r(11);
+  border-radius: 50%;
+  background: #F8F8F8;
+}
+.header-content {
+  width: 50%;
+  height: 100%;
+  text-align: center;
+}
+.header__title {
+  color: #B6B6B6;
+  font-size: r(12);
+}
+.header__desc {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-top: r(13);
+  margin-left: r(19);
+  color: #000;
+  font-size: r(44);
+}
+.header__text {
+  padding-left: r(11);
+  color: #000;
+  font-size: r(12);
+}
+/* 电费主页寝室用电详情 */
 .main {
+  display: flex;
+  flex-direction: column;
+  padding-top: r(2);
   width: 100%;
-  height: r(408);
-  background: red;
+  height: r(406);
+  text-align: center;
+  background: #fff;
+  border-bottom-left-radius: r(5);
+  border-bottom-right-radius: r(5);
 }
+.main-title {
+  margin-top: r(32);
+  font-size: r(11);
+  color: #B6B6B6;
+}
+.main-infor {
+  margin-top: r(10);
+  height: r(22);
+  font-size: r(24);
+  color: #000;
+}
+.main-infor__used {
+  display: flex;
+  justify-content: space-between;
+  margin-top: r(9);
+  .main-title {
+    font-size: r(11);
+    color: #666;
+  }
+  .main-round {
+    position: relative;
+    margin: 0 auto;
+    margin-top: r(14);
+    width: r(8);
+    height: r(8);
+    border-radius: 50%;
+    &::after {
+      position: absolute;
+      content: '';
+      width: r(110);
+      height: 0;
+      border-bottom: r(2) dashed #ECF2F2;
+    }
+  }
+  .main-infor {
+    margin-top: r(8);
+    font-size: r(22);
+  }
+}
+.main__used__left {
+  width: r(118);
+  .main-round {
+    background: #00D0D5;
+    &::after {
+      top: r(3);
+      left: r(8);
+    }
+  }
+  .main-infor {
+    color: #00D0D5;
+  }
+}
+.main__used__right {
+  width: r(118);
+  .main-round {
+    background: #FFBD00;
+    &::after {
+      top: r(3);
+      left: r(-110);
+    }
+  }
+  .main-infor {
+    color: #FFBD00;
+  }
+}
+/* 跳转到往期电费按钮 */
 .footer {
   margin: r(-22) r(117-16) 0 r(118-16);
   width: r(140);
@@ -30,7 +155,8 @@
   background: linear-gradient(to right, #00C5E2 , #0FF3DF); /* 标准的语法 */
   border-radius: r(22);
   text-align: center;
+  font-size: r(16);
+  color: #fff;
   line-height: r(44);
   box-shadow: 0 0 r(5) #00C5E2, 0 r(20) r(20) rgba(6, 242, 222, .25);
-  // box-shadow:;
 }

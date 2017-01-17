@@ -1,11 +1,64 @@
 <view class="wrapper">
   <view class="header">
-    header
+    <view class="header-content">
+      <text class="header__title">
+        本月用电
+      </text>
+      <view class="header__desc">
+        {{elecState.elec_spend}}
+        <text class="header__text">度</text>
+      </view>
+    </view>
+    <view class="header-content">
+      <text class="header__title">
+        本月电费
+      </text>
+      <view class="header__desc">
+        {{elecState.elec_cost[0]}}
+        <text class="header__text">元</text>
+      </view>
+    </view>
   </view>
   <view class="main">
-    main
+    <view class="main-title">
+      寝室信息
+    </view>
+    <view class="main-infor">
+        {{elecState.room.builing}}asd栋 {{elecState.room.door}}asd
+    </view>
+    <view class="main-title">
+      抄表日期
+    </view>
+    <view class="main-infor">
+        {{elecState.record_time}} 08:00
+    </view>
+    <view class="main-title">
+      本月免费
+    </view>
+    <view class="main-infor">
+        {{elecState.elec_free}}度
+    </view>
+    <view class="main-title">
+      用电详情
+    </view>
+    <view class="main-infor__used">
+      <view class="main__used__left">
+        <text class="main-title">电起度</text>
+        <view class="main-round"></view>
+        <view class="main-infor">
+          {{elecState.elec_start}}
+        </view>
+      </view>
+      <view class="main__used__right">
+        <text class="main-title">电止度</text>
+        <view class="main-round"></view>
+        <view class="main-infor">
+          {{elecState.elec_end}}
+        </view>
+      </view>
+    </view>
   </view>
-  <view class="footer">
-    footer
-  </view>
+  <navigator class="footer" url="/pages/electricity/past">
+    查往月用电
+  </navigator>
 </view>
