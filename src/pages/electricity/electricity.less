@@ -1,18 +1,4 @@
-.function {
-  .r(@x) {
-    return: 2 * @x + 0rpx;
-  }
-}
-
-page {
-  background: #F8F8F8;
-  font-family: 'PingFangSC-Medium', "Helvetica Neue", Helvetica, Arial, sans-serif, '冬青黑';
-}
-.wrapper {
-  margin: 0 auto;
-  margin-top: r(16);
-  width: r(343);
-}
+@import "starttoend.less";
 /* 电费主页头部总 */
 .header {
   display: flex;
@@ -89,74 +75,4 @@ page {
   height: r(22);
   font-size: r(24);
   color: #000;
-}
-.main-infor__used {
-  display: flex;
-  justify-content: space-between;
-  margin-top: r(9);
-  .main-title {
-    font-size: r(11);
-    color: #666;
-  }
-  .main-round {
-    position: relative;
-    margin: 0 auto;
-    margin-top: r(14);
-    width: r(8);
-    height: r(8);
-    border-radius: 50%;
-    &::after {
-      position: absolute;
-      content: '';
-      width: r(110);
-      height: 0;
-      border-bottom: r(2) dashed #ECF2F2;
-    }
-  }
-  .main-infor {
-    margin-top: r(8);
-    font-size: r(22);
-  }
-}
-.main__used__left {
-  width: r(118);
-  .main-round {
-    background: #00D0D5;
-    &::after {
-      top: r(3);
-      left: r(8);
-    }
-  }
-  .main-infor {
-    color: #00D0D5;
-  }
-}
-.main__used__right {
-  width: r(118);
-  .main-round {
-    background: #FFBD00;
-    &::after {
-      top: r(3);
-      left: r(-110);
-    }
-  }
-  .main-infor {
-    color: #FFBD00;
-  }
-}
-/* 跳转到往期电费按钮 */
-.footer {
-  margin: r(-22) r(117-16) 0 r(118-16);
-  width: r(140);
-  height: r(44);
-  background: -webkit-linear-gradient(left, #00C5E2 , #0FF3DF); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(right, #00C5E2, #0FF3DF); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(right, #00C5E2, #0FF3DF); /* Firefox 3.6 - 15 */
-  background: linear-gradient(to right, #00C5E2 , #0FF3DF); /* 标准的语法 */
-  border-radius: r(22);
-  text-align: center;
-  font-size: r(16);
-  color: #fff;
-  line-height: r(44);
-  box-shadow: 0 0 r(5) #00C5E2, 0 r(20) r(20) rgba(6, 242, 222, .25);
 }

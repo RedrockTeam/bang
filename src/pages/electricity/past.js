@@ -2,7 +2,7 @@
 
 Page({
   data: {
-    title: 'electricity',
+    title: 'past',
     elecState: {}
   },
   onLoad () {

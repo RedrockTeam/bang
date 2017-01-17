@@ -1,0 +1,16 @@
+<import src="/pages/electricity/starttoend" />
+<view class="wrapper">
+  <view class="header">
+    <view class="header__desc">
+      {{elecState.elec_spend}}
+      <text class="header__text">度</text>
+    </view>
+  </view>
+  <view class="main">
+    <template is="starttoend" data="{{elecState}}"></template>
+    <canvas width="332" height="343"></canvas>
+  </view>
+  <navigator class="footer" url="/pages/electricity/electricity">
+    查往月用电
+  </navigator>
+</view>
