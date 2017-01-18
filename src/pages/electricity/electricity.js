@@ -8,10 +8,10 @@ Page({
   onLoad () {
     // TODO: onLoad
     wx.request({
-      url: `http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/getElectric`,
-      method: `POST`,
+      url: 'http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/getElectric',
+      method: 'POST',
       header: {
-        'Content-Type': `application/x-www-form-urlencoded`
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
       data: {
         stuNum: 2015211878

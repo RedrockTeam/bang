@@ -20,6 +20,7 @@
 }
 /* 电费主页寝室用电详情 */
 .main {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding-top: r(2);
@@ -28,9 +29,33 @@
   background: #fff;
   border-bottom-left-radius: r(5);
   border-bottom-right-radius: r(5);
+  // z-index: 1;
 }
 #pastCost {
+  position: relative;
   margin-top: r(30);
   width: r(343);
   height: r(333);
+  background: #F4FFFE;
+}
+.round {
+  position: absolute;
+  top: r(110);
+  left: 0;
+  width: r(11);
+  height: r(11);
+  background: #00D0D5;
+  border-radius: 50%;
+}
+.white {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: r(5);
+  height: r(5);
+  background: #fff;
+  border-radius: 50%;
 }
