@@ -9,9 +9,7 @@
   <view class="main">
     <template is="starttoend" data="{{elecState}}"></template>
     <canvas canvas-id="pastCost" id="pastCost" bindtouchstart="pastCostChange" binderror="canvasError"></canvas>
-    <view class="round" animation="{{animationData}}">
-      <view class="white"></view>
-    </view>
+    <canvas canvas-id="round" id="round"></canvas>
   </view>
   <navigator class="footer" url="/pages/electricity/electricity">
     查往月用电

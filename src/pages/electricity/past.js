@@ -41,35 +41,32 @@ Page({
     canvasData.ctx.restore();
     canvasData.ctx.draw(true);
   },
+  //  画圆
   drawRound: function (circleX, circleY) {
     let canvasData = this.data.canvasData;
 
-    // canvasData.roundCanvas.save();
-    // canvasData.roundCanvas.beginPath();
-    // canvasData.roundCanvas.setStrokeStyle('#00D0D5');
-    // canvasData.roundCanvas.setFillStyle('#ffffff');
-    // canvasData.roundCanvas.setLineWidth(this.pxToRpx(2));
+    canvasData.roundCanvas.save();
+    canvasData.roundCanvas.beginPath();
+    canvasData.roundCanvas.setStrokeStyle('#00D0D5');
+    canvasData.roundCanvas.setFillStyle('#ffffff');
+    canvasData.roundCanvas.setLineWidth(this.pxToRpx(2));
 
-    // let circleRadius = this.pxToRpx(4);
+    let circleRadius = this.pxToRpx(6);
     circleX = circleX || canvasData.perWidth * this.data.focusIndex;
     circleY = circleY || canvasData.costHeight[this.data.focusIndex - 1];
-    // let setDefaultWidth = wx.createAnimation({
-    //   duration: 500,
-    //   timingFunction: 'linear'
-    // });
-    // setDefaultWidth.left(this.data.canvasData.perWidth - this.pxToRpx(11 / 2)).step();
-    // this.setData({
-    //   animationData: setDefaultWidth.export()
-    // });
+
+    canvasData.roundCanvas.arc(circleX, circleY, circleRadius, 0, Math.PI * 2);
+    canvasData.roundCanvas.closePath();
+    canvasData.roundCanvas.fill();
+    canvasData.roundCanvas.stroke();
+    canvasData.roundCanvas.restore();
+    canvasData.roundCanvas.draw();
   },
   clearCanvas: function () {
     let canvasData = this.data.canvasData;
-    canvasData.ctx.clearRect(0, 0, this.pxToRpx(343), this.pxToRpx(234));
+    canvasData.roundCanvas.clearRect(0, 0, this.pxToRpx(343), this.pxToRpx(234));
   },
-  // clearRound: function (circleX, circleY) {
-  //   let canvasData = this.data.canvasData;
-  //   canvasData.roundCanvas.clearRect(0, 0, this.pxToRpx(343), this.pxToRpx(234));
-  // },
+
   drawMonths: function () {
     let canvasData = this.data.canvasData;
     let start = this.data.start;
@@ -99,55 +96,61 @@ Page({
     let preIndex = this.data.lastFocusIndex - 1;
     let currentIndex = this.data.focusIndex - 1;
 
-    function drawPath (currentIndex, that) {
-      let canvasData = that.data.canvasData;
-
-      // let preIndexX = (preIndex + 1) * canvasData.perWidth;
-      // let preIndexY = canvasData.costHeight[preIndex];
-      // console.log(typeof currentIndex);
-      let setPosition = wx.createAnimation({
-        duration: 1000,
-        timingFunction: 'linear'
-      });
+    let drawPath = function (preIndex, currentIndex) {
 
       if (typeof currentIndex === 'number') {
-        let currentIndexX = (currentIndex + 1) * canvasData.perWidth;
-        let currentIndexY = canvasData.costHeight[currentIndex];
-        // 一元二次方程
-        // let k = (currentIndexY - preIndexY) / (currentIndexX - preIndexX);
-        // let b = preIndexY - k * preIndexX;
-        // let x = preIndexX;
-        // let y = k * x + b;
-        setPosition.left(currentIndexX - that.pxToRpx(11 / 2))
-          .top(currentIndexY + that.pxToRpx(110)).step();
-        that.setData({
-          animationData: setPosition.export()
-        });
+        step(preIndex, currentIndex);
       } else if (typeof currentIndex === 'object') {
-        currentIndex.forEach((val, idx, arr) => {
-          setTimeout(() => {
-            let currentIndexX = (val + 1) * canvasData.perWidth;
-            let currentIndexY = canvasData.costHeight[val];
-            setPosition.left(currentIndexX - that.pxToRpx(11 / 2))
-              .top(currentIndexY + that.pxToRpx(110)).step();
-            that.setData({
-              animationData: setPosition.export()
-            });
-          }, 1000 * (idx - 1));
-        });
+        step(preIndex, currentIndex[1], currentIndex);
       }
-      let currentIndexX = (that.data.focusIndex) * canvasData.perWidth;
-      let currentIndexY = canvasData.costHeight[that.data.focusIndex];
-      setPosition.left(currentIndexX - that.pxToRpx(11 / 2))
-        .top(currentIndexY + that.pxToRpx(110)).step();
-      that.setData({
-        animationData: setPosition.export()
-      });
-      that.drawMonths();
-    }
+      this.drawMonths();
+    }.bind(this);
 
+    let step = function (preIndex, currentIndex, currentIndexObject) {
+      let lastTime = 0;
+      function requestAnimationFrame (callback) {
+        let currTime = new Date().getTime();
+        let timeToCall = Math.max(0, 16 - (currTime - lastTime));
+        let id = setTimeout(function () { callback(currTime + timeToCall); },
+          timeToCall);
+        lastTime = currTime + timeToCall;
+        return id;
+      };
+      let canvasData = this.data.canvasData;
+      let preIndexX = (preIndex + 1) * canvasData.perWidth;
+      let preIndexY = canvasData.costHeight[preIndex];
+      let currentIndexX = (currentIndex + 1) * canvasData.perWidth;
+      let currentIndexY = canvasData.costHeight[currentIndex];
+      // 一元二次方程
+      let k = (currentIndexY - preIndexY) / (currentIndexX - preIndexX);
+      let b = preIndexY - k * preIndexX;
+      let x = preIndexX;
+      let y = k * x + b;
+      this.clearCanvas();
+
+      let _self = this;
+      console.log(Math.floor(x), Math.floor(currentIndexX));
+      function _step () {
+        if (Math.floor(x) !== Math.floor(currentIndexX)) {
+          if (x < currentIndexX) {
+            x += 1;
+          } else {
+            x -= 1;
+          }
+          y = k * x + b;
+          _self.drawRound(x, y);
+          requestAnimationFrame(_step);
+        } else {
+          currentIndexObject.shift();
+          if (currentIndexObject.length !== 1) {
+            step(currentIndexObject[0], currentIndexObject[1], currentIndexObject);
+          }
+        }
+      };
+      _step();
+    }.bind(this);
     if (Math.abs(preIndex - currentIndex) === 1) {
-      drawPath(currentIndex, this);
+      drawPath(preIndex, currentIndex, this);
     } else {
       let spots = [];
       if (preIndex > currentIndex) {
@@ -159,7 +162,7 @@ Page({
           spots.push(i);
         }
       }
-      drawPath(spots, this);
+      drawPath(preIndex, spots, this);
     }
   },
   pastCostChange: function (e) {
@@ -168,9 +171,6 @@ Page({
     let touchTarget = e.changedTouches[0];
     let x = touchTarget.x;
     let y = touchTarget.y;
-
-    // console.log(x);
-    // console.log(monthsConWidth);
 
     if (monthsConHeight.yStart <= y && y <= monthsConHeight.yEnd) {
       monthsConWidth.forEach((val, idx, arr) => {
@@ -228,7 +228,8 @@ Page({
         }),
         monthsHeight: this.pxToRpx(280),
 
-        ctx: wx.createCanvasContext('pastCost')
+        ctx: wx.createCanvasContext('pastCost'),
+        roundCanvas: wx.createCanvasContext('round')
       }
     });
 
@@ -248,25 +249,8 @@ Page({
       }
     });
 
-    let setDefaultHeight = wx.createAnimation({
-      duration: 0,
-      timingFunction: 'linear'
-    });
-    setDefaultHeight.top(this.data.canvasData.costHeight[0] + this.pxToRpx(110)).step();
-    this.setData({
-      animationData: setDefaultHeight.export()
-    });
-
-    let setDefaultWidth = wx.createAnimation({
-      duration: 1000,
-      timingFunction: 'linear'
-    });
-    setDefaultWidth.left(this.data.canvasData.perWidth - this.pxToRpx(11 / 2)).step();
-    this.setData({
-      animationData: setDefaultWidth.export()
-    });
-
     this.drawLine();
+    this.drawRound();
     this.drawMonths();
 
     wx.request({
