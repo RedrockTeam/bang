@@ -1,5 +1,5 @@
 const wechat = require('./utils/wechat');
-const Promise = require('./utils/bluebird');
+const Promise = require('./es6-promise');
 
 App({
   data: {
