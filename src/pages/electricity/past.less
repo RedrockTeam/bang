@@ -1,0 +1,51 @@
+@import "starttoend.less";
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  padding-top: r(32);
+  background: #fff;
+  border-top-left-radius: r(5);
+  border-top-right-radius: r(5);
+}
+.header__desc {
+  color: #000;
+  font-size: r(48);
+}
+.header__text {
+  margin-left: r(-11);
+  color: #000;
+  font-size: r(12);
+}
+/* 电费主页寝室用电详情 */
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-top: r(2);
+  width: 100%;
+  text-align: center;
+  background: #fff;
+  border-bottom-left-radius: r(5);
+  border-bottom-right-radius: r(5);
+}
+#pastCost {
+  position: relative;
+  margin-top: r(30);
+  width: r(343);
+  height: r(333);
+  background: #F4FFFE;
+}
+#round {
+  position: absolute;
+  bottom: r(333 - 234);
+  left: 0;
+  width: r(343);
+  height: r(234);
+  background: rgba(1, 1, 1, 0);
+}
+.footer {
+  font-size: r(18);
+  letter-spacing: r(8);
+}

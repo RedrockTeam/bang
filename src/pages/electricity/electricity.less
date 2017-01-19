@@ -1,0 +1,78 @@
+@import "starttoend.less";
+/* 电费主页头部总 */
+.header {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: r(136);
+  border-bottom: r(2) dashed #ECF2F2;
+  background: #fff;
+  border-top-left-radius: r(5);
+  border-top-right-radius: r(5);
+}
+.header::before {
+  position: absolute;
+  content: '';
+  left: r(-(11 / 2));
+  bottom: r(-(11 / 2));
+  width: r(11);
+  height: r(11);
+  border-radius: 50%;
+  background: #F8F8F8;
+}
+.header::after {
+  position: absolute;
+  content: '';
+  right: r(-(11 / 2));
+  bottom: r(-(11 / 2));
+  width: r(11);
+  height: r(11);
+  border-radius: 50%;
+  background: #F8F8F8;
+}
+.header-content {
+  width: 50%;
+  height: 100%;
+  text-align: center;
+}
+.header__title {
+  color: #B6B6B6;
+  font-size: r(12);
+}
+.header__desc {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-top: r(13);
+  margin-left: r(19);
+  color: #000;
+  font-size: r(44);
+}
+.header__text {
+  padding-left: r(11);
+  color: #000;
+  font-size: r(12);
+}
+/* 电费主页寝室用电详情 */
+.main {
+  display: flex;
+  flex-direction: column;
+  padding-top: r(2);
+  width: 100%;
+  height: r(406);
+  text-align: center;
+  background: #fff;
+  border-bottom-left-radius: r(5);
+  border-bottom-right-radius: r(5);
+}
+.main-title {
+  margin-top: r(32);
+  font-size: r(11);
+  color: #B6B6B6;
+}
+.main-infor {
+  margin-top: r(10);
+  height: r(22);
+  font-size: r(24);
+  color: #000;
+}

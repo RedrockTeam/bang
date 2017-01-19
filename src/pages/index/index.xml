@@ -2,6 +2,6 @@
   <text class="title">{{ title }}</text>
   <view class="info">
     <image src="{{userInfo.avatarUrl}}"/>
-    <text>{{ userInfo.nickName }}</text>
+    <navigator url="/pages/electricity/electricity">{{ userInfo.nickName }}</navigator>
   </view>
 </view>
