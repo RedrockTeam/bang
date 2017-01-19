@@ -3,14 +3,14 @@
 Page({
   data: {
     title: 'past',
-    elecState: {},
+    elecState: {}, // 返回xml的数据
     cost: [12, 3, 87, 1, 90, 54],
-    start: 11,
+    start: 11, // 开始月份
     focusIndex: 1,
     lastFocusIndex: 0,
     windowWidth: 0,
     monthsConWidth: [],
-    animationData: {},
+    moving: false, // 判断圆点是否在移动的标志
     canvasData: {} // onload中设置
   },
   pxToRpx: function (px) {
@@ -62,6 +62,7 @@ Page({
     canvasData.roundCanvas.restore();
     canvasData.roundCanvas.draw();
   },
+  // 清除圆的canvas
   clearCanvas: function () {
     let canvasData = this.data.canvasData;
     canvasData.roundCanvas.clearRect(0, 0, this.pxToRpx(343), this.pxToRpx(234));
@@ -92,12 +93,13 @@ Page({
     });
     canvasData.ctx.draw(true);
   },
+  // 获取圆的路径
   getPath: function () {
     let preIndex = this.data.lastFocusIndex - 1;
     let currentIndex = this.data.focusIndex - 1;
 
+    // 设置圆的路径，step函数是分步进行
     let drawPath = function (preIndex, currentIndex) {
-
       if (typeof currentIndex === 'number') {
         step(preIndex, currentIndex);
       } else if (typeof currentIndex === 'object') {
@@ -121,7 +123,7 @@ Page({
       let preIndexY = canvasData.costHeight[preIndex];
       let currentIndexX = (currentIndex + 1) * canvasData.perWidth;
       let currentIndexY = canvasData.costHeight[currentIndex];
-      // 一元二次方程
+      // 获取两个点的一元二次方程
       let k = (currentIndexY - preIndexY) / (currentIndexX - preIndexX);
       let b = preIndexY - k * preIndexX;
       let x = preIndexX;
@@ -129,7 +131,6 @@ Page({
       this.clearCanvas();
 
       let _self = this;
-      console.log(Math.floor(x), Math.floor(currentIndexX));
       function _step () {
         if (Math.floor(x) !== Math.floor(currentIndexX)) {
           if (x < currentIndexX) {
@@ -140,15 +141,30 @@ Page({
           y = k * x + b;
           _self.drawRound(x, y);
           requestAnimationFrame(_step);
+          _self.setData({
+            moving: true
+          });
         } else {
-          currentIndexObject.shift();
-          if (currentIndexObject.length !== 1) {
-            step(currentIndexObject[0], currentIndexObject[1], currentIndexObject);
+          // 如果传递的点是数组，则递归进行step步骤
+          if (currentIndexObject) {
+            currentIndexObject.shift();
+            if (currentIndexObject.length !== 1) {
+              step(currentIndexObject[0], currentIndexObject[1], currentIndexObject);
+            } else {
+              _self.setData({
+                moving: false
+              });
+            }
+          } else {
+            _self.setData({
+              moving: false
+            });
           }
         }
       };
       _step();
     }.bind(this);
+    // 如果两个是挨着，则直接走，否则传递点的集合过去。
     if (Math.abs(preIndex - currentIndex) === 1) {
       drawPath(preIndex, currentIndex, this);
     } else {
@@ -166,31 +182,29 @@ Page({
     }
   },
   pastCostChange: function (e) {
-    let monthsConWidth = this.data.monthsConWidth;
-    let monthsConHeight = this.data.monthsConHeight;
-    let touchTarget = e.changedTouches[0];
-    let x = touchTarget.x;
-    let y = touchTarget.y;
-
-    if (monthsConHeight.yStart <= y && y <= monthsConHeight.yEnd) {
-      monthsConWidth.forEach((val, idx, arr) => {
-        if (val.xStart <= x && x <= val.xEnd) {
-          if (idx + 1 !== this.data.focusIndex) {
-            this.setData({
-              lastFocusIndex: this.data.focusIndex,
-              focusIndex: idx + 1
-            });
-            this.getPath();
+    if (!this.data.moving) {
+      let monthsConWidth = this.data.monthsConWidth;
+      let monthsConHeight = this.data.monthsConHeight;
+      let touchTarget = e.changedTouches[0];
+      let x = touchTarget.x;
+      let y = touchTarget.y;
+      if (monthsConHeight.yStart <= y && y <= monthsConHeight.yEnd) {
+        monthsConWidth.forEach((val, idx, arr) => {
+          if (val.xStart <= x && x <= val.xEnd) {
+            if (idx + 1 !== this.data.focusIndex) {  // 两个if，判断时候点击了月份
+              this.setData({
+                lastFocusIndex: this.data.focusIndex,
+                focusIndex: idx + 1
+              });
+              this.getPath();
+            }
           }
-        }
-      });
+        });
+      }
     }
   },
   canvasError: function (e) {
     console.log('----------------', e.detail.errMsg);
-  },
-  moveRound: function () {
-    // this.
   },
   onLoad () {
     // TODO: onLoad

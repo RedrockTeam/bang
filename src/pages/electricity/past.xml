@@ -12,6 +12,6 @@
     <canvas canvas-id="round" id="round"></canvas>
   </view>
   <navigator class="footer" url="/pages/electricity/electricity">
-    查往月用电
+    返回
   </navigator>
 </view>
