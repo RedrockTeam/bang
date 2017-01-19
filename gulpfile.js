@@ -68,7 +68,7 @@ gulp.task('clean', del.bind(null, ['dist/*']));
  */
 
 gulp.task('lint', () => {
-  return gulp.src(['*.{js,json}', '**/*.{js,json}', '!node_modules/**', '!dist/**', '!**/bluebird.js', '!utils/**'])
+  return gulp.src(['*.{js,json}', '**/*.{js,json}', '!node_modules/**', '!dist/**', '!**/es6-promise.js', '!utils/**'])
   .pipe(plugins.eslint())
   .pipe(plugins.eslint.format('node_modules/eslint-friendly-formatter'))
   .pipe(plugins.eslint.failAfterError());
