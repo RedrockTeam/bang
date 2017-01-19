@@ -1,0 +1,32 @@
+<view class="repair">
+  <view class="header">
+    <view class="header__apply">
+      <text>报修</text>
+    </view>
+    <view class="header__feedback">
+      <text>投诉</text>
+      <text>建议</text>
+    </view>
+  </view>
+  <view class="waves">
+    <view class="waves__line wave__one"></view>
+    <view class="waves__line wave__two"></view>
+    <view class="waves__line wave__three"></view>
+  </view>
+  <view class="items">
+    <view class="items__wait">
+      <view class="items--icon"></view>
+      <view class="items--content">
+        <text class="items--content__status">待审核</text>
+        <text class="items--content__time">17/01/16</text>
+        <text class="items--content__title">寝室的灯坏了标题很长寝室的灯坏了标题很长</text>
+      </view>
+    </view>
+  </view>
+  <view class="notify">
+    <view class="notify__box">
+      <view class="notify__box--img"></view>
+      <text class="notify__box--txt">还可以继续报修哦</text>
+    </view>
+  </view>
+</view>

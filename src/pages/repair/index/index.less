@@ -1,0 +1,215 @@
+.repair {
+  background-color: #fff;
+}
+.header {
+  height: 330rpx;
+  background: url('http://kjcx.yaerma.com/static/imgs/wxapp/images/repair__bg.png') 100% 100% no-repeat;
+  background-size: contain;
+}
+.header__apply {
+  display: inline-block;
+  margin-top: 50rpx;
+  margin-left: 125rpx;
+  width: 260rpx;
+  height: 265rpx;
+  line-height: 245rpx;
+  letter-spacing: 20rpx;
+  color: #fff;
+  font-size: 40rpx;
+  text-align: center;
+  text-indent: 10rpx;
+  background: url('http://kjcx.yaerma.com/static/imgs/wxapp/images/repair__apply-btn.png') 100% 100% no-repeat;
+  background-size: cover;
+}
+.header__feedback {
+  box-sizing: border-box;
+  float: right;
+  margin-top: 90rpx;
+  margin-right: 130rpx;
+  padding-top: 50rpx;
+  width: 170rpx;
+  height: 200rpx;
+  color: #fff;
+  font-size: 25rpx;
+  letter-spacing: 15rpx;
+  text-align: center;
+  text-indent: 5rpx;
+  background: url('http://kjcx.yaerma.com/static/imgs/wxapp/images/repair__feedback-btn.png') 100% 100% no-repeat;
+  background-size: cover;
+  text {
+    display: block;
+  }
+}
+.waves {
+  position: relative;
+  height: 80rpx;
+  background-color: #fff;
+  overflow: hidden;
+}
+.waves__line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-size: contain;
+}
+.wave__one {
+  background: url("./images/index_waves.png") no-repeat 100% 100%;
+  background-position: 0 0;
+}
+.wave__two {
+  background: url("./images/index_waves.png") no-repeat 100% 100%;
+  background-position: 0 60%;
+}
+.wave__three {
+  background: url("./images/index_waves.png") no-repeat 100% 100%;
+  background-position: 0 60%;
+}
+@keyframes wave {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-20rpx, 20rpx);
+  }
+  100% {
+    transform: translate(20rpx, -20rpx);
+  }
+}
+.wave__one,
+.wave__two,
+.wave__three {
+  animation: wave 5s ease-in-out alternate infinite;
+}
+.wave__two {
+  animation-delay: 2s;
+}
+.wave__three {
+  animation-delay: 4s;
+}
+
+.items {
+  box-sizing: border-box;
+  padding: 30rpx;
+  background-color: #f7f7f7;
+}
+.items__wait {
+  width: 100%;
+  background-color: #fff;
+  height: 190rpx;
+  margin-bottom: 20rpx;
+  border-radius: 10rpx;
+  box-shadow: 0 10rpx 14rpx 0 rgba(237,243,243,0.81);
+}
+.items__wait:last-of-type {
+  margin-bottom: 0;
+}
+.items--icon {
+  box-sizing: border-box;
+  float: left;
+  width: 190rpx;
+  height: 100%;
+  background: url('http://kjcx.yaerma.com/static/imgs/wxapp/images/repair__wait-icon.png') 100% 100% no-repeat;
+  background-position: 50% 50%;
+  border-right: 5rpx dashed #ecf2f2;
+}
+.items--content {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 500rpx;
+  height: 100%;
+  line-height: 100%;
+  padding-left: 50rpx;
+  padding-right: 50rpx;
+  font-family: "PingFangSC-Semibold";
+  .items--content__status {
+    float: left;
+    left: 0;
+    font-size: 30rpx;
+    margin-top: 60rpx;
+  }
+  .items--content__time {
+    position: absolute;
+    top: 105rpx;
+    left: 50rpx;
+    font-family: "PingFangSC-Medium";
+    font-size: 24rpx;
+    color: #999;
+  }
+  .items--content__title {
+    box-sizing: border-box;
+    display: block;
+    float: right;
+    right: 0;
+    margin-top: 80rpx;
+    width: 280rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 30rpx;
+  }
+}
+.notify {
+  box-sizing: border-box;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-bottom: 30rpx;
+  background-color: #f7f7f7;
+}
+.notify__box {
+  box-sizing: border-box;
+  padding-top: 77rpx;
+  width: 100%;
+  height: 550rpx;
+  border-radius: 10rpx;
+  background-color: #fff;
+  text-align: center;
+  box-shadow: 0 10rpx 14rpx 0 rgba(237,243,243,0.81);
+}
+.notify__box--img {
+  display: block;
+  margin: 0 auto;
+  width: 288rpx;
+  height: 272rpx;
+  background: url('http://kjcx.yaerma.com/static/imgs/wxapp/images/repair__box-continue.png') no-repeat 100% 100%;
+  background-size: cover;
+  background-position: 0 0;
+}
+.notify__box--txt {
+  position: relative;
+  display: inline-block;
+  margin-top: 67rpx;
+  padding-left: 50rpx;
+  padding-right: 50rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  font-size: 32rpx;
+  font-family: "PingFangSC-Regular";
+  color: #999;
+  letter-spacing: .12em;
+  text-align: center;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 6rpx;
+    left: 0;
+    width: 20rpx;
+    height: 20rpx;
+    background: url('http://kjcx.yaerma.com/static/imgs/wxapp/images/repair__box-star.png') no-repeat 100% 100%;
+    background-position: 0 0;
+    background-size: cover;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 6rpx;
+    right: 0;
+    width: 20rpx;
+    height: 20rpx;
+    background: url('http://kjcx.yaerma.com/static/imgs/wxapp/images/repair__box-star.png') no-repeat 100% 100%;
+    background-position: 0 0;
+    background-size: cover;
+  }
+}
