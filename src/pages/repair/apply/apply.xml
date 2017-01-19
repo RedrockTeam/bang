@@ -64,14 +64,14 @@
               placeholder-style="color: #b6b6b6" />
     </view>
     <view class="service-item">
-      <view class="service-item__icon"></view>
+      <view class="service-item__icon icon--text"></view>
       <view class="service-item__title">申报内容</view>
       <textarea placeholder="请输入申报内容"
                 class="service-item__text"
                 placeholder-style="color: #b6b6b6" />
     </view>
     <view class="service-item">
-      <view class="service-item__icon icon--text"></view>
+      <view class="service-item__icon icon--pic"></view>
       <view class="upload-img"
             bindtap="uploadImg"
             wx:if="{{!showImg}}" >+</view>
