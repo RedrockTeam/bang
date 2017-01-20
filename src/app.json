@@ -5,7 +5,10 @@
     "pages/electricity/starttoend",
     "pages/index/index",
     "pages/user/user",
-    "pages/repair/apply/apply"
+    "pages/repair/apply/apply",
+    "pages/repair/index/index",
+    "pages/repair/detail/detail",
+    "pages/repair/feedback/feedback"
     // Dont remove this comment
   ],
   "window": {

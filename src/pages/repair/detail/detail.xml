@@ -1,0 +1,58 @@
+<view class="detail">
+  <view class="header">
+    <view class="header__icon">待审核</view>
+    <view class="header__arrow"></view>
+    <view class="header__icon">派出中</view>
+    <view class="header__arrow"></view>
+    <view class="header__icon">已完成</view>
+  </view>
+  <view class="seperate-line"></view>
+  <view class="content">
+    <view class="service-item">
+      <view class="service-item__icon icon--people"></view>
+      <view class="service-item__title">反馈人</view>
+      <view class="service-item__value">你的名字你的名字你的名字fdvgfds</view>
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--phone"></view>
+      <view class="service-item__title">电话</view>
+      <view class="service-item__value">13042372005</view>
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--area"></view>
+      <view class="service-item__title">服务区域</view>
+      <view class="service-item__value">这是服务区域</view>
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--title"></view>
+      <view class="service-item__title">标题</view>
+      <view class="service-item__value">这是标题</view>
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--text"></view>
+      <view class="service-item__title">申报内容</view>
+      <view class="service-item__text">
+        内容什么的内容什么的内容什么的内容什么的内容什么的内容什么
+      </view>
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--pic"></view>
+      <image class="show-img" src="http://pics.sc.chinaz.com/files/pic/pic9/201508/apic14052.jpg"></image>
+    </view>
+  </view>
+  <view class="seperate-line"></view>
+  <view class="footer">
+    <view class="service-item">
+      <view class="service-item__icon icon--title"></view>
+      <view class="service-item__title">满意度</view>
+      <view class="service-item__value">这是标题</view>
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--text"></view>
+      <view class="service-item__title">反馈内容</view>
+      <textarea placeholder="请输入反馈内容"
+                placeholder-style="color: #b6b6b6" />
+    </view>
+    <view class="submit-btn">提 交</view>
+  </view>
+</view>
