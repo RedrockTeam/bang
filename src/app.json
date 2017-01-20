@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/electricity/past",
-    "pages/electricity/electricity",
-    "pages/electricity/starttoend",
+    "pages/electricity/past/past",
+    "pages/electricity/index/electricity",
+    "pages/electricity/public/starttoend",
     "pages/index/index",
     "pages/user/user"
     // Dont remove this comment
