@@ -1,4 +1,4 @@
-<import src="/pages/electricity/starttoend" />
+<import src="/pages/electricity/public/starttoend" />
 <view class="wrapper">
   <view class="header">
     <view class="header__desc">
@@ -11,7 +11,7 @@
     <canvas canvas-id="pastCost" id="pastCost" bindtouchstart="pastCostChange" binderror="canvasError"></canvas>
     <canvas canvas-id="round" id="round"></canvas>
   </view>
-  <navigator class="footer" url="/pages/electricity/electricity">
+  <navigator class="footer" url="/pages/electricity/index/electricity">
     返回
   </navigator>
 </view>
