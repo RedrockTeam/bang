@@ -1,4 +1,4 @@
-<view class="repair">
+<view class="index">
   <view class="header">
     <view class="header__apply">
       <text>报修</text>
@@ -11,15 +11,36 @@
   <view class="waves">
     <view class="waves__line wave__one"></view>
     <view class="waves__line wave__two"></view>
-    <view class="waves__line wave__three"></view>
   </view>
   <view class="items">
-    <view class="items__wait">
-      <view class="items--icon"></view>
+    <view class="items__wait"
+          wx:for="{{repairList.verify}}"
+          wx:key="wx_djh">
+      <view class="items--icon icon--step-one"></view>
       <view class="items--content">
         <text class="items--content__status">待审核</text>
-        <text class="items--content__time">17/01/16</text>
-        <text class="items--content__title">寝室的灯坏了标题很长寝室的灯坏了标题很长</text>
+        <text class="items--content__time">{{(item.wx_bxsj)}}</text>
+        <text class="items--content__title">{{item.wx_bt}}</text>
+      </view>
+    </view>
+    <view class="items__wait"
+          wx:for="{{repairList.send}}"
+          wx:key="wx_djh">
+      <view class="items--icon icon--step-two"></view>
+      <view class="items--content">
+        <text class="items--content__status">派出中</text>
+        <text class="items--content__time">{{item.wx_bxsj}}</text>
+        <text class="items--content__title">{{item.wx_bt}}</text>
+      </view>
+    </view>
+    <view class="items__wait"
+          wx:for="{{repairList.finish}}"
+          wx:key="wx_djh">
+      <view class="items--icon icon--step-three"></view>
+      <view class="items--content">
+        <text class="items--content__status">已完成</text>
+        <text class="items--content__time">{{item.wx_bxsj}}</text>
+        <text class="items--content__title">{{item.wx_bt}}</text>
       </view>
     </view>
   </view>
