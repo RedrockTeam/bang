@@ -12,7 +12,8 @@
     <view class="waves__line wave__one"></view>
     <view class="waves__line wave__two"></view>
   </view>
-  <view class="items">
+  <view class="items"
+        wx:if="{{!emptyData}}">
     <view class="items__wait"
           wx:for="{{repairList.verify}}"
           wx:key="wx_djh">
@@ -44,7 +45,15 @@
       </view>
     </view>
   </view>
-  <view class="notify">
+  <view class="notify"
+        wx:if="{{emptyData}}">
+    <view class="notify__box box-empty">
+      <view class="notify__box--img"></view>
+      <text class="notify__box--txt">你还没有报修过哦</text>
+    </view>
+  </view>
+  <view class="notify"
+        wx:else>
     <view class="notify__box">
       <view class="notify__box--img"></view>
       <text class="notify__box--txt">还可以继续报修哦</text>
