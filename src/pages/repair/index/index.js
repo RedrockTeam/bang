@@ -3,8 +3,8 @@
 Page({
   data: {
     userInfo: {
-      // stuNum: 2015211535
-      stuNum: 2014211767
+      stuNum: 2015211535
+      // stuNum: 2014211767
     },
     repairList: {
       finish: [],
@@ -48,7 +48,7 @@ Page({
           for (let key in dataList) {
             dataList[key].forEach((item) => {
               if (item.wx_bxsj) {
-                item.wx_bxsj = item.wx_bxsj.split(' ')[0].split('-').join('/');
+                item.wx_bxsj = item.wx_bxsj.split(' ')[0].split('-').join('/').slice(2);
               }
             });
           }
