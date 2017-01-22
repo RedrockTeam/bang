@@ -3,7 +3,7 @@
     <view class="service-item">
       <view class="service-item__icon icon--people"></view>
       <view class="service-item__title">反馈人</view>
-      <view class="service-item__value">你的名字你的名字你的名字fdvgfds</view>
+      <view class="service-item__value">{{name}}</view>
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--phone"></view>
@@ -12,6 +12,7 @@
               placeholder="请输入电话号码"
               maxlength="11"
               type="digit"
+              bindblur="bindPhone"
               placeholder-style="color: #b6b6b6" />
     </view>
     <view class="service-item">
@@ -19,20 +20,20 @@
       <view class="service-item__title">服务项目</view>
       <picker class="service-item__value"
               bindchange="bindServiceChange"
-              value="{{serviceIndex}}"
+              value="{{serviceVal}}"
               range="{{service}}">
         <view class="picker">
-          {{service[serviceIndex]}}
+          {{serviceVal}}
         </view>
       </picker>
     </view>
     <view class="service-item">
       <picker class="service-item__value"
               bindchange="bindDetailChange"
-              value="{{detailIndex}}"
-              range="{{detail[serviceIndex]}}">
+              value="{{detailVal}}"
+              range="{{detail[detailNum]}}">
         <view class="picker">
-          {{detail[serviceIndex][detailIndex]}}
+          {{detailVal}}
         </view>
       </picker>
     </view>
@@ -41,16 +42,17 @@
       <view class="service-item__title">服务区域</view>
       <picker class="service-item__value"
               bindchange="bindAreaChange"
-              value="{{areaIndex}}"
+              value="{{areaVal}}"
               range="{{area}}">
         <view class="picker">
-          {{area[areaIndex]}}
+          {{areaVal}}
         </view>
       </picker>
     </view>
     <view class="service-item">
       <input class="service-item__value"
               placeholder="请输入详细区域"
+              bindblur="bindPlace"
               placeholder-style="color: #b6b6b6" />
     </view>
   </view>
@@ -61,6 +63,7 @@
       <view class="service-item__title">标题</view>
       <input class="service-item__value"
               placeholder="请输入标题"
+              bindblur="bindTitle"
               placeholder-style="color: #b6b6b6" />
     </view>
     <view class="service-item">
@@ -68,7 +71,8 @@
       <view class="service-item__title">申报内容</view>
       <textarea placeholder="请输入申报内容"
                 class="service-item__text"
-                placeholder-style="color: #b6b6b6" />
+                placeholder-style="color: #b6b6b6"
+                bindblur="bindText" />
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--pic"></view>
@@ -79,6 +83,7 @@
               src="{{imgSrc}}"
               wx:if="{{showImg}}"></image>
     </view>
-    <view class="submit-btn">提 交</view>
+    <view class="submit-btn"
+          bindtap="submitApply">提 交</view>
   </view>
 </view>

@@ -15,6 +15,7 @@ Page({
     image: '',
     status: 0,
     isFeedback: false,
+    advise: '',
     stars: 0
   },
   onLoad (params) {
@@ -40,17 +41,16 @@ Page({
       },
       success (res) {
         let data = res.data.data;
-        // let status = [
-        //   '未审核',
-        //   '已审核',
-        //   '已受理',
-        //   '已派出',
-        //   '已完工',
-        //   '已验收',
-        //   '已驳回',
-        //   '已回访'
-        // ].indexOf(data.wx_wxztm) || -1;
-        let status = 4;
+        let status = [
+          '未审核',
+          '已审核',
+          '已受理',
+          '已派出',
+          '已完工',
+          '已验收',
+          '已驳回',
+          '已回访'
+        ].indexOf(data.wx_wxztm) || -1;
         let isFeedback = !!(data.wx_hfmyd && data.wx_hfjy);
 
         wx.hideToast();
@@ -63,7 +63,9 @@ Page({
           content: data.wx_bxnr,
           image: data.wx_picUrl,
           status: status,
-          isFeedback: isFeedback
+          isFeedback: isFeedback,
+          stars: ~~data.wx_hfmyd || 0,
+          advise: data.wx_hfjy || ''
         });
         // 更新数据
       }
@@ -75,5 +77,8 @@ Page({
     self.setData({
       stars: e.target.dataset.starIndex
     });
+  },
+  sendAdvise (e) {
+
   }
 });

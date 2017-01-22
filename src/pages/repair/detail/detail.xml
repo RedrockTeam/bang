@@ -103,14 +103,15 @@
       <view class="service-item__icon icon--text"></view>
       <view class="service-item__title">反馈内容</view>
       <view class="text-content"
-            wx:if="{{isFeedback}}"></view>
+            wx:if="{{isFeedback}}">{{advise}}</view>
       <textarea class="text-content"
                 placeholder="请输入反馈内容"
                 placeholder-style="color: #b6b6b6"
                 wx:else />
     </view>
     <view class="submit-btn"
-          wx:if="{{!isFeedback}}">提 交</view>
+          wx:if="{{!isFeedback}}"
+          bindtap="{{sendAdvise}}">提 交</view>
     <navigator class="submit-btn"
                 url="../index/index"
                 hover-class="none"

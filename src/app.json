@@ -8,7 +8,8 @@
     "pages/repair/apply/apply",
     "pages/repair/index/index",
     "pages/repair/detail/detail",
-    "pages/repair/feedback/feedback"
+    "pages/repair/feedback/feedback",
+    "pages/repair/info/info"
     // Dont remove this comment
   ],
   "window": {

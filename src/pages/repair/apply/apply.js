@@ -2,10 +2,6 @@
 
 Page({
   data: {
-    /**
-     * [service 服务类型（大范围）]
-     * @type {Array}
-     */
     service: [
       '水',
       '电',
@@ -17,49 +13,7 @@ Page({
       '换表',
       '多媒体设备'
     ],
-    serviceArr: [
-      {
-        id: 0,
-        name: '水'
-      },
-      {
-        id: 1,
-        name: '电'
-      },
-      {
-        id: 2,
-        name: '光源类'
-      },
-      {
-        id: 3,
-        name: '木工'
-      },
-      {
-        id: 4,
-        name: '电器'
-      },
-      {
-        id: 5,
-        name: '泥水'
-      },
-      {
-        id: 6,
-        name: '管道疏通'
-      },
-      {
-        id: 7,
-        name: '换表'
-      },
-      {
-        id: 8,
-        name: '多媒体设备'
-      }
-    ],
-    serviceIndex: 0,
-    /**
-     * [detail 服务类型（小范围）]
-     * @type {Array}
-     */
+    serviceVal: '请选择服务项目',
     detail: [
       [
         '水龙头',
@@ -71,90 +25,104 @@ Page({
         '公共区域用电维修'
       ],
       [
-        '气一号',
-        '气二号'
-      ]
-    ],
-    detailArr: [
-      [
-        {
-          id: 0,
-          name: '水一号'
-        },
-        {
-          id: 1,
-          name: '水二号'
-        }
+        '路灯',
+        '室内照明灯'
       ],
       [
-        {
-          id: 0,
-          name: '电一号'
-        },
-        {
-          id: 1,
-          name: '电二号'
-        }
+        '门窗、锁',
+        '桌、椅、家具',
+        '窗帘',
+        '黑板',
+        '配钥匙'
       ],
       [
-        {
-          id: 0,
-          name: '气一号'
-        },
-        {
-          id: 1,
-          name: '气二号'
-        }
+        '开关',
+        '插座',
+        '教室多媒体设备',
+        '电风扇',
+        '开水器'
+      ],
+      [
+        '土建维修'
+      ],
+      [
+        '疏通'
+      ],
+      [
+        '换水表',
+        '换电表',
+        '高压表'
+      ],
+      [
+        '教室多媒体设备',
+        '投影仪故障',
+        '电脑硬件故障',
+        '软甲故障',
+        '网络故障',
+        '音响系统故障',
+        '电源故障',
+        '其他故障'
       ]
     ],
-    detailIndex: 0,
-    /**
-     * [area 报修区域]
-     * @type {Array}
-     */
+    detailNum: 0,
+    detailVal: '请选择服务项目',
     area: [
-      '一栋',
-      '二栋',
-      '十五栋'
+      '住宅区',
+      '教学区',
+      '校园公共区',
+      '办公区',
+      '学生公寓区'
     ],
-    areaArr: [
-      {
-        id: 0,
-        name: '一栋'
-      },
-      {
-        id: 1,
-        name: '二栋'
-      },
-      {
-        id: 2,
-        name: '十五栋'
-      }
-    ],
-    areaIndex: 0,
+    areaVal: '请选择区域',
+    name: '桥本奈奈未',
+    phone: '',
+    place: '',
+    title: '',
+    text: '',
     // 是否显示已上传图片
     showImg: false,
     // 上传图片地址
     imgSrc: ''
   },
-  bindServiceChange: function (e) {
+  bindServiceChange (e) {
     this.setData({
-      serviceIndex: e.detail.value,
-      detailIndex: 0
+      serviceVal: this.data.service[e.detail.value],
+      detailNum: e.detail.value
     });
   },
-  bindDetailChange: function (e) {
+  bindDetailChange (e) {
     this.setData({
-      detailIndex: e.detail.value
+      detailVal: this.data.detail[this.data.detailNum][e.detail.value]
     });
   },
-  bindAreaChange: function (e) {
+  bindAreaChange (e) {
     this.setData({
-      areaIndex: e.detail.value
+      areaVal: this.data.area[e.detail.value]
+    });
+  },
+  bindPhone (e) {
+    this.setData({
+      phone: e.detail.value
+    });
+  },
+  bindPlace (e) {
+    this.setData({
+      place: e.detail.value
+    });
+  },
+  bindTitle (e) {
+    this.setData({
+      title: e.detail.value
+    });
+  },
+  bindText (e) {
+    this.setData({
+      text: e.detail.value
     });
   },
   uploadImg: function () {
     let self = this;
+
     wx.chooseImage({
       count: 1,
       sizeType: ['compressed'],
@@ -168,5 +136,20 @@ Page({
         });
       }
     });
+  },
+  // 差一个上传图片的接口
+  submitApply () {
+    let self = this;
+    let data = {
+      ip: '',
+      name: '',
+      stuId: '',
+      bt: self.data.title,
+      bxdh: self.data.phone,
+      bxdd: self.data.place,
+      bxnr: self.data.text,
+      // 对接口这儿没写完
+    };
+
   }
 });
