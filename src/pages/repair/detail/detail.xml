@@ -1,58 +1,120 @@
-<view class="detail">
+<view>
   <view class="header">
-    <view class="header__icon">待审核</view>
+    <view class="header__icon icon-wait"
+          wx:if="{{status < 1}}">待审核</view>
+    <view class="header__icon icon-wait-out"
+          wx:else>待审核</view>
     <view class="header__arrow"></view>
-    <view class="header__icon">派出中</view>
+    <view class="header__icon icon-send"
+          wx:if="{{status > 0 && status < 4}}">派出中</view>
+    <view class="header__icon icon-send-out"
+          wx:else>派出中</view>
     <view class="header__arrow"></view>
-    <view class="header__icon">已完成</view>
+    <view class="header__icon icon-finish"
+          wx:if="{{status > 3}}">已完成</view>
+    <view class="header__icon icon-finish-out"
+          wx:else>已完成</view>
   </view>
+  <!-- 根据报修状态的不同点亮不同的图标 -->
   <view class="seperate-line"></view>
+  <!-- 分割线 -->
   <view class="content">
     <view class="service-item">
       <view class="service-item__icon icon--people"></view>
       <view class="service-item__title">反馈人</view>
-      <view class="service-item__value">你的名字你的名字你的名字fdvgfds</view>
+      <view class="service-item__value">{{user}}</view>
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--phone"></view>
       <view class="service-item__title">电话</view>
-      <view class="service-item__value">13042372005</view>
+      <view class="service-item__value">{{phone}}</view>
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--area"></view>
       <view class="service-item__title">服务区域</view>
-      <view class="service-item__value">这是服务区域</view>
+      <view class="service-item__value">{{area}}</view>
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--title"></view>
       <view class="service-item__title">标题</view>
-      <view class="service-item__value">这是标题</view>
+      <view class="service-item__value">{{title}}</view>
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--text"></view>
       <view class="service-item__title">申报内容</view>
-      <view class="service-item__text">
-        内容什么的内容什么的内容什么的内容什么的内容什么的内容什么
-      </view>
+      <view class="service-item__text">{{content}}</view>
     </view>
-    <view class="service-item">
+    <view class="service-item"
+          wx:if="{{picurl}}">
       <view class="service-item__icon icon--pic"></view>
-      <image class="show-img" src="http://pics.sc.chinaz.com/files/pic/pic9/201508/apic14052.jpg"></image>
+      <image class="show-img" src="{{picurl}}"></image>
     </view>
+    <view class="service-item"
+          wx:else>
+      <view class="service-item__icon icon--pic"></view>
+      <image class="show-img" src="https://static.mengniang.org/common/thumb/4/41/Nicky.jpg/250px-Nicky.jpg"></image>
+    </view>
+    <navigator class="submit-btn btn-back"
+                wx:if="{{status < 4}}"
+                url="../index/index"
+                hover-class="none"
+                redirect="true">返回首页</navigator>
   </view>
-  <view class="seperate-line"></view>
-  <view class="footer">
+  <!-- 报修数据部分 -->
+  <view class="seperate-line"
+        wx:if="{{status > 3}}"></view>
+  <view class="footer"
+        wx:if="{{status > 3}}">
     <view class="service-item">
       <view class="service-item__icon icon--title"></view>
       <view class="service-item__title">满意度</view>
-      <view class="service-item__value">这是标题</view>
+      <view class="service-item__value service__star-container"
+            wx:if="{{isFeedback}}">
+        <view class="service__star"
+              wx:for="{{[1, 2, 3, 4, 5]}}">
+          <view class="service__star-true"
+                wx:if="{{item <= stars}}">
+          </view>
+          <view class="service__star-false"
+                wx:else>
+          </view>
+        </view>
+      </view>
+      <view class="service-item__value service__star-container"
+            wx:else>
+        <view class="service__star"
+              wx:for="{{[1, 2, 3, 4, 5]}}"
+              wx:key="star__{{item}}">
+          <view class="service__star-true"
+                wx:if="{{item <= stars}}"
+                data-star-index="{{item}}"
+                bindtap="giveStar">
+          </view>
+          <view class="service__star-false"
+                wx:else
+                data-star-index="{{item}}"
+                bindtap="giveStar">
+          </view>
+        </view>
+      </view>
+      <!-- 评价星级 点击就送 -->
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--text"></view>
       <view class="service-item__title">反馈内容</view>
-      <textarea placeholder="请输入反馈内容"
-                placeholder-style="color: #b6b6b6" />
+      <view class="text-content"
+            wx:if="{{isFeedback}}"></view>
+      <textarea class="text-content"
+                placeholder="请输入反馈内容"
+                placeholder-style="color: #b6b6b6"
+                wx:else />
     </view>
-    <view class="submit-btn">提 交</view>
+    <view class="submit-btn"
+          wx:if="{{!isFeedback}}">提 交</view>
+    <navigator class="submit-btn"
+                url="../index/index"
+                hover-class="none"
+                redirect="true"
+                wx:else>返回首页</navigator>
   </view>
 </view>

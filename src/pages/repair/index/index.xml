@@ -21,7 +21,7 @@
     <view class="items__item"
           wx:for="{{repairList.verify}}"
           wx:key="wx_djh">
-      <navigator url="../detail/detail">
+      <navigator url="../detail/detail?wx_djh={{item.wx_djh}}">
         <view class="items--icon icon--step-one"></view>
         <view class="items--content">
           <text class="items--content__status">待审核</text>
@@ -33,7 +33,7 @@
     <view class="items__item"
           wx:for="{{repairList.send}}"
           wx:key="wx_djh">
-      <navigator url="../detail/detail">
+      <navigator url="../detail/detail?wx_djh={{item.wx_djh}}">
         <view class="items--icon icon--step-two"></view>
         <view class="items--content">
           <text class="items--content__status">派出中</text>
@@ -45,7 +45,7 @@
     <view class="items__item"
           wx:for="{{repairList.finish}}"
           wx:key="wx_djh">
-      <navigator url="../detail/detail">
+      <navigator url="../detail/detail?wx_djh={{item.wx_djh}}">
         <view class="items--icon icon--step-three"></view>
         <view class="items--content">
           <text class="items--content__status">已完成</text>
