@@ -85,7 +85,7 @@ Page({
         canvasData.ctx.fillText(this.data.start, canvasData.perWidth * i - this.pxToRpx(6), canvasData.monthsHeight);
       }
       if (this.data.start++ === 12) {
-        this.data.start = 0;
+        this.data.start = 1;
       }
     };
     this.setData({
