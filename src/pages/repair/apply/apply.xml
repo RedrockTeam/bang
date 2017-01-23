@@ -1,0 +1,89 @@
+<view class="repair">
+  <view class="header">
+    <view class="service-item">
+      <view class="service-item__icon icon--people"></view>
+      <view class="service-item__title">反馈人</view>
+      <view class="service-item__value">{{name}}</view>
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--phone"></view>
+      <view class="service-item__title">电话</view>
+      <input class="service-item__value"
+              placeholder="请输入电话号码"
+              maxlength="11"
+              type="digit"
+              bindblur="bindPhone"
+              placeholder-style="color: #b6b6b6" />
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--item"></view>
+      <view class="service-item__title">服务项目</view>
+      <picker class="service-item__value"
+              bindchange="bindServiceChange"
+              value="{{serviceVal}}"
+              range="{{service}}">
+        <view class="picker">
+          {{serviceVal}}
+        </view>
+      </picker>
+    </view>
+    <view class="service-item">
+      <picker class="service-item__value"
+              bindchange="bindDetailChange"
+              value="{{detailVal}}"
+              range="{{detail[detailNum]}}">
+        <view class="picker">
+          {{detailVal}}
+        </view>
+      </picker>
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--area"></view>
+      <view class="service-item__title">服务区域</view>
+      <picker class="service-item__value"
+              bindchange="bindAreaChange"
+              value="{{areaVal}}"
+              range="{{area}}">
+        <view class="picker">
+          {{areaVal}}
+        </view>
+      </picker>
+    </view>
+    <view class="service-item">
+      <input class="service-item__value"
+              placeholder="请输入详细区域"
+              bindblur="bindPlace"
+              placeholder-style="color: #b6b6b6" />
+    </view>
+  </view>
+  <view class="seperate-line"></view>
+  <view class="footer">
+    <view class="service-item">
+      <view class="service-item__icon icon--title"></view>
+      <view class="service-item__title">标题</view>
+      <input class="service-item__value"
+              placeholder="请输入标题"
+              bindblur="bindTitle"
+              placeholder-style="color: #b6b6b6" />
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--text"></view>
+      <view class="service-item__title">申报内容</view>
+      <textarea placeholder="请输入申报内容"
+                class="service-item__text"
+                placeholder-style="color: #b6b6b6"
+                bindblur="bindText" />
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--pic"></view>
+      <view class="upload-img"
+            bindtap="uploadImg"
+            wx:if="{{!showImg}}" >+</view>
+      <image class="show-img"
+              src="{{imgSrc}}"
+              wx:if="{{showImg}}"></image>
+    </view>
+    <view class="submit-btn"
+          bindtap="submitApply">提 交</view>
+  </view>
+</view>

@@ -2,6 +2,7 @@
   <text class="title">{{ title }}</text>
   <view class="info">
     <image src="{{userInfo.avatarUrl}}"/>
-    <navigator url="/pages/electricity/electricity">{{ userInfo.nickName }}</navigator>
+    <text>{{ userInfo.nickName }}</text>
+    <navigator url="../repair/apply/apply">跳转到新页面</navigator>
   </view>
 </view>
