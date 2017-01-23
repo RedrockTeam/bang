@@ -1,0 +1,12 @@
+<view class="info">
+  <view class="notify">
+    <view class="notify__box">
+      <view class="notify__box--title">提交成功</view>
+      <view class="notify__box--img"></view>
+      <navigator class="notify__box--btn"
+                  url="../index/index"
+                  hover-class="none"
+                  redirect="true">返回首页</navigator>
+    </view>
+  </view>
+</view>

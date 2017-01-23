@@ -1,29 +1,69 @@
-<view class="repair">
+<view class="index">
   <view class="header">
-    <view class="header__apply">
+    <navigator class="header__apply"
+                url="../apply/apply"
+                hover-class="none">
       <text>报修</text>
-    </view>
-    <view class="header__feedback">
+    </navigator>
+    <navigator class="header__feedback"
+                url="../feedback/feedback"
+                hover-class="none">
       <text>投诉</text>
       <text>建议</text>
-    </view>
+    </navigator>
   </view>
   <view class="waves">
     <view class="waves__line wave__one"></view>
     <view class="waves__line wave__two"></view>
-    <view class="waves__line wave__three"></view>
   </view>
-  <view class="items">
-    <view class="items__wait">
-      <view class="items--icon"></view>
-      <view class="items--content">
-        <text class="items--content__status">待审核</text>
-        <text class="items--content__time">17/01/16</text>
-        <text class="items--content__title">寝室的灯坏了标题很长寝室的灯坏了标题很长</text>
-      </view>
+  <view class="items"
+        wx:if="{{!emptyData}}">
+    <view class="items__item"
+          wx:for="{{repairList.verify}}"
+          wx:key="wx_djh">
+      <navigator url="../detail/detail?wx_djh={{item.wx_djh}}">
+        <view class="items--icon icon--step-one"></view>
+        <view class="items--content">
+          <text class="items--content__status">待审核</text>
+          <text class="items--content__time">{{(item.wx_bxsj)}}</text>
+          <text class="items--content__title">{{item.wx_bt}}</text>
+        </view>
+      </navigator>
+    </view>
+    <view class="items__item"
+          wx:for="{{repairList.send}}"
+          wx:key="wx_djh">
+      <navigator url="../detail/detail?wx_djh={{item.wx_djh}}">
+        <view class="items--icon icon--step-two"></view>
+        <view class="items--content">
+          <text class="items--content__status">派出中</text>
+          <text class="items--content__time">{{item.wx_bxsj}}</text>
+          <text class="items--content__title">{{item.wx_bt}}</text>
+        </view>
+      </navigator>
+    </view>
+    <view class="items__item"
+          wx:for="{{repairList.finish}}"
+          wx:key="wx_djh">
+      <navigator url="../detail/detail?wx_djh={{item.wx_djh}}">
+        <view class="items--icon icon--step-three"></view>
+        <view class="items--content">
+          <text class="items--content__status">已完成</text>
+          <text class="items--content__time">{{item.wx_bxsj}}</text>
+          <text class="items--content__title">{{item.wx_bt}}</text>
+        </view>
+      </navigator>
     </view>
   </view>
-  <view class="notify">
+  <view class="notify"
+        wx:if="{{emptyData}}">
+    <view class="notify__box box-empty">
+      <view class="notify__box--img"></view>
+      <text class="notify__box--txt">你还没有报修过哦</text>
+    </view>
+  </view>
+  <view class="notify"
+        wx:else>
     <view class="notify__box">
       <view class="notify__box--img"></view>
       <text class="notify__box--txt">还可以继续报修哦</text>

@@ -1,0 +1,50 @@
+<import src="/pages/electricity/starttoend" />
+<view class="wrapper">
+  <view class="header">
+    <view class="header-content">
+      <text class="header__title">
+        本月用电
+      </text>
+      <view class="header__desc">
+        {{elecState.elec_spend}}
+        <text class="header__text">度</text>
+      </view>
+    </view>
+    <view class="header-content">
+      <text class="header__title">
+        本月电费
+      </text>
+      <view class="header__desc">
+        {{elecState.elec_cost[0]}}
+        <text class="header__text">元</text>
+      </view>
+    </view>
+  </view>
+  <view class="main">
+    <view class="main-title">
+      寝室信息
+    </view>
+    <view class="main-infor">
+        {{elecState.room.builing}}栋 {{elecState.room.door}}
+    </view>
+    <view class="main-title">
+      抄表日期
+    </view>
+    <view class="main-infor">
+        {{elecState.record_time}} 08:00
+    </view>
+    <view class="main-title">
+      本月免费
+    </view>
+    <view class="main-infor">
+        {{elecState.elec_free}}度
+    </view>
+    <view class="main-title">
+      用电详情
+    </view>
+    <template is="starttoend" data="{{elecState}}"></template>
+  </view>
+  <navigator class="footer" url="/pages/electricity/past">
+    查往月用电
+  </navigator>
+</view>

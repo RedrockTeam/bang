@@ -1,7 +1,7 @@
 @img_url: "http://kjcx.yaerma.com/static/imgs/wxapp/images/";
 // 图片外链 暂存地址
 
-.repair {
+.feedback {
   .header {
     box-sizing: border-box;
     position: relative;
@@ -21,6 +21,9 @@
       color: #999;
       background: url('@{img_url}/repair__icon-arrow.png') no-repeat 100% 100%;
       background-position: 100% 5rpx;
+    }
+    .service-item:first-of-type .service-item__value {
+      width: 150rpx;
     }
   }
   .service-item {
@@ -96,6 +99,27 @@
     overflow: hidden;
     text-overflow: ellipsis;
     color: #666;
+  }
+  .service-item__choose {
+    position: absolute;
+    top: 0;
+    left: 460rpx;
+    width: 120rpx;
+    height: 40rpx;
+    border: 1px solid #f0f0f0;
+    .service-item__choose-item {
+      float: left;
+      width: 50%;
+      height: 40rpx;
+      line-height: 40rpx;
+      font-size: 20rpx;
+      text-align: center;
+    }
+    .service-item__choose-item__active {
+      color: #fff;
+      background-color: #00D0D5;
+      box-shadow: 0 2rpx 6rpx 0 rgba(0,225,218,0.50);
+    }
   }
   .seperate-line {
     box-sizing: border-box;

@@ -75,6 +75,7 @@ Page({
     ],
     areaVal: '请选择区域',
     name: '桥本奈奈未',
+    type: '投诉',
     phone: '',
     place: '',
     title: '',
@@ -83,6 +84,11 @@ Page({
     showImg: false,
     // 上传图片地址
     imgSrc: ''
+  },
+  bindType (e) {
+    this.setData({
+      type: e.target.dataset.feedbackType
+    });
   },
   bindServiceChange (e) {
     this.setData({
@@ -141,6 +147,7 @@ Page({
   submitApply () {
     let self = this;
     let data = {
+      type: self.data.type,
       ip: '',
       name: '',
       stuId: '',

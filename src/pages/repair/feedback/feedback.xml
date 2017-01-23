@@ -1,9 +1,27 @@
-<view class="repair">
+<view class="feedback">
   <view class="header">
     <view class="service-item">
       <view class="service-item__icon icon--people"></view>
       <view class="service-item__title">反馈人</view>
       <view class="service-item__value">{{name}}</view>
+      <view class="service-item__choose"
+            wx:if="{{type === '投诉'}}">
+        <view class="service-item__choose-item service-item__choose-item__active"
+              data-feedback-type="投诉"
+              bindtap="bindType">投诉</view>
+        <view class="service-item__choose-item"
+              data-feedback-type="建议"
+              bindtap="bindType">建议</view>
+      </view>
+      <view class="service-item__choose"
+            wx:else>
+        <view class="service-item__choose-item"
+              data-feedback-type="投诉"
+              bindtap="bindType">投诉</view>
+        <view class="service-item__choose-item service-item__choose-item__active"
+              data-feedback-type="建议"
+              bindtap="bindType">建议</view>
+      </view>
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--phone"></view>
@@ -68,8 +86,8 @@
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--text"></view>
-      <view class="service-item__title">申报内容</view>
-      <textarea placeholder="请输入申报内容"
+      <view class="service-item__title">反馈内容</view>
+      <textarea placeholder="请输入反馈内容"
                 class="service-item__text"
                 placeholder-style="color: #b6b6b6"
                 bindblur="bindText" />
