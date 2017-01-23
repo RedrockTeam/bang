@@ -148,8 +148,19 @@ Page({
       bxdh: self.data.phone,
       bxdd: self.data.place,
       bxnr: self.data.text,
-      // 对接口这儿没写完
+      fwqy: self.data.areaVal,
+      fwxm: self.data.detailVal,
+      pic: ''
     };
 
+    /**
+     *  服务项目字段应该有两个的...少一个
+     *  请求报修提交接口
+     *  应该会返回单号之类的，然后根据单号查看情况什么的
+     */
+    console.log(data);
+    wx.redirectTo({
+      url: '../info/info'
+    });
   }
 });
