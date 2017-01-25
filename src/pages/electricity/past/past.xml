@@ -1,4 +1,4 @@
-<import src="/pages/electricity/public/starttoend" />
+<import src="/pages/electricity/public/public" />
 <view class="wrapper">
   <view class="header">
     <view class="header__desc">
