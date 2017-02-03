@@ -1,8 +1,6 @@
 {
-  "navigationBarBackgroundColor": "#35495e",
-  "navigationBarTextStyle": "white",
-  "navigationBarTitleText": "Index Page",
+  "navigationBarTitleText": "重邮帮",
   "backgroundColor": "#000000",
   "backgroundTextStyle": "light",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": false
 }
