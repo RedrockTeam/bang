@@ -3,7 +3,7 @@ const Promise = require('./utils/es6-promise');
 
 App({
   data: {
-    name: 'WeApp Boilerplate',
+    name: 'CQUPT Bang',
     version: '0.1.0',
     userInfo: null
   },
