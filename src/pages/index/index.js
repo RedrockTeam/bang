@@ -88,7 +88,7 @@ Page({
           name: '',
           url: '',
           img: ''
-        },
+        }
       ]
     ],
     week: 10,
