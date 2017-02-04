@@ -1,8 +1,91 @@
-<view class="container">
-  <text class="title">{{ title }}</text>
-  <view class="info">
-    <image src="{{userInfo.avatarUrl}}"/>
-    <text>{{ userInfo.nickName }}</text>
-    <navigator url="../repair/apply/apply">跳转到新页面</navigator>
+<view class="index">
+  <view class="index--banner">
+    <swiper autoplay="true"
+            interval="5000"
+            duration="1000"
+            bindchange="swiperBar">
+      <block wx:for="{{imgUrls}}"
+              wx:key="swiper_{{index}}">
+        <swiper-item>
+          <image src="{{item}}"
+                  mode="aspectFill" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="index--banner__bar">
+      <block wx:for="{{imgUrls}}"
+              wx:key="swiper_bar_{{index}}">
+        <view class="index--banner__bar-item index--banner__bar-item-active"
+                wx:if="{{index == currentSwiper}}"></view>
+        <view class="index--banner__bar-item"
+                wx:else></view>
+      </block>
+    </view>
+  </view>
+  <view class="index--course">
+    <view class="index--course__title">
+      <text>{{week}}周</text>
+      <text>今日课程</text>
+      <navigator class="index--course__nav"
+                  hover-class="none">
+        完整课表
+      </navigator>
+    </view>
+    <view class="index--course__scroll">
+      <scroll-view scroll-x="true"
+                    class="index--course__scroll-view">
+        <view id="course__morning"
+              class="index--course__scroll-item">
+          <block wx:for="{{course[0]}}"
+                  wx:key="course_0_{{index}}">
+            <view class="index--course__scroll-class">
+              <text>{{item.class}}</text>
+              <text>{{item.room}}</text>
+              <text>{{item.name}}</text>
+            </view>
+          </block>
+        </view>
+        <view id="course__afternoon"
+              class="index--course__scroll-item">
+          <block wx:for="{{course[1]}}"
+                  wx:key="course_1_{{index}}">
+            <view class="index--course__scroll-class">
+              <text>{{item.class}}</text>
+              <text>{{item.room}}</text>
+              <text>{{item.name}}</text>
+            </view>
+          </block>
+        </view>
+        <view id="course__night"
+              class="index--course__scroll-item">
+          <block wx:for="{{course[2]}}"
+                  wx:key="course_2_{{index}}">
+            <view class="index--course__scroll-class">
+              <text>{{item.class}}</text>
+              <text>{{item.room}}</text>
+              <text>{{item.name}}</text>
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <view class="index--service">
+    <view class="index--service__title">校园服务</view>
+    <block wx:for="{{services}}"
+            wx:key="service_line_{{index}}">
+      <view class="index--service__line">
+        <block wx:for="{{item}}"
+                wx:key="service_col_{{index}}">
+          <navigator class="index--service__item"
+                      to="{{item.url}}"
+                      hover-class="none">
+            <image class="index--service__item-image"
+                   src="{{item.img}}" />
+            <text class="index--service__item-text">{{item.name}}</text>
+          </navigator>
+        </block>
+      </view>
+    </block>
   </view>
 </view>
