@@ -1,0 +1,43 @@
+<!-- <template name="base_page"> -->
+  <view class="header">
+    <input class="header-input" placeholder="搜索"></input>
+  </view>
+  <view class="main-tags">
+    <navigator class="tag tag-focus">我的信息</navigator>
+    <navigator class="tag">借阅榜单</navigator>
+  </view>
+<!-- </template> -->
+
+
+<!-- <import src="{{myinfor_template_src}}" />
+<template name="base_page">
+  <view class="header">
+    <input class="header-input" placeholder="搜索"></input>
+  </view>
+  <view class="main-tags">
+    <navigator class="tag tag-focus">我的信息</navigator>
+    <navigator class="tag">借阅榜单</navigator>
+  </view>
+  <view class="main">
+    <view class="myinfor-details">
+      <navigator wx:for="{{myinforItems}}" wx:key="*this" class="myinfor-item">
+        <block wx:if="{{index === myinforItemsFocusIndex}}">
+          <image class="myinfor-item__img myinfor-item__img-focus" src="../../../../images/library/{{item.img}}.png"></image>
+          <text class="myinfor-item__text myinfor-item__text-focus">
+            {{item.text}}
+          </text>
+        </block>
+        <block wx:else>
+          <image class="myinfor-item__img" src="../../../../images/library/{{item.img}}.png"></image>
+          <text class="myinfor-item__text">
+            {{item.text}}
+          </text>
+        </block>
+      </navigator>
+    </view>
+    <view class="main-content">
+      <template is="{{myinfor_template_name}}"/>
+    </view>
+  </view>
+</template>
+ -->
