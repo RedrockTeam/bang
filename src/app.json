@@ -14,7 +14,8 @@
     "pages/user/user",
     "pages/repair/apply/apply",
     "pages/repair/feedback/feedback",
-    "pages/repair/info/info"
+    "pages/repair/info/info",
+    "pages/activity/index/index"
     // Dont remove this comment
   ],
   "window": {
@@ -39,7 +40,7 @@
       },
       {
         "text": "活动",
-        "pagePath": "pages/repair/index/index",
+        "pagePath": "pages/activity/index/index",
         "iconPath": "images/tab--act__blur.png",
         "selectedIconPath": "images/tab--act__focus.png"
       },

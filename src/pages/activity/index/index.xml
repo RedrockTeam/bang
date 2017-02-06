@@ -1,0 +1,68 @@
+<view class="activity">
+  <view class="activity--nav">
+    <block wx:for="{{actType}}"
+            wx:key="act_type_{{index}}">
+      <view class="activity--nav-item activity--nav-item-active"
+              wx:if="{{index == actIndex}}"
+              bindtap="actTypeChange"
+              data-act-index="{{index}}">
+        {{item.type}}
+      </view>
+      <view class="activity--nav-item"
+              wx:else
+              bindtap="actTypeChange"
+              data-act-index="{{index}}">
+        {{item.type}}
+      </view>
+    </block>
+    <navigator class="activity--nav-apply">
+      申请发布
+    </navigator>
+  </view>
+  <view class="activity--banner">
+    <swiper autoplay="true"
+            interval="5000"
+            duration="1000"
+            bindchange="swiperBar">
+      <block wx:for="{{imgUrls}}"
+              wx:key="swiper_{{index}}">
+        <swiper-item>
+          <image src="{{item}}"
+                  mode="aspectFill" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="activity--banner__bar">
+      <block wx:for="{{imgUrls}}"
+              wx:key="swiper_bar_{{index}}">
+        <view class="activity--banner__bar-item activity--banner__bar-item-active"
+                wx:if="{{index == currentSwiper}}"></view>
+        <view class="activity--banner__bar-item"
+                wx:else></view>
+      </block>
+    </view>
+  </view>
+  <view class="activity--list">
+    <block wx:for="{{actList}}">
+      <view class="activity--list-item">
+        <view class="item-left">
+          <view class="item__title">
+            {{item.title}}
+          </view>
+          <view class="item__date">
+            {{item.date}}
+          </view>
+          <view class="item__day">
+            {{item.day}}
+          </view>
+          <view class="item__place">
+            {{item.place}}
+          </view>
+        </view>
+        <image class="item__image"
+                src="{{item.img}}"
+                mode="aspectFill"/>
+      </view>
+    </block>
+  </view>
+</view>
