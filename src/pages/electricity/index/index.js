@@ -1,12 +1,9 @@
-// const app = getApp();
-
 Page({
   data: {
     title: 'electricity',
     elecState: {}
   },
   onLoad () {
-    // TODO: onLoad
     wx.request({
       url: 'http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/getElectric',
       method: 'POST',
@@ -16,7 +13,7 @@ Page({
       data: {
         stuNum: 2015211878
       },
-      success: (res) => {
+      success: res => {
         if (res.statusCode === 200) {
           if (res.data.status === 200) {
             this.setData({
@@ -30,17 +27,5 @@ Page({
         }
       }
     });
-  },
-  onReady () {
-    // TODO: onReady
-  },
-  onShow () {
-    // TODO: onShow
-  },
-  onHide () {
-    // TODO: onHide
-  },
-  onUnload () {
-    // TODO: onUnload
   }
 });
