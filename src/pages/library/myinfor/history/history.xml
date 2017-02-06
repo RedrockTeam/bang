@@ -34,7 +34,7 @@
   </view>
   <view class="main-content">
     <block wx:if="{{bookItems.length !== 0}}">
-      <block wx:for="{{bookItems}}">
+      <block wx:for="{{bookItems}}" wx:key="book_{{index}}">
         <view class="book-item">
           <text class="book-name">《{{item.name}}》</text>
           <text class="book-lefttime">{{item.time}}</text>

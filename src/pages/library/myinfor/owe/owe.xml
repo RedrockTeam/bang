@@ -34,7 +34,7 @@
       <block wx:for="{{bookItems}}">
         <view class="book-item">
           <text class="book-name">《{{item.name}}》</text>
-          <text class="book-lefttime">欠费{{item.time}}元</text>
+          <text class="book-lefttime">欠费 {{item.money}} 元</text>
         </view>
       </block>
     </block>

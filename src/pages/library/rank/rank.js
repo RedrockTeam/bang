@@ -1,14 +1,12 @@
-// const app = getApp();
-
+import utils from '../utils/utils';
 Page({
   data: {
-    title: 'asd',
+    title: 'rank',
     rankList: [],
     rankListImgSrc: ['gold_icon', 'silver_icon', 'copper_icon'],
     myinforItemsFocusIndex: 0
   },
   onLoad () {
-    // TODO: onLoad
     this.setData({
       rankList: [{
         name: '李立平',
@@ -65,17 +63,5 @@ Page({
       }]
     });
   },
-  onReady () {
-    // TODO: onReady
-
-  },
-  onShow () {
-    // TODO: onShow
-  },
-  onHide () {
-    // TODO: onHide
-  },
-  onUnload () {
-    // TODO: onUnload
-  }
+  gotoSearch: utils.gotoSearch
 });

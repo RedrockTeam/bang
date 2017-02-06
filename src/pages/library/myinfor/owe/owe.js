@@ -1,41 +1,21 @@
-// const app = getApp();
-
+import utils from '../../utils/utils';
 Page({
   data: {
     title: 'library',
-    bookItems: [{
-      name: 'owe.js',
-      time: '2'
-    }, {
-      name: 'asdasd.js',
-      time: '2'
-    }, {
-      name: 'owe.js',
-      time: '12'
-    }, {
-      name: 'owe.js',
-      time: '24'
-    }, {
-      name: 'owe.js',
-      time: '12'
-    }, {
-      name: 'owe.js',
-      time: '12'
-    }]
+    bookItems: []
   },
+  gotoSearch: utils.gotoSearch,
   onLoad () {
-    // TODO: onLoad
-  },
-  onReady () {
-    // TODO: onReady
-  },
-  onShow () {
-    // TODO: onShow
-  },
-  onHide () {
-    // TODO: onHide
-  },
-  onUnload () {
-    // TODO: onUnload
+    wx.getStorage({
+      key: 'myinfor_library',
+      success: res => {
+        this.setData({
+          bookItems: res.data.owedBook
+        });
+      },
+      fail: () => {
+        utils.getBookInfor(this, 'owedBook');
+      }
+    });
   }
 });

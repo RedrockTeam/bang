@@ -29,5 +29,14 @@ App({
   },
   onHide () {
     console.log(' ========== Application is hid ========== ');
+    // 图书馆查询清空缓存
+    wx.removeStorage({
+      key: 'myinfor_library',
+      success: res => {
+        console.log('---------removestorage', wx.getStorage({
+          key: 'myinfor_library'
+        }));
+      }
+    });
   }
 });

@@ -1,13 +1,13 @@
 {
   "pages": [
-    "pages/library/search/index/index",
+    "pages/library/myinfor/index/index",
+    "pages/library/search/search",
+    "pages/library/rank/rank",
+    "pages/electricity/index/index",
     "pages/repair/detail/detail",
     "pages/library/myinfor/history/history",
-    "pages/library/myinfor/index/index",
     "pages/library/myinfor/owe/owe",
-    "pages/library/rank/page/page",
     "pages/library/myinfor/page/page",
-    "pages/electricity/index/index",
     "pages/repair/index/index",
     "pages/electricity/past/past",
     "pages/electricity/public/public",
