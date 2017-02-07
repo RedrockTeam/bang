@@ -10,7 +10,8 @@
     "pages/repair/detail/detail",
     "pages/repair/feedback/feedback",
     "pages/repair/info/info",
-    "pages/activity/index/index"
+    "pages/activity/index/index",
+    "pages/activity/apply/apply"
     // Dont remove this comment
   ],
   "window": {

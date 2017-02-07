@@ -1,0 +1,112 @@
+<view class="apply">
+  <view class="header">
+    <view class="service-item">
+      <view class="service-item__icon icon--title"></view>
+      <view class="service-item__title">标题</view>
+      <input class="service-item__value"
+              placeholder="请输入活动标题"
+              maxlength="22"
+              placeholder-style="color: #b6b6b6"
+              bindchange="bindTitle" />
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--host"></view>
+      <view class="service-item__title">举办方</view>
+      <input class="service-item__value"
+              placeholder="请输入活动举办方"
+              placeholder-style="color: #b6b6b6"
+              bindchange="bindHost" />
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--phone"></view>
+      <view class="service-item__title">联系方式</view>
+      <input class="service-item__value"
+              placeholder="请输入联系方式"
+              placeholder-style="color: #b6b6b6"
+              bindchange="bindPhone" />
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--date"></view>
+      <view class="service-item__title">时间</view>
+      <picker mode="date"
+              start="2017-02-01"
+              class="service-item__value"
+              bindchange="bindDate">
+        <view class="picker">
+          {{date}}
+        </view>
+      </picker>
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--place"></view>
+      <view class="service-item__title">地点</view>
+      <input class="service-item__value"
+              placeholder="请输入活动地点"
+              placeholder-style="color: #b6b6b6"
+              bindchange="bindPlace" />
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--type"></view>
+      <view class="service-item__title">类型</view>
+      <radio-group class="service-item__content type-content">
+        <view wx:for="{{type}}"
+                wx:key="type_{{index}}">
+          <radio id="type-{{index}}"
+                  hidden="true"
+                  checked="{{typeIndex == index}}"></radio>
+          <label class="radio-style__focus radio-style"
+                  for="type-{{index}}"
+                  wx:if="{{typeIndex == index}}"
+                  bindtap="typeChange"
+                  data-type-index="{{index}}">
+            {{item}}
+          </label>
+          <label class="radio-style__disable radio-style"
+                  for="type-{{index}}"
+                  wx:else
+                  bindtap="typeChange"
+                  data-type-index="{{index}}">
+            {{item}}
+          </label>
+        </view>
+      </radio-group>
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--headline"></view>
+      <view class="service-item__title">申请头条</view>
+      <view class="service-item__content">
+          <view class="headline-switch__focus"
+                  wx:if="{{isHeadline}}"></view>
+          <view class="headline-switch__blur"
+                  wx:else></view>
+          <view class="headline-switch"
+                  bindtap="headlineChange">
+          </view>
+      </view>
+    </view>
+  </view>
+  <view class="seperate-line"></view>
+  <view class="footer">
+    <view class="service-item">
+      <view class="service-item__icon icon--detail"></view>
+      <view class="service-item__title">活动详情</view>
+      <textarea placeholder="请输入活动详情"
+                class="service-item__text"
+                placeholder-style="color: #b6b6b6"
+                maxlength="-1"
+                bindblur="bindDetail" />
+    </view>
+    <view class="service-item">
+      <view class="service-item__icon icon--img"></view>
+      <view class="upload-img"
+            bindtap="uploadImg"
+            wx:if="{{!showImg}}" >+</view>
+      <image class="show-img"
+              src="{{imgSrc}}"
+              mode="aspectFill"
+              wx:if="{{showImg}}"></image>
+    </view>
+    <view class="submit-btn"
+          bindtap="submitApply">提 交</view>
+  </view>
+</view>

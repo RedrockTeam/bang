@@ -78,7 +78,7 @@
         <block wx:for="{{item}}"
                 wx:key="service_col_{{index}}">
           <navigator class="index--service__item"
-                      to="{{item.url}}"
+                      url="{{item.url}}"
                       hover-class="none">
             <image class="index--service__item-image"
                    src="{{item.img}}" />

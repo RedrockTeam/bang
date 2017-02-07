@@ -1,0 +1,10 @@
+{
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "成功",
+  // 顶部标题
+  "backgroundColor": "#ffffff",
+  // 下拉之后底色颜色
+  "backgroundTextStyle": "light",
+  "enablePullDownRefresh": false
+}
