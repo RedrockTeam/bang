@@ -1,7 +1,7 @@
 {
-  "navigationBarBackgroundColor": "#ffffff",
-  "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "library",
+  "navigationBarBackgroundColor": "#ab73cf",
+  "navigationBarTextStyle": "#fff",
+  "navigationBarTitleText": "重邮帮",
   "backgroundColor": "#000000",
   "backgroundTextStyle": "light",
   "enablePullDownRefresh": false

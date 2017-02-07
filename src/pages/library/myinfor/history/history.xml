@@ -8,7 +8,7 @@
       <image class="myinfor-item__img"
              src="../../../../images/library/borrowing.png"></image>
       <text class="myinfor-item__text">
-        正在借阅  2
+        正在借阅  {{readerInfo.borrow}}
       </text>
     </navigator>
     <navigator redirect="true"
@@ -18,7 +18,7 @@
       <image class="myinfor-item__img myinfor-item__img-focus"
              src="../../../../images/library/history_borrow_focus.png"></image>
       <text class="myinfor-item__text myinfor-item__text-focus">
-        历史借阅  113
+        历史借阅  {{readerInfo.history}}
       </text>
     </navigator>
     <navigator redirect="true"
@@ -28,7 +28,7 @@
       <image class="myinfor-item__img"
              src="../../../../images/library/owe_books.png"></image>
       <text class="myinfor-item__text">
-        欠费书目  3
+        欠费书目  {{readerInfo.money}}
       </text>
     </navigator>
   </view>
@@ -36,7 +36,7 @@
     <block wx:if="{{bookItems.length !== 0}}">
       <block wx:for="{{bookItems}}" wx:key="book_{{index}}">
         <view class="book-item">
-          <text class="book-name">《{{item.name}}》</text>
+          <text class="book-name" data-text="{{item.name}}">《{{item.name}}》</text>
           <text class="book-lefttime">{{item.time}}</text>
         </view>
       </block>

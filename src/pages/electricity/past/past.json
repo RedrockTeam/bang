@@ -1,7 +1,7 @@
 {
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "electricity",
+  "navigationBarTitleText": "电费",
   "backgroundColor": "#000000",
   "backgroundTextStyle": "light",
   "enablePullDownRefresh": false
