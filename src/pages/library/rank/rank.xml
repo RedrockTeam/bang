@@ -21,7 +21,7 @@
     </view>
     <view wx:else class="rank-list__left">
       <text class="rank-list__order">
-      {{index}}
+      {{index + 1}}
       </text>
       <text class="rank-list__name">
         {{item.name}}
@@ -29,10 +29,10 @@
     </view>
     <view class="rank-list__right">
       <text class="rank-list__number">
-        {{item.number}}
+        {{item.rank}}
       </text>
       <text class="rank-list__academy">
-        {{item.academy}}
+        {{item.xueyuan}}
       </text>
     </view>
   </view>

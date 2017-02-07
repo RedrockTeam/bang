@@ -3,64 +3,25 @@ Page({
   data: {
     title: 'rank',
     rankList: [],
-    rankListImgSrc: ['gold_icon', 'silver_icon', 'copper_icon'],
-    myinforItemsFocusIndex: 0
+    rankListImgSrc: ['gold_icon', 'silver_icon', 'copper_icon']
   },
   onLoad () {
-    this.setData({
-      rankList: [{
-        name: '李立平',
-        number: '正在借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '计算机学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '历史借阅 ' + 2,
-        academy: '通信与信息工程学院'
-      }, {
-        name: '李立平',
-        number: '欠费书目 ' + 2,
-        academy: '通信与信息工程学院'
-      }]
+    wx.getStorage({
+      key: 'rankList_library',
+      success: res => {
+        console.log(res);
+        this.setData({
+          rankList: res.data
+        });
+      },
+      fail: () => {
+        wx.showToast({
+          title: 'Loading',
+          duration: 10000,
+          icon: 'loading'
+        });
+        utils.getRankList(this);
+      }
     });
   },
   gotoSearch: utils.gotoSearch

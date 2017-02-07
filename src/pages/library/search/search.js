@@ -14,6 +14,7 @@ Page({
     this.setData({
       searchValue: req.value
     });
+    utils.getSearchResult(this, req.value);
   },
   toggleBookInfor (event) {
     let index = event.currentTarget.dataset.index;

@@ -25,7 +25,7 @@ page {
   color: #a5a5a5;
 }
 .main {
-  margin: 0 auto;
+  margin: 20rpx auto;
   width: 690rpx;
   height: auto;
 }
@@ -41,27 +41,30 @@ page {
   letter-spacing: 26rpx;
 }
 .search-head {
-  height: 92rpx;
-  line-height: 92rpx;
+  padding-top: 20rpx;
+  margin-bottom: 20rpx;
+  line-height: 48rpx;
   font-size: 30rpx;
   overflow: hidden;
   .search-head__left {
     float: left;
+    width: 520rpx;
   }
   .search-head__right {
     float: right;
-    margin-top: (92-45)/2rpx;
     width: 45rpx;
     height: 45rpx;
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA60lEQVRYR8XXvQ3CMBCG4bt4IdgANqC1UrACmzACKSzPwwiMAAvEyEUaJOT7+Q7S5ud97EhxzPTng0f9WutpXdcbMx/neb6PrteeHwJKKRdmvrbWnhGIIaCPqJSyMPM5AiECRCLEgCiEChCBUAPQCBMAiTADUAgXAIFwA7wICMCDgAGsCCjAgoADPhEppX3O+fFtlQwFENFrmqbdTwHbytnjRHQY/UNAZ0Ab768FBrDEYQBrHALwxN0Ab9wFQMTNAFTcBEDG1QB0XAWIiIsBUXERYNuaSb/t8L1h35y21hbJwqKNi2bA8lDNPW+AXuIh4sWzLwAAAABJRU5ErkJggg==");
     background-size: 45rpx 45rpx;
+    transform: rotate(90deg);
   }
   .search-head__right-focus {
-    transform: rotate(90deg);
+    transform: rotate(-90deg);
   }
 }
 .search-body {
-  margin-bottom: 20rpx;
+  margin-bottom: 10rpx;
+  line-height: 40rpx;
   color: #a5a5a5;
   font-size: 26rpx;
   overflow: hidden;
@@ -70,6 +73,8 @@ page {
   }
   .search-body__right {
     float: right;
+    width: 320rpx;
+    text-align: center;
   }
 }
 

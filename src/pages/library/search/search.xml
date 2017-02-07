@@ -1,7 +1,6 @@
 <view class="header">
   <input class="header-input"
-         value="{{searchValue}}"
-         placeholder="搜索"
+         placeholder="{{searchValue ? searchValue : '搜索'}}"
          bindconfirm="gotoSearch"></input>
 </view>
 <view class="main">
@@ -10,22 +9,22 @@
       <view class="search-head"
             data-index="{{index}}"
             bindtap="toggleBookInfor">
-        <text class="search-head__left">{{item.name}}</text>
+        <text class="search-head__left">{{item.bookName}}</text>
         <view wx:if="{{item.hidden}}" class="search-head__right"></view>
         <view wx:else class="search-head__right search-head__right-focus"></view>
       </view>
       <view hidden="{{item.hidden}}">
         <view class="search-body">
           <view class="search-body__left space">作者</view>
-          <text class="search-body__right">{{item.author}}</text>
+          <text class="search-body__right">{{item.writer}}</text>
         </view>
         <view class="search-body">
           <view class="search-body__left space">编号</view>
-          <text class="search-body__right">{{item.number}}</text>
+          <text class="search-body__right">{{item.code}}</text>
         </view>
         <view class="search-body">
           <view class="search-body__left">馆藏地</view>
-          <text class="search-body__right">{{item.position}}</text>
+          <text class="search-body__right">{{item.place}}</text>
         </view>
       </view>
     </view>
