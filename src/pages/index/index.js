@@ -1,4 +1,5 @@
-let imgPrefix = 'http://kjcx.yaerma.com/static/imgs/wxapp/images';
+const imgPrefix = 'http://kjcx.yaerma.com/static/imgs/wxapp/images';
+const app = getApp();
 
 Page({
   data: {
@@ -54,7 +55,7 @@ Page({
         },
         {
           name: '图书馆',
-          url: '',
+          url: '../library/myinfor/index/index',
           img: `${imgPrefix}/index__icon-book.png`
         },
         {
@@ -94,9 +95,11 @@ Page({
     week: 10,
     currentSwiper: 0
   },
-  onLoad () {
-    // let self = this;
+  onShow () {
     let courseUrl = 'http://hongyan.cqupt.edu.cn/redapi2/api/kebiao';
+    let userInfo = app.getUserInfo();
+
+    console.log(userInfo);
 
     wx.showToast({
       title: '数据获取中',
