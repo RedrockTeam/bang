@@ -1,7 +1,6 @@
 import utils from '../../utils/utils';
 Page({
   data: {
-    title: 'library',
     bookItems: []
   },
   gotoSearch: utils.gotoSearch,

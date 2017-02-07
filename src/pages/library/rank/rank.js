@@ -1,9 +1,8 @@
 import utils from '../utils/utils';
 Page({
   data: {
-    title: 'rank',
     rankList: [],
-    rankListImgSrc: ['gold_icon', 'silver_icon', 'copper_icon']
+    rankListImgSrc: ['gold_icon', 'silver_icon', 'copper_icon'] // 前三排名的图标名称
   },
   onLoad () {
     wx.getStorage({

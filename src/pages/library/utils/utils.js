@@ -1,11 +1,19 @@
 /* gotoSearch 搜索： 输入完成后的点击确认时的跳转
 * value： 搜索的内容
+* flag: 是否为第一次搜索，在search.xml中设置(true)。如果是，则跳转，否则则重定向，避免无限搜索，无限返回
 */
 const gotoSearch = function (event) {
   let value = event.detail.value;
-  wx.redirectTo({
-    url: `/pages/library/search/search?value=${value}`
-  });
+  let flag = event.currentTarget.dataset.flag;
+  if (!flag) {
+    wx.navigateTo({
+      url: `/pages/library/search/search?value=${value}`
+    });
+  } else {
+    wx.redirectTo({
+      url: `/pages/library/search/search?value=${value}`
+    });
+  }
 };
 /* gotoSearch 搜索： 搜索结果及渲染
 *
@@ -28,21 +36,20 @@ const getSearchResult = function (self, searchValue) {
     },
     success: res => {
       if (res.statusCode === 200) {
-        console.log(res.data.data);
         self.setData({
           searchItems: res.data.data.data
         });
         wx.hideToast();
       } else {
-        console.log('网络错误!2');
+        console.log('网络错误!搜索失败2');
       }
     },
-    fail: () => {
-      console.log('网络错误!3_ 搜索');
+    fail: res => {
+      console.log('fail to search: ', res);
     }
   });
-}
-/* getBookInfor
+};
+/* getBookInfor 获取读者的信息，借阅数目数量和目前欠费的金额
 *
 * tag: 三个栏目（正在借阅，历史借阅，欠费书目）
 */
@@ -70,7 +77,7 @@ const getBookInfor = function (self, tag) {
           key: 'myinfor_library',
           data: data
         });
-        wx.clearStorage();
+        // wx.clearStorage();
       }
     },
     fail: res => {
@@ -78,7 +85,7 @@ const getBookInfor = function (self, tag) {
     }
   });
 };
-
+// getBookInfor 获取图书借阅排名
 const getRankList = function (self) {
   wx.request({
     url: 'http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ApiForWx/GetLibInfo/getBoard',
@@ -94,9 +101,12 @@ const getRankList = function (self) {
         key: 'rankList_library',
         data: rankList
       });
+    },
+    fail: res => {
+      console.log('fail to get user rank list of library：', res);
     }
   });
-}
+};
 
 module.exports = {
   gotoSearch: gotoSearch,

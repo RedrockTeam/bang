@@ -4,7 +4,7 @@ src/pages/electricity
 #### 目录结构
 ```bash
 electricity
- ├── index            # 报修首页
+ ├── index            # 电费首页
  │   ├── index.js
  │   ├── index.xml
  │   ├── index.less
