@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/library/myinfor/index/index",
+    "pages/library/search/search",
     "pages/library/myinfor/history/history",
     "pages/library/rank/rank",
-    "pages/library/search/search",
     "pages/electricity/index/index",
     "pages/repair/detail/detail",
     "pages/library/myinfor/owe/owe",
