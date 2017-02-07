@@ -1,0 +1,51 @@
+@img_url: "http://kjcx.yaerma.com/static/imgs/wxapp/images";
+// 图片外链 暂存地址
+
+.info {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+}
+.notify {
+  box-sizing: border-box;
+  padding: 30rpx;
+  width: 100%;
+  height: 100%;
+  background-color: #f7f7f7;
+  &__box {
+    box-sizing: border-box;
+    padding-top: 200rpx;
+    width: 100%;
+    height: 100%;
+    border-radius: 10rpx;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 0 10rpx 14rpx 0 rgba(237, 243, 243, 0.81);
+    &--title {
+      font-size: 48rpx;
+      margin-bottom: 80rpx;
+    }
+    &--img {
+      display: block;
+      margin: 0 auto;
+      width: 326rpx;
+      height: 338rpx;
+      background: url('@{img_url}/repair__info-img.png') no-repeat 100% 100%;
+      background-size: cover;
+      background-position: 0 0;
+    }
+    &--btn {
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 100rpx;
+      width: 360rpx;
+      height: 154rpx;
+      line-height: 140rpx;
+      color: #fff;
+      text-align: center;
+      background: url('@{img_url}/repair__btn-submit.png') no-repeat 100% 100%;
+      background-position: 0 0;
+      background-size: cover;
+    }
+  }
+}

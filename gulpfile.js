@@ -151,6 +151,7 @@ gulp.task('extras', [], () => {
     '!src/**/*.xml',
     '!src/**/*.less',
     '!src/**/*.json',
+    '!src/**/*.md',
     '!src/**/*.{jpe?g,png,gif}'
   ])
   .pipe(gulp.dest('dist'));

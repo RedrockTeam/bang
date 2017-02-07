@@ -59,7 +59,7 @@ Page({
         },
         {
           name: '报修服务',
-          url: '',
+          url: '../repair/index/index',
           img: `${imgPrefix}/index__icon-repair.png`
         },
         {
