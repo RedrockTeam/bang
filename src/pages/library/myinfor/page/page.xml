@@ -1,0 +1,13 @@
+<view class="header">
+  <input class="header-input" placeholder="搜索" bindconfirm="gotoSearch"></input>
+</view>
+<view class="main-tags">
+  <navigator class="tag tag-focus"
+             url="/pages/library/myinfor/index/index"
+             redirect="true"
+             hover-class="none">我的信息</navigator>
+  <navigator class="tag"
+             url="/pages/library/rank/rank"
+             redirect="true"
+             hover-class="none">借阅榜单</navigator>
+</view>

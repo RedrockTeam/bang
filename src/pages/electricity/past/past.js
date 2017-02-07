@@ -1,5 +1,3 @@
-// const app = getApp();
-
 Page({
   data: {
     title: 'past',
@@ -13,10 +11,10 @@ Page({
     moving: false, // 判断圆点是否在移动的标志
     canvasData: {} // onload中设置
   },
-  pxToRpx: function (px) {
+  pxToRpx (px) {
     return px * 2 / 750 * this.data.windowWidth;
   },
-  drawLine: function () {
+  drawLine () {
     // 画线
     let canvasData = this.data.canvasData;
     canvasData.ctx.save();
@@ -42,7 +40,7 @@ Page({
     canvasData.ctx.draw(true);
   },
   //  画圆
-  drawRound: function (circleX, circleY) {
+  drawRound (circleX, circleY) {
     let canvasData = this.data.canvasData;
 
     canvasData.roundCanvas.save();
@@ -63,12 +61,12 @@ Page({
     canvasData.roundCanvas.draw();
   },
   // 清除圆的canvas
-  clearCanvas: function () {
+  clearCanvas () {
     let canvasData = this.data.canvasData;
     canvasData.roundCanvas.clearRect(0, 0, this.pxToRpx(343), this.pxToRpx(234));
   },
 
-  drawMonths: function () {
+  drawMonths () {
     let canvasData = this.data.canvasData;
     let start = this.data.start;
     canvasData.ctx.setFontSize(this.pxToRpx(14));
@@ -94,7 +92,7 @@ Page({
     canvasData.ctx.draw(true);
   },
   // 获取圆的路径
-  getPath: function () {
+  getPath () {
     let preIndex = this.data.lastFocusIndex - 1;
     let currentIndex = this.data.focusIndex - 1;
 
@@ -181,7 +179,7 @@ Page({
       drawPath(preIndex, spots, this);
     }
   },
-  pastCostChange: function (e) {
+  pastCostChange (e) {
     if (!this.data.moving) {
       let monthsConWidth = this.data.monthsConWidth;
       let monthsConHeight = this.data.monthsConHeight;
@@ -203,11 +201,10 @@ Page({
       }
     }
   },
-  canvasError: function (e) {
+  canvasError (e) {
     console.log('----------------', e.detail.errMsg);
   },
   onLoad () {
-    // TODO: onLoad
     let windowWidth = 0;
     wx.getSystemInfo({
       success: (res) => {
@@ -290,17 +287,5 @@ Page({
         }
       }
     });
-  },
-  onReady () {
-    // TODO: onReady
-  },
-  onShow () {
-    // TODO: onShow
-  },
-  onHide () {
-    // TODO: onHide
-  },
-  onUnload () {
-    // TODO: onUnload
   }
 });
