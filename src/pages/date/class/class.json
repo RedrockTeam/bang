@@ -1,0 +1,10 @@
+{
+  "navigationBarBackgroundColor": "#06d6e0",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "没课约",
+  // 顶部标题
+  "backgroundColor": "#ffffff",
+  // 下拉之后底色颜色
+  "backgroundTextStyle": "light",
+  "enablePullDownRefresh": false
+}

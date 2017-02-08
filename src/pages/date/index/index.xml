@@ -1,0 +1,87 @@
+<view class="index">
+  <!-- 搜索框 -->
+  <view class="header">
+    <!-- 蓝色块 -->
+    <view class="blue"></view>
+    <!-- 搜索框 -->
+    <view class="input-con">
+      <input placeholder="输入学号或姓名" bindinput="bindinputChange" bindconfirm="searchTap" placeholder-style="color:#cbcbcb;font-size:30rpx;" type="text" />
+      <image bindtap="searchTap" src="{{imgUrl}}/search.png"></image>
+      <!-- 查询结果 -->
+      <view class="result" hidden="{{resultHidden ? true : false}}">
+        <view class="line"></view>
+        <scroll-view class="word-con" scroll-y="true" style="height: {{resultHight}}">
+          <view class="result-word" wx:for="{{searchResult.stuName}}" bindtap="bindtapAdd" data-stuNum="{{searchResult.stuNum[index]}}">
+            <text>{{searchResult.stuName[index]}}</text>
+            <text>{{searchResult.stuNum[index]}}</text>
+          </view>
+        </scroll-view>
+        <image src="{{imgUrl}}/white.png"></image> 
+
+      </view>
+    </view>
+    
+  </view>
+
+  <!-- 中间 -->
+  <view class="middle">
+    <!-- 没添加人时 -->
+    <view class="blank" hidden="{{nobodyHidden ? true : false}}">
+      <image src="{{imgUrl}}/partner.png"></image>
+      <view class="blank-word">
+        <text class="word-cha">查查你和你小伙伴们都没课的时段吧~</text>
+        <text class="word-add">最多添加6人</text>
+      </view>
+    </view>
+    <!-- 添加人时 -->
+    <view class="added-con"  hidden="{{somebodyHidden ? true : false}}">
+      <scroll-view class="added" scroll-y="true">
+        <view class="add-detail" wx:for="{{addStu.stuName}}">
+          <view class="detail-name">
+            <text>{{addStu.stuName[index]}}</text>
+            <text>{{addStu.stuNum[index]}}</text>
+          </view>
+          <view class="detail-major">
+            <text>{{addStu.stuMajor[index]}}</text>
+            <text>{{addStu.stuClass[index]}}</text>
+          </view>
+          <image src="{{imgUrl}}/class.png" bindtap="bindtapClass" data-stuNumber="{{addStu.stuNum[index]}}" data-stuName="{{addStu.stuName[index]}}"></image>
+        </view>
+        
+        <text class="another">还可添加{{anotherAdd}}人</text>
+      </scroll-view> 
+      <image class="cover" src="{{imgUrl}}/white.png" hidden="{{coverHidden ? true : false}}"></image> 
+    </view>
+    
+  </view>
+
+  <!-- 请先添加小伙伴 -->
+  <view class="add-first" hidden="{{firstHidden ? true : false}}">
+    <view class="first">
+      <view class="first-note">
+        <text>提示</text>
+      </view>
+      <view class="first-please">
+        <text>请先添加小伙伴哦~</text>
+      </view>
+      <button class="first-butt" bindtap="bindtapaddSure">确定</button>
+    </view>
+  </view>
+  <!-- 确认删除 -->
+  <view class="add-first" hidden="{{deleteHidden ? true : false}}">
+    <view class="first">
+      <view class="first-note">
+        <text>提示</text>
+      </view>
+      <image class="delete-person" src="{{imgUrl}}/delete.png"></image>
+      <view class="first-please">
+        <text>确认删除</text>
+        <text> XX </text>
+        <text>同学？</text>
+      </view>
+      <button class="first-butt">确定</button>
+    </view>
+  </view>
+  <!-- 没课约一下 -->
+  <button class="date-butt" bindtap="bindtapData">没课约一下</button>
+</view>
