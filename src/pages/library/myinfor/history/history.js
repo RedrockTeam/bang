@@ -4,6 +4,7 @@ Page({
     bookItems: []
   },
   gotoSearch: utils.gotoSearch,
+  toggleSearchIcon: utils.toggleSearchIcon,
   onLoad () {
     wx.getStorage({
       key: 'myinfor_library',

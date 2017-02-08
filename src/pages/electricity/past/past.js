@@ -11,6 +11,11 @@ Page({
     moving: false, // 判断圆点是否在移动的标志
     canvasData: {} // onload中设置
   },
+  backToIndex () {
+    wx.navigateBack({
+      delta: 1
+    });
+  },
   pxToRpx (px) {
     return px * 2 / 750 * this.data.windowWidth;
   },
