@@ -39,5 +39,13 @@ App({
         }));
       }
     });
+    wx.removeStorage({
+      key: 'rankList_library',
+      success: res => {
+        console.log('---------removestorage', wx.getStorage({
+          key: 'rankList_library'
+        }));
+      }
+    });
   }
 });
