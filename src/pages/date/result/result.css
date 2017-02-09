@@ -1,0 +1,178 @@
+.class {
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: #fff;
+}
+.title {
+  width: 665rpx;
+  margin-top: 50rpx;
+  margin-left: 50rpx;
+  color: #000;
+}
+.title .title-name,
+.title .title-num {
+  font-size: 36rpx;
+  padding-left: 24rpx;
+}
+.title .title-week {
+  font-size: 30rpx;
+  float: right;
+  display: inline-block;
+}
+.title .title-week image {
+  width: 26rpx;
+  height: 18rpx;
+  padding-left: 26rpx;
+}
+.table {
+  box-sizing: border-box;
+  width: 735rpx;
+  margin: 0 auto;
+  margin-top: 60rpx;
+}
+.table .table-week {
+  margin-left: 80rpx;
+}
+.table .table-week text {
+  color: #999;
+  font-size: 23rpx;
+  padding-right: 78rpx;
+}
+.table .class-body {
+  margin-top: 35rpx;
+}
+.table .class-body .class12 .class-con,
+.table .class-body .class34 .class-con,
+.table .class-body .class56 .class-con,
+.table .class-body .class78 .class-con,
+.table .class-body .class910 .class-con,
+.table .class-body .class1112 .class-con {
+  box-sizing: border-box;
+  width: 90rpx;
+  height: 160rpx;
+  background-color: #ffd051;
+  margin-right: 10rpx;
+  float: left;
+  margin-bottom: 10rpx;
+  padding: 10rpx 10rpx;
+  position: relative;
+  overflow: hidden;
+}
+.table .class-body .class12 .class-con view,
+.table .class-body .class34 .class-con view,
+.table .class-body .class56 .class-con view,
+.table .class-body .class78 .class-con view,
+.table .class-body .class910 .class-con view,
+.table .class-body .class1112 .class-con view {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 96%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  color: #fff;
+}
+.table .class-body .class12 .class-con view text,
+.table .class-body .class34 .class-con view text,
+.table .class-body .class56 .class-con view text,
+.table .class-body .class78 .class-con view text,
+.table .class-body .class910 .class-con view text,
+.table .class-body .class1112 .class-con view text {
+  color: #fff;
+  font-size: 22rpx;
+  line-height: 22rpx;
+}
+.table .class-body .class12 .class-con .class-name,
+.table .class-body .class34 .class-con .class-name,
+.table .class-body .class56 .class-con .class-name,
+.table .class-body .class78 .class-con .class-name,
+.table .class-body .class910 .class-con .class-name,
+.table .class-body .class1112 .class-con .class-name {
+  padding-bottom: 10rpx;
+}
+.table .class-body .class12 .table-time,
+.table .class-body .class34 .table-time,
+.table .class-body .class56 .table-time,
+.table .class-body .class78 .table-time,
+.table .class-body .class910 .table-time,
+.table .class-body .class1112 .table-time {
+  box-sizing: border-box;
+  width: 45rpx;
+  height: 160rpx;
+  background-color: #fff;
+  overflow: hidden;
+  text-align: center;
+  padding-top: 30rpx;
+  margin-right: 0;
+  float: left;
+}
+.table .class-body .class12 .table-time text,
+.table .class-body .class34 .table-time text,
+.table .class-body .class56 .table-time text,
+.table .class-body .class78 .table-time text,
+.table .class-body .class910 .table-time text,
+.table .class-body .class1112 .table-time text {
+  display: block;
+  margin-bottom: 55rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+.table .class-body .class12 #sunday,
+.table .class-body .class34 #sunday,
+.table .class-body .class56 #sunday,
+.table .class-body .class78 #sunday,
+.table .class-body .class910 #sunday,
+.table .class-body .class1112 #sunday {
+  margin-right: 0;
+}
+.table .class-body .class56 .class-con,
+.table .class-body .class78 .class-con {
+  background-color: #09dee0;
+}
+.class-detail {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.class-detail .detail-con {
+  box-sizing: border-box;
+  width: 516rpx;
+  height: 396rpx;
+  background-color: #fff;
+  border-radius: 14rpx;
+  margin: 0 auto;
+  margin-top: 324rpx;
+  padding: 0 100rpx;
+  overflow: hidden;
+}
+.class-detail .detail-con .detail-time {
+  text-align: center;
+  margin-top: 65rpx;
+}
+.class-detail .detail-con .detail-time text {
+  color: #000;
+  font-size: 36rpx;
+}
+.class-detail .detail-con .detail-time .detail-week {
+  padding-right: 30rpx;
+}
+.class-detail .detail-con .detail-class {
+  margin-top: 80rpx;
+  text-align: center;
+}
+.class-detail .detail-con .detail-class text {
+  display: inline-block;
+  text-align: center;
+  color: #999;
+  font-size: 30rpx;
+  padding-bottom: 20rpx;
+  padding-left: 20rpx;
+}
