@@ -11,7 +11,7 @@
     <canvas canvas-id="pastCost" id="pastCost" bindtouchstart="pastCostChange" binderror="canvasError"></canvas>
     <canvas canvas-id="round" id="round"></canvas>
   </view>
-  <navigator class="footer" url="/pages/electricity/index/electricity">
+  <view class="footer" bindtap="backToIndex">
     返回
-  </navigator>
+  </view>
 </view>

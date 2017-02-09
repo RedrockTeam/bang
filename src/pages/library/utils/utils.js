@@ -1,3 +1,19 @@
+/* toggleSearchIcon 点击搜索框切换搜索🔍图标显示
+* search_focus:  是否输入了字符
+*/
+const toggleSearchIcon = function (event) {
+  let value = event.detail.value;
+  console.log(value);
+  if (value === '') {
+    this.setData({
+      search_focus: false
+    });
+  } else {
+    this.setData({
+      search_focus: true
+    });
+  }
+};
 /* gotoSearch 搜索： 输入完成后的点击确认时的跳转
 * value： 搜索的内容
 * flag: 是否为第一次搜索，在search.xml中设置(true)。如果是，则跳转，否则则重定向，避免无限搜索，无限返回
@@ -112,5 +128,6 @@ module.exports = {
   gotoSearch: gotoSearch,
   getBookInfor: getBookInfor,
   getRankList: getRankList,
-  getSearchResult: getSearchResult
+  getSearchResult: getSearchResult,
+  toggleSearchIcon: toggleSearchIcon
 };

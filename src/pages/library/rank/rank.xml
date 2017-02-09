@@ -1,5 +1,10 @@
 <view class="header">
-  <input class="header-input" placeholder="搜索" bindconfirm="gotoSearch"></input>
+  <view wx:if="{{!search_focus}}" class="search_icon">
+    <text class="search-placeholder">搜索</text>
+  </view>
+  <input class="header-input"
+         bindinput="toggleSearchIcon"
+         bindconfirm="gotoSearch"></input>
 </view>
 <view class="main-tags">
   <navigator class="tag"
@@ -14,7 +19,7 @@
 <view class="main">
   <view wx:for="{{rankList}}" wx:key="rank_{{index}}" class="rank-list">
     <view wx:if="{{index <= 2}}" class="rank-list__left">
-      <image class="rank-list__orderImg" src="../../../../images/library/{{rankListImgSrc[index]}}.png"></image>
+      <view class="rank-list__orderImg rank-list__orderImg__{{index}}"></view>
       <text class="rank-list__name">
         {{item.name}}
       </text>
