@@ -20,23 +20,25 @@ Page({
       stuMajor: [],
       stuClass: []
     },
-    anotherAdd: 6
+    anotherAdd: 6,
+    deleteIndex: '',
+    deleteName: ''
   },
   onLoad (params) {
-    wx.request({
-      url: 'http://hongyan.cqupt.edu.cn/api/stuinfo',
-      method: 'get',
-      data: {
-        searchKey: '2014210104'
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-        console.log(res.data);
-      // console.log(self.data.index);
-      }
-    });
+    // wx.request({
+    //   url: 'http://hongyan.cqupt.edu.cn/api/stuinfo',
+    //   method: 'get',
+    //   data: {
+    //     searchKey: '2014210104'
+    //   },
+    //   header: {
+    //     'content-type': 'application/x-www-form-urlencoded'
+    //   },
+    //   success: function (res) {
+    //     console.log(res.data);
+    //   // console.log(self.data.index);
+    //   }
+    // });
   },
   bindinputChange: function bindinputChange (e) {
     let value = e.detail.value;
@@ -172,5 +174,39 @@ Page({
     this.setData({
       firstHidden: true
     });
+  },
+  bindtapDelete: function bindtapDelete (e) {
+    console.log(e);
+    let self = this;
+    self.setData({
+      deleteIndex: e.currentTarget.dataset.index,
+      deleteHidden: false,
+      deleteName: self.data.addStu.stuName[e.currentTarget.dataset.index]
+    });
+  },
+  bindtapCancel: function bindtapCancel (e) {
+    this.setData({
+      deleteHidden: true
+    });
+  },
+  bindtapdeleteSure: function bindtapdeleteSure (e) {
+    this.addstuName.splice(this.data.deleteIndex, 1);
+    this.addstuNum.splice(this.data.deleteIndex, 1);
+    this.addstuMajor.splice(this.data.deleteIndex, 1);
+    this.addstuClass.splice(this.data.deleteIndex, 1);
+    this.setData({
+      'addStu.stuName': this.addstuName,
+      'addStu.stuNum': this.addstuNum,
+      'addStu.stuMajor': this.addstuMajor,
+      'addStu.stuClass': this.addstuClass,
+      deleteHidden: true,
+      anotherAdd: this.data.anotherAdd + 1
+    });
+    if (this.data.anotherAdd === 6) {
+      this.setData({
+        nobodyHidden: false,
+        somebodyHidden: true
+      });
+    }
   }
 });

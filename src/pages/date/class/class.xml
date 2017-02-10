@@ -35,14 +35,14 @@
 
         <view wx:for="{{[0,1,2,3,4,5]}}" style="background-color:{{color[0][item]}}" class="class-con" bindtap="bindAppear" data-classname="{{className.oneT[item]}}" data-classroom="{{classRoom.oneT[item]}}" data-classweek="{{classWeekday[item]}}" data-classtime="12节">
           <view>
-            <text class="class-name">{{className.oneT[item]}}</text>
+            <text class="class-name">{{className.oneT[item]}}\n</text>
             <text>{{classRoom.oneT[item]}}</text>  
           </view>
           
         </view>
         <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
           <view>
-            <text class="class-name">{{className.oneT[6]}}</text>
+            <text class="class-name">{{className.oneT[6]}}\n</text>
             <text>{{classRoom.oneT[6]}}</text>  
           </view>
           
@@ -56,14 +56,14 @@
         </view>
         <view wx:for="{{[0,1,2,3,4,5]}}" style="background-color:{{color[1][item]}}" class="class-con" bindtap="bindAppear" data-classname="{{className.threeF[item]}}" data-classroom="{{classRoom.threeF[item]}}" data-classweek="{{classWeekday[item]}}" data-classtime="34节">
           <view>
-            <text class="class-name">{{className.threeF[item]}}</text>
+            <text class="class-name">{{className.threeF[item]}}\n</text>
             <text>{{classRoom.threeF[item]}}</text>  
           </view>
           
         </view>
         <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
           <view>
-            <text class="class-name">{{className.threeF[6]}}</text>
+            <text class="class-name">{{className.threeF[6]}}\n</text>
             <text>{{classRoom.threeF[6]}}</text>  
           </view>
           
@@ -77,14 +77,14 @@
         </view>
         <view wx:for="{{[0,1,2,3,4,5]}}" style="background-color:{{color[2][item]}}" class="class-con" bindtap="bindAppear" data-classname="{{className.fiveS[item]}}" data-classroom="{{classRoom.fiveS[item]}}" data-classweek="{{classWeekday[item]}}" data-classtime="56节">
           <view>
-            <text class="class-name">{{className.fiveS[item]}}</text>
+            <text class="class-name">{{className.fiveS[item]}}\n</text>
             <text>{{classRoom.fiveS[item]}}</text>  
           </view>
           
         </view>
         <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
           <view>
-            <text class="class-name">{{className.fiveS[6]}}</text>
+            <text class="class-name">{{className.fiveS[6]}}\n</text>
             <text>{{classRoom.fiveS[6]}}</text>  
           </view>
           
@@ -98,14 +98,14 @@
         </view>
         <view wx:for="{{[0,1,2,3,4,5]}}" style="background-color:{{color[3][item]}}" class="class-con" bindtap="bindAppear" data-classname="{{className.sevenE[item]}}" data-classroom="{{classRoom.sevenE[item]}}" data-classweek="{{classWeekday[item]}}" data-classtime="78节">
           <view>
-            <text class="class-name">{{className.sevenE[item]}}</text>
+            <text class="class-name">{{className.sevenE[item]}}\n</text>
             <text>{{classRoom.sevenE[item]}}</text>  
           </view>
           
         </view>
         <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
           <view>
-            <text class="class-name">{{className.sevenE[6]}}</text>
+            <text class="class-name">{{className.sevenE[6]}}\n</text>
             <text>{{classRoom.sevenE[6]}}</text>  
           </view>
           
@@ -119,14 +119,14 @@
         </view>
         <view wx:for="{{[0,1,2,3,4,5]}}" style="background-color:{{color[4][item]}}" class="class-con" bindtap="bindAppear" data-classname="{{className.nineT[item]}}" data-classroom="{{classRoom.nineT[item]}}" data-classweek="{{classWeekday[item]}}" data-classtime="910节">
           <view>
-            <text class="class-name">{{className.nineT[item]}}</text>
+            <text class="class-name">{{className.nineT[item]}}\n</text>
             <text>{{classRoom.nineT[item]}}</text>  
           </view>
           
         </view>
         <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
           <view>
-            <text class="class-name">{{className.nineT[6]}}</text>
+            <text class="class-name">{{className.nineT[6]}}\n</text>
             <text>{{classRoom.nineT[6]}}</text>  
           </view>
           
@@ -140,14 +140,14 @@
         </view>
         <view wx:for="{{[0,1,2,3,4,5]}}" style="background-color:{{color[5][item]}}" class="class-con" bindtap="bindAppear" data-classname="{{className.elevenT[item]}}" data-classroom="{{classRoom.elevenT[item]}}" data-classweek="{{classWeekday[item]}}" data-classtime="1112节">
           <view>
-            <text class="class-name">{{className.elevenT[item]}}</text>
+            <text class="class-name">{{className.elevenT[item]}}\n</text>
             <text>{{classRoom.elevenT[item]}}</text>  
           </view>
           
         </view>
         <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
           <view>
-            <text class="class-name">{{className.elevenT[6]}}</text>
+            <text class="class-name">{{className.elevenT[6]}}\n</text>
             <text>{{classRoom.elevenT[6]}}</text>  
           </view>
           
