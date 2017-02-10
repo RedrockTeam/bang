@@ -45,7 +45,15 @@
             <text>{{addStu.stuMajor[index]}}</text>
             <text>{{addStu.stuClass[index]}}</text>
           </view>
-          <image src="{{imgUrl}}/class.png" bindtap="bindtapClass" data-stuNumber="{{addStu.stuNum[index]}}" data-stuName="{{addStu.stuName[index]}}"></image>
+          <image src="{{imgUrl}}/class.png"
+                  class="image-class"
+                  bindtap="bindtapClass" 
+                  data-stuNumber="{{addStu.stuNum[index]}}" 
+                  data-stuName="{{addStu.stuName[index]}}"></image>
+          <image class="image-delete"
+                  src="{{imgUrl}}/delete.png"
+                  bindtap="bindtapDelete"
+                  data-index="{{index}}"></image>
         </view>
         
         <text class="another">还可添加{{anotherAdd}}人</text>
@@ -73,13 +81,13 @@
       <view class="first-note">
         <text>提示</text>
       </view>
-      <image class="delete-person" src="{{imgUrl}}/delete.png"></image>
+      <image class="delete-person" src="{{imgUrl}}/delete.png" bindtap="bindtapCancel"></image>
       <view class="first-please">
         <text>确认删除</text>
-        <text> XX </text>
+        <text> {{deleteName}} </text>
         <text>同学？</text>
       </view>
-      <button class="first-butt">确定</button>
+      <button class="first-butt" bindtap="bindtapdeleteSure">确定</button>
     </view>
   </view>
   <!-- 没课约一下 -->
