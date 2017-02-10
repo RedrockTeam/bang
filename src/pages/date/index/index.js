@@ -66,6 +66,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
+        wx.hideToast();
         let result = res.data.data;
         console.log(res.data.data);
         for (let resultI = 0; resultI < result.length; resultI++) {
@@ -120,6 +121,7 @@ Page({
       },
       success: function (res) {
         console.log(res.data);
+        wx.hideToast();
         if (self.addstuNum.indexOf(res.data.data[0].stuNum) === -1 && self.addstuName.length < 6) {
           self.addstuName.push(res.data.data[0].name);
           self.addstuNum.push(res.data.data[0].stuNum);
