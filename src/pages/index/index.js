@@ -72,7 +72,7 @@ Page({
       [
         {
           name: '没课约',
-          url: '',
+          url: '../date/index/index',
           img: `${imgPrefix}/index__icon-yue.png`
         },
         {
