@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
     "pages/electricity/index/index",
     "pages/repair/index/index",
@@ -11,6 +12,7 @@
     "pages/repair/feedback/feedback",
     "pages/repair/info/info",
     "pages/activity/index/index"
+    
     // Dont remove this comment
   ],
   "window": {
