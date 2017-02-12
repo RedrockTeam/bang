@@ -11,10 +11,11 @@
             <navigator url="##" class="copyright">
                 红岩网校工作站
             </navigator>
-            01/17   太极运动场
+            01/17
+            <text class="place">太极运动场</text>
         </view>
         <view class="cover">
-            <image src="{{acInfo.img}}" mode="{{aspectFit}}"></image>
+            <image src="{{acInfo.img}}"></image>
         </view>
         <view class="context">
             {{acInfo.context}}
