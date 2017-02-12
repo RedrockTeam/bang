@@ -21,7 +21,7 @@
     "pages/repair/info/info",
     "pages/activity/index/index",
     "pages/activity/apply/apply",
-    "pages/activity/xxy/xxy"
+    "pages/activity/detail/detail"
     // Dont remove this comment
   ],
   "window": {
