@@ -1,12 +1,11 @@
 {
   "pages": [
-    "pages/user/user",
     "pages/index/index",
     "pages/electricity/index/index",
     "pages/repair/index/index",
     "pages/electricity/past/past",
     "pages/electricity/public/public",
-    
+    "pages/user/user",
     "pages/repair/apply/apply",
     "pages/repair/detail/detail",
     "pages/repair/feedback/feedback",
