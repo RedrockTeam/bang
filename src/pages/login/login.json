@@ -2,7 +2,7 @@
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",
   "navigationBarTitleText": "login",
-  "backgroundColor": "#000000",
+  "backgroundColor": "#fff",
   "backgroundTextStyle": "light",
   "enablePullDownRefresh": false
 }

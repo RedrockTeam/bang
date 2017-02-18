@@ -1,18 +1,18 @@
 {
   "pages": [
-    "pages/login/login",
+    "pages/user/user",
     "pages/index/index",
     "pages/electricity/index/index",
     "pages/repair/index/index",
     "pages/electricity/past/past",
     "pages/electricity/public/public",
-    "pages/user/user",
+    
     "pages/repair/apply/apply",
     "pages/repair/detail/detail",
     "pages/repair/feedback/feedback",
     "pages/repair/info/info",
-    "pages/activity/index/index"
-    
+    "pages/activity/index/index",
+    "pages/login/login"
     // Dont remove this comment
   ],
   "window": {
@@ -43,7 +43,7 @@
       },
       {
         "text": "我的",
-        "pagePath": "pages/electricity/index/index",
+        "pagePath": "pages/user/user",
         "iconPath": "images/tab--my__blur.png",
         "selectedIconPath": "images/tab--my__focus.png"
       }

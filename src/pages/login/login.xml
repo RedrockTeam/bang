@@ -4,8 +4,8 @@
         <text>重邮帮</text>
     </view>
     <view class='login--info'>
-        <input class='login--info__stuid' type="text" placeholder="学号"/>
-        <input class='login--info__stucard' type="text" placeholder="身份证后6位"/>
-        <button>登  陆</button>
+        <input type="text" placeholder="学号"/>
+        <input type="text" placeholder="身份证后6位"/>
+        <button>登 录</button>
     </view>
 </view>

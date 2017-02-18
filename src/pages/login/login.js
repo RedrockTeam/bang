@@ -1,8 +1,8 @@
 // const app = getApp();
-let imgPrefix = 'https://app.liuwenxi.me/';
+// let imgPrefix = 'https://app.liuwenxi.me/';
 Page({
   data: {
-    header: imgPrefix + 'login-header.png'
+    header: 'login-header.png'
   },
   onLoad () {
     // TODO: onLoad
