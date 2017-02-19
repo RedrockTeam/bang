@@ -41,6 +41,7 @@
     "gulp-util": "^3.0.7",
     "inquirer": "^1.2.2",
     "less-plugin-functions": "^0.0.2",
+    "mkdirp": "^0.5.1",
     "run-sequence": "^1.2.2"
   }
 }
