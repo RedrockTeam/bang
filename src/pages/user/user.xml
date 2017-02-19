@@ -18,7 +18,9 @@
             <block wx:for="{{stu_info.room_feedback_info}}" wx:key="my-info-ext">
                 <view class="user--info__item">
                    <text class="user--info__name ext">{{item.name}}</text>
-                   <image class="user--info__arrow" src="{{item.url}}"></image>
+                   <view class="user--info__arrow">  
+                        <image src="{{item.url}}"></image>
+                   </view>
                    <text class="user--info__message">{{item.message}}</text>
                 </view>
             </block>
