@@ -4,7 +4,7 @@ src/pages/electricity
 #### 目录结构
 ```bash
 electricity
- ├── index            # 报修首页
+ ├── index            # 电费首页
  │   ├── index.js
  │   ├── index.xml
  │   ├── index.less
@@ -21,9 +21,7 @@ electricity
 
 + 2017-01-20 (本页面进度 70%)
     - 基本写完界面逻辑
-    - 首页接口 OK 能获取数据
 + 2017-01-22 (本页面进度 80%)
-    - 基本写完界面逻辑
     - 首页接口 OK 能获取数据
 
 #### 待填坑

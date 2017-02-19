@@ -1,0 +1,43 @@
+<view class="header">
+  <input class="header-input"
+         placeholder="{{searchValue ? searchValue : '搜索'}}"
+         bindconfirm="gotoSearch"
+         data-flag="true"></input>
+</view>
+<view class="main">
+  <!-- 搜索有结果 -->
+  <block wx:if="{{searchItems.length > 0}}">
+    <block wx:for="{{searchItems}}" wx:key="search_{{index}}">
+      <view class="search-item">
+        <view class="search-head"
+              data-index="{{index}}"
+              bindtap="toggleBookInfor">
+          <text class="search-head__left">{{item.bookName}}</text>
+          <view wx:if="{{item.hidden}}" class="search-head__right"></view>
+          <view wx:else class="search-head__right search-head__right-focus"></view>
+        </view>
+        <view hidden="{{!item.hidden}}">
+          <view class="search-body">
+            <view class="search-body__left space">作者</view>
+            <text class="search-body__right">{{item.writer}}</text>
+          </view>
+          <view class="search-body">
+            <view class="search-body__left space">编号</view>
+            <text class="search-body__right">{{item.code}}</text>
+          </view>
+          <view class="search-body">
+            <view class="search-body__left">馆藏地</view>
+            <text class="search-body__right">{{item.place}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </block>
+  <!-- 搜索无结果 -->
+  <block wx:else>
+    <view class="no-result__con">
+      <image src="../../../images/library/search_not_found.png" class="no-result__img"></image>
+      <text class="no-result__text">抱歉，未找到相关结果</text>
+    </view>
+  </block>
+</view>

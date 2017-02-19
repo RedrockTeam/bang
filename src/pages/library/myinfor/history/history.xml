@@ -1,0 +1,51 @@
+<include src="/pages/library/myinfor/page/page" />
+<view class="main">
+  <view class="myinfor-details">
+    <navigator redirect="true"
+               hover-class="none"
+               class="myinfor-item"
+               url="/pages/library/myinfor/index/index">
+      <image class="myinfor-item__img"
+             src="../../../../images/library/borrowing.png"></image>
+      <text class="myinfor-item__text">
+        正在借阅  {{readerInfo.borrow}}
+      </text>
+    </navigator>
+    <navigator redirect="true"
+               hover-class="none"
+               class="myinfor-item"
+               url="/pages/library/myinfor/history/history">
+      <image class="myinfor-item__img myinfor-item__img-focus"
+             src="../../../../images/library/history_borrow_focus.png"></image>
+      <text class="myinfor-item__text myinfor-item__text-focus">
+        历史借阅  {{readerInfo.history}}
+      </text>
+    </navigator>
+    <navigator redirect="true"
+               hover-class="none"
+               class="myinfor-item"
+               url="/pages/library/myinfor/owe/owe">
+      <image class="myinfor-item__img"
+             src="../../../../images/library/owe_books.png"></image>
+      <text class="myinfor-item__text">
+        欠费书目  {{readerInfo.money}}
+      </text>
+    </navigator>
+  </view>
+  <view class="main-content">
+    <block wx:if="{{bookItems.length !== 0}}">
+      <block wx:for="{{bookItems}}" wx:key="book_{{index}}">
+        <view class="book-item">
+          <text class="book-name" data-text="{{item.name}}">《{{item.name}}》</text>
+          <text class="book-lefttime">{{item.time}}</text>
+        </view>
+      </block>
+    </block>
+    <block wx:else>
+      <view class="no-result__con">
+        <image src="../../../../images/library/no_result.png" class="no-result__img"></image>
+        <text class="no-result__text">目前没有历史借阅的书目</text>
+      </view>
+    </block>
+  </view>
+</view>

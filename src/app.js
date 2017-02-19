@@ -17,17 +17,35 @@ App({
         .then(() => wechat.getUserInfo())
         .then(res => res.userInfo)
         .then(info => (this.data.userInfo = info))
-        .then(info => resolve(info))
+        .then(info => {
+          resolve(info);
+        })
         .catch(error => console.error('failed to get user info, error: ' + error));
     });
   },
   onLaunch () {
-    console.log(' ========== Application is launched ========== ');
+    // 初始化完成
   },
   onShow () {
-    console.log(' ========== Application is showed ========== ');
+    // 显示
   },
   onHide () {
-    console.log(' ========== Application is hid ========== ');
+    // 图书馆查询清空缓存
+    wx.removeStorage({
+      key: 'myinfor_library',
+      success: res => {
+        console.log('---------removestorage', wx.getStorage({
+          key: 'myinfor_library'
+        }));
+      }
+    });
+    wx.removeStorage({
+      key: 'rankList_library',
+      success: res => {
+        console.log('---------removestorage', wx.getStorage({
+          key: 'rankList_library'
+        }));
+      }
+    });
   }
 });

@@ -1,17 +1,28 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/login/login"
+    "pages/user/user",
+    "pages/date/index/index",
+    "pages/date/result/result",
+    "pages/date/class/class",
+    "pages/library/myinfor/index/index",
+    "pages/library/myinfor/history/history",
+    "pages/library/myinfor/owe/owe",
+    "pages/library/myinfor/page/page",
+    "pages/library/rank/rank",
+    "pages/library/search/search",
     "pages/electricity/index/index",
-    "pages/repair/index/index",
     "pages/electricity/past/past",
     "pages/electricity/public/public",
-    "pages/user/user",
-    "pages/repair/apply/apply",
     "pages/repair/detail/detail",
+    "pages/repair/index/index",
+    "pages/repair/apply/apply",
     "pages/repair/feedback/feedback",
     "pages/repair/info/info",
     "pages/activity/index/index",
-    "pages/login/login"
+    "pages/activity/apply/apply",
+    "pages/activity/detail/detail"
     // Dont remove this comment
   ],
   "window": {
