@@ -1,5 +1,5 @@
 const imgPrefix = 'http://kjcx.yaerma.com/static/imgs/wxapp/images';
-const app = getApp();
+// const app = getApp();
 
 Page({
   data: {
@@ -165,20 +165,20 @@ Page({
         ];
 
         courseToday.map((item, index) => {
-          let stage_index = ~~(item.begin_lesson / 4);
-          let detail_index = (item.begin_lesson % 4 - 1) / 2;
+          let stageIndex = ~~(item.begin_lesson / 4);
+          let detailIndex = (item.begin_lesson % 4 - 1) / 2;
           /**
-           * stage_index: 上午 中午 下午
-           * detail_index: 每个阶段有两节大课
+           * stageIndex: 上午 中午 下午
+           * detailIndex: 每个阶段有两节大课
            */
 
-          courseTmp[stage_index][detail_index] = {
+          courseTmp[stageIndex][detailIndex] = {
             class: item.lesson,
             room: item.classroom,
             name: item.course
           };
-          if (item.period == 3) {
-            courseTmp[stage_index][detail_index + 1] = Object.assign(courseTmp[stage_index][detail_index + 1], {
+          if (item.period === 3) {
+            courseTmp[stageIndex][detailIndex + 1] = Object.assign(courseTmp[stageIndex][detailIndex + 1], {
               room: item.classroom,
               name: item.course
             });
