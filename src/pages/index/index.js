@@ -98,7 +98,6 @@ Page({
   onShow () {
     let self = this;
     let courseUrl = 'http://hongyan.cqupt.edu.cn/redapi2/api/kebiao';
-    // let userInfo = app.getUserInfo();
 
     wx.showToast({
       title: '数据获取中',
@@ -111,8 +110,7 @@ Page({
       url: courseUrl,
       method: 'post',
       data: {
-        stuNum: 2014210014,
-        idNum: 232935,
+        stuNum: 2014211766,
         week: 13
       },
       header: {
