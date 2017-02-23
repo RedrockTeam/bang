@@ -1,3 +1,5 @@
+const Base64 = require('./base64');
+
 /**
  * 格式化时间
  * @param  {Datetime} source 时间对象
@@ -25,4 +27,26 @@ function formatDate (source, format) {
   return format;
 }
 
-module.exports = { formatDate };
+function randomCode (length) {
+  let str = '';
+  let arr =  ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+  for (let i = 0; i < length; i++) {
+    const pos = Math.round(Math.random() * (arr.length-1));
+    str += arr[pos];
+  }
+
+  return str;
+}
+// 随机字符串
+
+function encodeFormated (str) {
+  if (str.length) {
+    return randomCode(10).concat(Base64.encode(str));
+  }
+
+  return randomCode(10).concat(randomCode(10));
+}
+// 生成随机字符串
+
+module.exports = { formatDate, encodeFormated };

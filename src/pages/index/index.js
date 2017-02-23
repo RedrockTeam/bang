@@ -1,5 +1,5 @@
 const imgPrefix = 'http://kjcx.yaerma.com/static/imgs/wxapp/images';
-const app = getApp();
+// const app = getApp();
 
 Page({
   data: {
@@ -12,37 +12,37 @@ Page({
       [
         {
           class: '一二节',
-          room: '3108',
-          name: '线性代数实验课'
+          room: '',
+          name: '获取中'
         },
         {
           class: '三四节',
-          room: '3108',
-          name: '信号与系统'
+          room: '',
+          name: '获取中'
         }
       ],
       [
         {
           class: '五六节',
           room: '',
-          name: '没有课'
+          name: '获取中'
         },
         {
           class: '七八节',
-          room: '3108',
-          name: '信号与系统'
+          room: '',
+          name: '获取中'
         }
       ],
       [
         {
           class: '九十节',
-          room: '3108',
-          name: '线性代数'
+          room: '',
+          name: '获取中'
         },
         {
           class: '十一二',
-          room: '3108',
-          name: '信号与系统'
+          room: '',
+          name: '获取中'
         }
       ]
     ],
@@ -96,10 +96,8 @@ Page({
     currentSwiper: 0
   },
   onShow () {
+    let self = this;
     let courseUrl = 'http://hongyan.cqupt.edu.cn/redapi2/api/kebiao';
-    let userInfo = app.getUserInfo();
-
-    console.log(userInfo);
 
     wx.showToast({
       title: '数据获取中',
@@ -113,18 +111,81 @@ Page({
       method: 'post',
       data: {
         stuNum: 2014211766,
-        idNum: 232935,
-        week: 16
+        week: 13
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        // let resData = res.data.data;
+        let resData = res.data.data;
         // let day = new Date().getDay() - 1;
-        // let courseToday = resData.filter((item) => {
-        //   return item.hash_day === day;
-        // });
+        let day = 3;
+        let courseToday = resData.filter((item) => {
+          return item.hash_day === day;
+        });
+        let courseTmp = [
+          [
+            {
+              class: '一二节',
+              room: '',
+              name: '没有课'
+            },
+            {
+              class: '三四节',
+              room: '',
+              name: '没有课'
+            }
+          ],
+          [
+            {
+              class: '五六节',
+              room: '',
+              name: '没有课'
+            },
+            {
+              class: '七八节',
+              room: '',
+              name: '没有课'
+            }
+          ],
+          [
+            {
+              class: '九十节',
+              room: '',
+              name: '没有课'
+            },
+            {
+              class: '十一二',
+              room: '',
+              name: '没有课'
+            }
+          ]
+        ];
+
+        courseToday.map((item, index) => {
+          let stageIndex = ~~(item.begin_lesson / 4);
+          let detailIndex = (item.begin_lesson % 4 - 1) / 2;
+          /**
+           * stageIndex: 上午 中午 下午
+           * detailIndex: 每个阶段有两节大课
+           */
+
+          courseTmp[stageIndex][detailIndex] = {
+            class: item.lesson,
+            room: item.classroom,
+            name: item.course
+          };
+          if (item.period === 3) {
+            courseTmp[stageIndex][detailIndex + 1] = Object.assign(courseTmp[stageIndex][detailIndex + 1], {
+              room: item.classroom,
+              name: item.course
+            });
+          }
+        });
+
+        self.setData({
+          course: courseTmp
+        });
 
         wx.hideToast();
         // 菊花转完
