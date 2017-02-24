@@ -161,6 +161,20 @@ App({
   onShow () {
 
   },
+  gotoLogin (url) {
+    wx.showModal({
+      title: '请先登录',
+      showCancel: false,
+      confirmText: '确认',
+      success: res => {
+        if (res.confirm) {
+          wx.redirectTo({
+            url: 'pages/login/login'
+          });
+        }
+      }
+    });
+  },
   onHide () {
     // 图书馆查询清空缓存
     wx.removeStorage({

@@ -41,7 +41,7 @@ function randomCode (length) {
 // 随机字符串
 
 function encodeFormated (str) {
-  if (str.length) {
+  if (str && str.length) {
     return randomCode(10).concat(Base64.encode(str));
   }
 

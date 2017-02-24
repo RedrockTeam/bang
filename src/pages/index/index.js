@@ -50,7 +50,7 @@ Page({
       [
         {
           name: '寝室电费',
-          url: '',
+          url: '../electricity/index/index',
           img: `${imgPrefix}/index__icon-elec.png`
         },
         {
