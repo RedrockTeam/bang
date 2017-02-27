@@ -1,4 +1,5 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
+
 Page({
   data: {
     imgUrls: [
@@ -56,7 +57,7 @@ Page({
       currentSwiper: e.detail.current
     });
   },
-  onLoad () {
+  onLoad (params) {
     this.getData();
   },
   getData () {
@@ -110,6 +111,7 @@ Page({
               listItem.day = weekDay;
               listItem.place = item.place;
               listItem.img = item.img;
+              listItem.id = item.id;
               newActList.push(listItem);
             }
             that.setData({

@@ -1,4 +1,4 @@
-// const app = getApp();
+const encodeFormated = require('../../../utils/util').encodeFormated;
 
 Page({
   data: {
@@ -88,8 +88,24 @@ Page({
       title: this.data.title,
       detail: this.data.detail,
       date: this.data.date,
-      phone: this.data.phone
+      phone: this.data.phone,
+      imgSrc: this.data.imgSrc
     };
+    const key = wx.getStorageSync('session');
+    let str = encodeFormated(`${key}&${data.type}&${data.headline}&${data.place}&${data.host}&${data.title}&${data.detail}&${data.date}&${data.phone}&${data.imgSrc}`);
+    wx.request({
+      method: 'post',
+      url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Apply/upload',
+      data: {
+        params: str
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success (res) {
+        console.log(res);
+      }
+    });
 
     /**
      *  服务项目字段应该有两个的...少一个
