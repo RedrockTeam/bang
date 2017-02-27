@@ -7,8 +7,7 @@ Page({
     title: 'past',
     elecState: {}, // 返回xml的数据
     cost: [],
-    // cost: [66, 12, 45, 23, 43, 49],
-    start: 11, // 开始月份
+    start: 0, // 开始月份
     focusIndex: 1,
     lastFocusIndex: 0,
     windowWidth: 0,
@@ -25,7 +24,7 @@ Page({
     // 获取屏幕宽度
     let windowWidth = 0;
     wx.getSystemInfo({
-      success: (res) => {
+      success: res => {
         windowWidth = res.windowWidth;
         this.setData({
           windowWidth
@@ -52,8 +51,14 @@ Page({
         elecState: res.result.current,
         cost: cost
       });
+      wx.hideToast();
       this.ready();
     } else {
+      wx.showToast({
+        title: '数据获取中',
+        icon: 'loading',
+        duration: 10000
+      });
       wx.request({
         url: electricityUrl,
         method: 'POST',
@@ -97,6 +102,9 @@ Page({
         fail: res => {
           console.log('获取电费信息失败2', res);
           app.gotoLogin();
+        },
+        complete: res => {
+            wx.hideToast();
         }
       });
     }

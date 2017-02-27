@@ -11,13 +11,18 @@ Page({
     wx.getStorage({
       key: 'myinfor_electricity',
       success: res => {
-        console.log('myinfor_electricity ', res);
         this.setData({
           elecState: res.data.result.current,
           roomState: res.data
         });
+        wx.hideToast();
       },
       fail: () => {
+        wx.showToast({
+          title: '数据获取中',
+          icon: 'loading',
+          duration: 10000
+        });
         wx.request({
           url: electricityUrl,
           method: 'POST',
@@ -28,7 +33,6 @@ Page({
             params: encodeFormated(wx.getStorageSync('session'))
           },
           success: res => {
-            console.log(res);
             res = res.data;
             if (res.status_code === 200) {
               this.setData({
@@ -47,6 +51,9 @@ Page({
           fail: res => {
             console.log('获取电费信息失败2', res);
             app.gotoLogin();
+          },
+          complete: res => {
+            wx.hideToast();
           }
         });
       }

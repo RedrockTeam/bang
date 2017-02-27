@@ -10,14 +10,13 @@ Page({
     wx.getStorage({
       key: 'rankList_library',
       success: res => {
-        console.log(res);
         this.setData({
           rankList: res.data
         });
       },
       fail: () => {
         wx.showToast({
-          title: 'Loading',
+          title: '数据获取中',
           duration: 10000,
           icon: 'loading'
         });
