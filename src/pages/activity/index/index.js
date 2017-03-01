@@ -76,10 +76,10 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success (res) {
-        var newImgUrls = [];
-        var type = 'school',
+        let newImgUrls = [];
+        let type = 'school',
             page = 1;
-        var str = encodeFormated(`${key}&${type}&${page}`);
+        let str = encodeFormated(`${key}&${type}&${page}`);
         for (var item of res.data.bags) {
           newImgUrls.push(item.img);
         }
@@ -98,10 +98,10 @@ Page({
           },
           success (res) {
             var newActList = [];
-            for (var item of res.data.bags) {
-              var listItem = {};
-              var weekDay = week[new Date(item.date).getDay()];
-              var dateStr = item.date.split('-')[1];
+            for (let item of res.data.bags) {
+              let listItem = {};
+              let weekDay = week[new Date(item.date).getDay()];
+              let dateStr = item.date.split('-')[1];
               if (dateStr < 10) {
                 dateStr = '0' + dateStr;
               }

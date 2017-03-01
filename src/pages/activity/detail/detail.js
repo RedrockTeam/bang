@@ -3,14 +3,15 @@ const encodeFormated = require('../../../utils/util').encodeFormated;
 Page({
   data: {
     title: ['谁是属于重邮的“小杏韵”？', '快来一起寻找吧!'],
-    acInfo: {
+    actInfo: {
       data: '01/17',
       place: '太极运动场',
       img: 'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg',
-      context: '写点什么写点什么参与方式面向同学们征集银杏主题的照片方式一：女生在银杏树下的留影方式二：女生拿着银杏叶在重邮内的留影方式三：用银杏叶摆出某种图案后与之留影照片下面附上自己对重邮的秋日寄语，字数在30字以内，照片+文字以姓名，学号，学院，联系方式打包发送至 i@redrock.com评选方式初选由摄影协会在投稿中选取20份优秀作品并由重邮小帮手微信公众号完成后期的线上投票评选票选出一、二、三等奖和人气奖奖项设置 一等奖：500G移动硬盘  二等奖：20000mAh移动电源 个/名  三等奖：小台灯 个/名 人气奖：耳机 个/名'
+      detail: '写点什么写点什么参与方式面向同学们征集银杏主题的照片方式一：女生在银杏树下的留影方式二：女生拿着银杏叶在重邮内的留影方式三：用银杏叶摆出某种图案后与之留影照片下面附上自己对重邮的秋日寄语，字数在30字以内，照片+文字以姓名，学号，学院，联系方式打包发送至 i@redrock.com评选方式初选由摄影协会在投稿中选取20份优秀作品并由重邮小帮手微信公众号完成后期的线上投票评选票选出一、二、三等奖和人气奖奖项设置 一等奖：500G移动硬盘  二等奖：20000mAh移动电源 个/名  三等奖：小台灯 个/名 人气奖：耳机 个/名'
     }
   },
   onLoad (params) {
+    const that = this;
     const key = wx.getStorageSync('session');
     let act_id = params.act_id;
     wx.request({
@@ -23,7 +24,20 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success (res) {
-        console.log(res);
+        let actInfo = {};
+        let dateStr = res.date.bags.split('-')[1];
+        if (dateStr <　10) {
+          dateStr = '0' + dateStr;
+        }
+        dateStr = dateStr + '/' +item.date.split('-')[2];
+        actInfo.date = dateStr;
+        actInfo.title = res.data.bags.title;
+        actInfo.place = res.data.bags.place;
+        actInfo.img = res.data.bags.img;
+        actInfo.detail = res.data.bags.detail;
+        that.setData({
+          actInfo: actInfo
+        })
       }
     })
   }

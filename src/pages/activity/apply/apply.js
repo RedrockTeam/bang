@@ -95,15 +95,27 @@ Page({
     let str = encodeFormated(`${key}&${data.type}&${data.headline}&${data.place}&${data.host}&${data.title}&${data.detail}&${data.date}&${data.phone}&${data.imgSrc}`);
     wx.request({
       method: 'post',
-      url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Apply/upload',
+      url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Apply/fileUpload',
       data: {
-        params: str
+        params: encodeFormated(`${key}&${data.imgSrc}`)
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       success (res) {
-        console.log(res);
+        wx.request({
+          method: 'post',
+          url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Apply/upload',
+          data: {
+            params: str
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success (res) {
+            console.log(res);
+          }
+        })
       }
     });
 
