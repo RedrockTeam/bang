@@ -164,7 +164,7 @@ App({
   gotoLogin (url) {
     wx.showModal({
       title: '请先登录',
-      showCancel: false,
+      showCancel: true,
       confirmText: '确认',
       success: res => {
         if (res.confirm) {

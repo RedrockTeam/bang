@@ -50,7 +50,11 @@ Page({
           },
           fail: res => {
             console.log('获取电费信息失败2', res);
-            app.gotoLogin();
+            wx.showModal({
+              title: '网络错误,请重试',
+              showCancel: false,
+              confirmText: '确认'
+            });
           },
           complete: res => {
             wx.hideToast();

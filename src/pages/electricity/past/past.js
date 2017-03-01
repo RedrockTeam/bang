@@ -36,7 +36,7 @@ Page({
     if (res) {
       let trend = res.result.trend;
       let cost = trend.map((val, idx) => {
-        if (idx === 5) {
+        if (idx === 0) {
           this.setData({
             start: parseInt(val.time)
           });
@@ -101,10 +101,14 @@ Page({
         },
         fail: res => {
           console.log('获取电费信息失败2', res);
-          app.gotoLogin();
+          wx.showModal({
+            title: '网络错误,请重试',
+            showCancel: false,
+            confirmText: '确认'
+          });
         },
         complete: res => {
-            wx.hideToast();
+          wx.hideToast();
         }
       });
     }
