@@ -2,7 +2,7 @@ const encodeFormated = require('../../../utils/util').encodeFormated;
 
 Page({
   data: {
-    title: ['谁是属于重邮的“小杏韵”？', '快来一起寻找吧!'],
+    title: '谁是属于重邮的“小杏韵”？快来一起寻找吧!',
     actInfo: {
       data: '01/17',
       place: '太极运动场',
@@ -26,7 +26,7 @@ Page({
       success (res) {
         let actInfo = {};
         let dateStr = res.date.bags.split('-')[1];
-        if (dateStr <　10) {
+        if (dateStr < 10) {
           dateStr = '0' + dateStr;
         }
         dateStr = dateStr + '/' +item.date.split('-')[2];

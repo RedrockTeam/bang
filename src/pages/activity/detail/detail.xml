@@ -1,11 +1,9 @@
 <view class="container">
     <view class="content">
         <view class="title">
-            <block wx:for="{{title}}">
-                <view>
-                    {{item}}
-                </view>
-            </block>
+            <view>
+                {{title}}
+            </view>
         </view>
         <view class="vice-title">
             <navigator url="##" class="copyright">
