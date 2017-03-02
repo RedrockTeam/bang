@@ -25,7 +25,7 @@
       寝室信息
     </view>
     <view class="main-infor">
-        {{elecState.building}} 栋 {{elecState.room}}
+        {{roomState.building}} 栋 {{roomState.room}}
     </view>
     <view class="main-title">
       抄表日期
@@ -44,7 +44,7 @@
     </view>
     <template is="starttoend" data="{{elecState}}"></template>
   </view>
-  <navigator class="footer" url="/pages/electricity/past/past">
+  <navigator class="footer" url="/pages/electricity/past/past" redirect="true">
     查往月用电
   </navigator>
 </view>

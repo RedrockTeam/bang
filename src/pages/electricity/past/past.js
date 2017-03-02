@@ -1,9 +1,13 @@
+const app = getApp();
+const encodeFormated = require('../../../utils/util').encodeFormated;
+const electricityUrl = 'https://redrock.cqupt.edu.cn/weapp/Electric/getInfo';
+
 Page({
   data: {
     title: 'past',
     elecState: {}, // 返回xml的数据
-    cost: [12, 3, 87, 1, 90, 54],
-    start: 11, // 开始月份
+    cost: [],
+    start: 0, // 开始月份
     focusIndex: 1,
     lastFocusIndex: 0,
     windowWidth: 0,
@@ -15,6 +19,150 @@ Page({
     wx.navigateBack({
       delta: 1
     });
+  },
+  onLoad () {
+    // 获取屏幕宽度
+    let windowWidth = 0;
+    wx.getSystemInfo({
+      success: res => {
+        windowWidth = res.windowWidth;
+        this.setData({
+          windowWidth
+        });
+      }
+    });
+    // 获取用电信息
+    let res = wx.getStorageSync('myinfor_electricity');
+    if (res) {
+      let trend = res.result.trend;
+      let cost = trend.map((val, idx) => {
+        if (idx === 0) {
+          this.setData({
+            start: parseInt(val.time)
+          });
+        }
+        return Number(val.spend);
+      });
+
+      let costMin = Math.min.apply(null, cost);
+      cost = cost.map(val => val / costMin);
+
+      this.setData({
+        elecState: res.result.current,
+        cost: cost
+      });
+      wx.hideToast();
+      this.ready();
+    } else {
+      wx.showToast({
+        title: '数据获取中',
+        icon: 'loading',
+        duration: 10000
+      });
+      wx.request({
+        url: electricityUrl,
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          params: encodeFormated(wx.getStorageSync('session'))
+        },
+        success: res => {
+          res = res.data;
+          let trend = res.bags.result.trend;
+          let cost = trend.map((val, idx) => {
+            if (idx === 5) {
+              this.setData({
+                start: parseInt(val.time)
+              });
+            }
+            return Number(val.spend);
+          });
+
+          // 对接口的时候发现的BUG 不知道当时是怎么写的canvas，后来发现，cost数据中没1就会bug，目测这样改简单了。
+          let costMin = Math.min.apply(null, cost);
+          cost = cost.map(val => val / costMin);
+
+          if (res.status_code === 200) {
+            this.setData({
+              elecState: res.bags.result.current,
+              cost: cost
+            });
+            this.ready();
+            wx.setStorage({
+              key: 'myinfor_electricity',
+              data: res.bags
+            });
+          } else {
+            console.log('获取电费信息失败1', res.status_text);
+            app.gotoLogin();
+          }
+        },
+        fail: res => {
+          console.log('获取电费信息失败2', res);
+          wx.showModal({
+            title: '网络错误,请重试',
+            showCancel: false,
+            confirmText: '确认'
+          });
+        },
+        complete: res => {
+          wx.hideToast();
+        }
+      });
+    }
+  },
+  ready () {
+    /*
+    *  往期用电图表
+    *  perWidth： 每一折线的宽， 共七条
+    *  ctxWidth, ctxHeight： 折线图的宽高
+    *  cost: 近六个月的用电量
+    *  costMax， costMin： 六个月电费的最大和最小，及比例
+    *  costHeight： 每一个点的高度， 再加上圆点的直径
+    *  monthsHeight： 月份的高度
+    */
+    this.setData({
+      canvasData: {
+        ctxWidth: this.pxToRpx(343),
+        months: 7,
+        ctxHeight: this.pxToRpx(214),
+        costMax: Math.max.apply(null, this.data.cost),
+        costMin: Math.min.apply(null, this.data.cost),
+
+        perWidth: this.pxToRpx(343 / 7),
+        costHeight: this.data.cost.map((val, idx, arr) => {
+          return (Math.max.apply(null, this.data.cost) - val) *
+          (Math.min.apply(null, this.data.cost) / Math.max.apply(null, this.data.cost)) *
+          this.pxToRpx(214) + this.pxToRpx(12);
+        }),
+        monthsHeight: this.pxToRpx(280),
+
+        ctx: wx.createCanvasContext('pastCost'),
+        roundCanvas: wx.createCanvasContext('round')
+      }
+    });
+
+    let firstMonthsContainerWidth = this.data.canvasData.perWidth;
+    let MonthsContainerWidth = [];
+    for (let i = 1; i <= 6; i++) {
+      MonthsContainerWidth[i - 1] = {
+        xStart: firstMonthsContainerWidth * i - 20,
+        xEnd: firstMonthsContainerWidth * i + 20
+      };
+    };
+    this.setData({
+      monthsConWidth: MonthsContainerWidth,
+      monthsConHeight: {
+        yStart: this.data.canvasData.monthsHeight - 20,
+        yEnd: this.data.canvasData.monthsHeight + 20
+      }
+    });
+
+    this.drawLine();
+    this.drawRound();
+    this.drawMonths();
   },
   pxToRpx (px) {
     return px * 2 / 750 * this.data.windowWidth;
@@ -208,89 +356,5 @@ Page({
   },
   canvasError (e) {
     console.log('----------------', e.detail.errMsg);
-  },
-  onLoad () {
-    let windowWidth = 0;
-    wx.getSystemInfo({
-      success: (res) => {
-        windowWidth = res.windowWidth;
-        this.setData({
-          windowWidth: windowWidth
-        });
-      }
-    });
-    /*
-    *  往期用电图表
-    *  perWidth： 每一折线的宽， 共七条
-    *  ctxWidth, ctxHeight： 折线图的宽高
-    *  cost: 近六个月的用电量
-    *  costMax， costMin： 六个月电费的最大和最小，及比例
-    *  costHeight： 每一个点的高度， 再加上圆点的直径
-    *  monthsHeight： 月份的高度
-    */
-    this.setData({
-      canvasData: {
-        ctxWidth: this.pxToRpx(343),
-        months: 7,
-        ctxHeight: this.pxToRpx(214),
-        costMax: Math.max.apply(null, this.data.cost),
-        costMin: Math.min.apply(null, this.data.cost),
-
-        perWidth: this.pxToRpx(343 / 7),
-        costHeight: this.data.cost.map((val, idx, arr) => {
-          return (Math.max.apply(null, this.data.cost) - val) *
-          (Math.min.apply(null, this.data.cost) / Math.max.apply(null, this.data.cost)) *
-          this.pxToRpx(214) + this.pxToRpx(12);
-        }),
-        monthsHeight: this.pxToRpx(280),
-
-        ctx: wx.createCanvasContext('pastCost'),
-        roundCanvas: wx.createCanvasContext('round')
-      }
-    });
-
-    let firstMonthsContainerWidth = this.data.canvasData.perWidth;
-    let MonthsContainerWidth = [];
-    for (let i = 1; i <= 6; i++) {
-      MonthsContainerWidth[i - 1] = {
-        xStart: firstMonthsContainerWidth * i - 20,
-        xEnd: firstMonthsContainerWidth * i + 20
-      };
-    };
-    this.setData({
-      monthsConWidth: MonthsContainerWidth,
-      monthsConHeight: {
-        yStart: this.data.canvasData.monthsHeight - 20,
-        yEnd: this.data.canvasData.monthsHeight + 20
-      }
-    });
-
-    this.drawLine();
-    this.drawRound();
-    this.drawMonths();
-
-    wx.request({
-      url: 'http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ElectricityQuery/ElectricityQuery/getElectric',
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        stuNum: 2015211878
-      },
-      success: res => {
-        if (res.statusCode === 200) {
-          if (res.data.status === 200) {
-            this.setData({
-              elecState: res.data.data
-            });
-          } else {
-            console.log('网络错误1!');
-          }
-        } else {
-          console.log('网络错误2!');
-        }
-      }
-    });
   }
 });

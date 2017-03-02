@@ -161,23 +161,50 @@ App({
   onShow () {
 
   },
+  gotoLogin (url) {
+    wx.showModal({
+      title: '请先登录',
+      showCancel: true,
+      confirmText: '确认',
+      success: res => {
+        if (res.confirm) {
+          wx.redirectTo({
+            url: '/pages/login/login'
+          });
+        }
+      }
+    });
+  },
+  removeStorages (key) {
+    wx.removeStorage({
+      key: key,
+      success: res => {
+        console.log('---------removestorage', wx.getStorage({
+          key: key
+        }));
+      }
+    });
+  },
   onHide () {
-    // 图书馆查询清空缓存
-    wx.removeStorage({
-      key: 'myinfor_library',
-      success: res => {
-        console.log('---------removestorage', wx.getStorage({
-          key: 'myinfor_library'
-        }));
-      }
+    // 图书馆查询，电费查询清空缓存
+    ['myinfor_library', 'rankList_library', 'myinfor_electricity'].forEach(value => {
+      this.removeStorages(value);
     });
-    wx.removeStorage({
-      key: 'rankList_library',
-      success: res => {
-        console.log('---------removestorage', wx.getStorage({
-          key: 'rankList_library'
-        }));
-      }
-    });
+    // wx.removeStorage({
+    //   key: 'myinfor_library',
+    //   success: res => {
+    //     console.log('---------removestorage', wx.getStorage({
+    //       key: 'myinfor_library'
+    //     }));
+    //   }
+    // });
+    // wx.removeStorage({
+    //   key: 'rankList_library',
+    //   success: res => {
+    //     console.log('---------removestorage', wx.getStorage({
+    //       key: 'rankList_library'
+    //     }));
+    //   }
+    // });
   }
 });
