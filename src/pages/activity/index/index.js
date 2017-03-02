@@ -1,3 +1,5 @@
+const encodeFormated = require('../../../utils/util').encodeFormated;
+
 Page({
   data: {
     imgUrls: [
@@ -54,5 +56,70 @@ Page({
     this.setData({
       currentSwiper: e.detail.current
     });
+  },
+  onLoad (params) {
+    this.getData();
+  },
+  getData () {
+    const that = this;
+    const key = wx.getStorageSync('session');
+    const week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+    var str = encodeFormated(wx.getStorageSync('session'));
+
+    wx.request({
+      method: 'post',
+      url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Show/getHeadline',
+      data: {
+        params: str
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success (res) {
+        let newImgUrls = [];
+        let type = 'school',
+            page = 1;
+        let str = encodeFormated(`${key}&${type}&${page}`);
+        for (var item of res.data.bags) {
+          newImgUrls.push(item.img);
+        }
+        that.setData({
+          imgUrls: newImgUrls
+        })
+        console.log(newImgUrls);
+        wx.request({
+          method: 'post',
+          url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Show/getList',
+          data: {
+            params: str
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success (res) {
+            var newActList = [];
+            for (let item of res.data.bags) {
+              let listItem = {};
+              let weekDay = week[new Date(item.date).getDay()];
+              let dateStr = item.date.split('-')[1];
+              if (dateStr < 10) {
+                dateStr = '0' + dateStr;
+              }
+              dateStr = dateStr + '/' +item.date.split('-')[2];
+              listItem.title = item.title;
+              listItem.date = dateStr;
+              listItem.day = weekDay;
+              listItem.place = item.place;
+              listItem.img = item.img;
+              listItem.id = item.id;
+              newActList.push(listItem);
+            }
+            that.setData({
+              actList: newActList
+            });
+          }
+        })
+      }
+    })
   }
 });

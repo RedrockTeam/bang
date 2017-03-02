@@ -1,24 +1,22 @@
 <view class="container">
     <view class="content">
         <view class="title">
-            <block wx:for="{{title}}">
-                <view>
-                    {{item}}
-                </view>
-            </block>
+            <view>
+                {{title}}
+            </view>
         </view>
         <view class="vice-title">
             <navigator url="##" class="copyright">
                 红岩网校工作站
             </navigator>
-            01/17
-            <text class="place">太极运动场</text>
+            {{actInfo.date}}
+            <text class="place">{{actInfo.place}}</text>
         </view>
         <view class="cover">
-            <image src="{{acInfo.img}}"></image>
+            <image src="{{actInfo.img}}"></image>
         </view>
         <view class="context">
-            {{acInfo.context}}
+            {{actInfo.detail}}
         </view>
     </view>
 </view>
