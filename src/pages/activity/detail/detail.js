@@ -13,12 +13,12 @@ Page({
   onLoad (params) {
     const that = this;
     const key = wx.getStorageSync('session');
-    let act_id = params.act_id;
+    let actId = params.act_id;
     wx.request({
       method: 'post',
       url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Show/getInfoById`',
       data: {
-        params: encodeFormated(`${key}&${act_id}`)
+        params: encodeFormated(`${key}&${actId}`)
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -29,7 +29,7 @@ Page({
         if (dateStr < 10) {
           dateStr = '0' + dateStr;
         }
-        dateStr = dateStr + '/' +item.date.split('-')[2];
+        // dateStr = dateStr + '/' + item.date.split('-')[2];
         actInfo.date = dateStr;
         actInfo.title = res.data.bags.title;
         actInfo.place = res.data.bags.place;
@@ -37,8 +37,8 @@ Page({
         actInfo.detail = res.data.bags.detail;
         that.setData({
           actInfo: actInfo
-        })
+        });
       }
-    })
+    });
   }
 });
