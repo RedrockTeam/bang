@@ -64,7 +64,7 @@ Page({
     const that = this;
     const key = wx.getStorageSync('session');
     const week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-    var str = encodeFormated(wx.getStorageSync('session'));
+    let str = encodeFormated(wx.getStorageSync('session'));
 
     wx.request({
       method: 'post',
@@ -77,15 +77,16 @@ Page({
       },
       success (res) {
         let newImgUrls = [];
-        let type = 'school',
-            page = 1;
+        let type = 'school';
+        let page = 1;
         let str = encodeFormated(`${key}&${type}&${page}`);
-        for (var item of res.data.bags) {
+
+        for (let item of res.data.bags) {
           newImgUrls.push(item.img);
         }
         that.setData({
           imgUrls: newImgUrls
-        })
+        });
         console.log(newImgUrls);
         wx.request({
           method: 'post',
@@ -97,7 +98,7 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            var newActList = [];
+            let newActList = [];
             for (let item of res.data.bags) {
               let listItem = {};
               let weekDay = week[new Date(item.date).getDay()];
@@ -105,7 +106,7 @@ Page({
               if (dateStr < 10) {
                 dateStr = '0' + dateStr;
               }
-              dateStr = dateStr + '/' +item.date.split('-')[2];
+              // dateStr = dateStr + '/' + item.date.split('-')[2];
               listItem.title = item.title;
               listItem.date = dateStr;
               listItem.day = weekDay;
@@ -118,8 +119,8 @@ Page({
               actList: newActList
             });
           }
-        })
+        });
       }
-    })
+    });
   }
 });
