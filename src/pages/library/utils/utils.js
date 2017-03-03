@@ -101,11 +101,12 @@ const getBookInfor = function (self, tag) {
           data: data
         });
       } else {
+        console.log('获取图书馆信息(我的信息)失败1: ', res.status_text);
         app.gotoLogin();
       }
     },
     fail: res => {
-      console.log('获取图书馆信息(我的信息)失败：', res);
+      console.log('获取图书馆信息(我的信息)失败2：', res);
       app.gotoLogin();
     }
   });
