@@ -1,5 +1,7 @@
 const imgPrefix = 'http://kjcx.yaerma.com/static/imgs/wxapp/images';
-// const app = getApp();
+const encodeFormated = require('../../utils/util').encodeFormated;
+const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
+const app = getApp();
 
 Page({
   data: {
@@ -92,12 +94,19 @@ Page({
         }
       ]
     ],
-    week: 10,
+    week: 0,
     currentSwiper: 0
+  },
+  onLoad () {
+    let userInfor = app.data.stuInfo;
+
+    this.setData({
+      stuNumber: userInfor.stuNum,
+      stuName: userInfor.name
+    });
   },
   onShow () {
     let self = this;
-    let courseUrl = 'http://hongyan.cqupt.edu.cn/redapi2/api/kebiao';
 
     wx.showToast({
       title: '数据获取中',
@@ -105,90 +114,107 @@ Page({
       duration: 10000
     });
     // 转个菊花
-
     wx.request({
-      url: courseUrl,
+      url: `${apiPrefix}/Course/getKebiao`,
       method: 'post',
       data: {
-        stuNum: 2014211766,
-        week: 13
+        params: encodeFormated(`${wx.getStorageSync('session')}&0&empty`)
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        let resData = res.data.data;
-        // let day = new Date().getDay() - 1;
-        let day = 3;
-        let courseToday = resData.filter((item) => {
-          return item.hash_day === day;
-        });
-        let courseTmp = [
-          [
-            {
-              class: '一二节',
-              room: '',
-              name: '没有课'
-            },
-            {
-              class: '三四节',
-              room: '',
-              name: '没有课'
-            }
-          ],
-          [
-            {
-              class: '五六节',
-              room: '',
-              name: '没有课'
-            },
-            {
-              class: '七八节',
-              room: '',
-              name: '没有课'
-            }
-          ],
-          [
-            {
-              class: '九十节',
-              room: '',
-              name: '没有课'
-            },
-            {
-              class: '十一二',
-              room: '',
-              name: '没有课'
-            }
-          ]
-        ];
+        if (res.data.status_code === 200) {
+          let resData = res.data.bags.courses;
+          console.log('resData', resData);
+          let day = new Date().getDay() - 1;
 
-        courseToday.map((item, index) => {
-          let stageIndex = ~~(item.begin_lesson / 4);
-          let detailIndex = (item.begin_lesson % 4 - 1) / 2;
-          /**
-           * stageIndex: 上午 中午 下午
-           * detailIndex: 每个阶段有两节大课
-           */
+          let courseToday = resData.filter((item) => {
+            return item.hash_day === day;
+          });
+          self.setData({
+            week: res.data.bags.week
+          });
+          let courseTmp = [
+            [
+              {
+                class: '一二节',
+                room: '',
+                name: '没有课'
+              },
+              {
+                class: '三四节',
+                room: '',
+                name: '没有课'
+              }
+            ],
+            [
+              {
+                class: '五六节',
+                room: '',
+                name: '没有课'
+              },
+              {
+                class: '七八节',
+                room: '',
+                name: '没有课'
+              }
+            ],
+            [
+              {
+                class: '九十节',
+                room: '',
+                name: '没有课'
+              },
+              {
+                class: '十一二',
+                room: '',
+                name: '没有课'
+              }
+            ]
+          ];
 
-          courseTmp[stageIndex][detailIndex] = {
-            class: item.lesson,
-            room: item.classroom,
-            name: item.course
-          };
-          if (item.period === 3) {
-            courseTmp[stageIndex][detailIndex + 1] = Object.assign(courseTmp[stageIndex][detailIndex + 1], {
+          courseToday.map((item, index) => {
+            let stageIndex = ~~(item.begin_lesson / 4);
+            let detailIndex = (item.begin_lesson % 4 - 1) / 2;
+            /**
+             * stageIndex: 上午 中午 下午
+             * detailIndex: 每个阶段有两节大课
+             */
+
+            courseTmp[stageIndex][detailIndex] = {
+              class: item.lesson,
               room: item.classroom,
               name: item.course
-            });
-          }
-        });
+            };
+            if (item.period === 3) {
+              courseTmp[stageIndex][detailIndex + 1] = Object.assign(courseTmp[stageIndex][detailIndex + 1], {
+                room: item.classroom,
+                name: item.course
+              });
+            }
+          });
 
-        self.setData({
-          course: courseTmp
-        });
-
+          self.setData({
+            course: courseTmp
+          });
+        } else {
+          console.log('首页获取课表失败1', res.data.status_text);
+          wx.hideToast();
+          wx.showModal({
+            title: '获取课表信息失败，请重试',
+            showCancel: false,
+            confirmText: '确认'
+          });
+        }
+        return false;
+      },
+      fail: function (res) {
+        console.log('首页获取课表失败2', res);
+        app.gotoLogin();
+      },
+      complete: res => {
         wx.hideToast();
-        // 菊花转完
       }
     });
   },
