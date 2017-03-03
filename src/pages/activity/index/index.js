@@ -106,7 +106,7 @@ Page({
               if (dateStr < 10) {
                 dateStr = '0' + dateStr;
               }
-              // dateStr = dateStr + '/' + item.date.split('-')[2];
+              dateStr = dateStr + '/' + item.date.split('-')[2];
               listItem.title = item.title;
               listItem.date = dateStr;
               listItem.day = weekDay;

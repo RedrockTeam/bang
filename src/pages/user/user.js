@@ -26,11 +26,11 @@ Page({
         }
       ],
       room_feedback_info: [
-        {
-          name: '寝室信息',
-          message: '',
-          url: imgPrefix + 'arrow.png'
-        },
+        // {
+        //   name: '寝室信息',
+        //   message: '',
+        //   url: imgPrefix + 'arrow.png'
+        // },
         {
           name: '意见反馈',
           message: '',
@@ -99,11 +99,11 @@ Page({
         }
       ],
       room_feedback_info: [
-        {
-          name: '寝室信息',
-          message: '',
-          url: imgPrefix + 'arrow.png'
-        },
+        // {
+        //   name: '寝室信息',
+        //   message: '',
+        //   url: imgPrefix + 'arrow.png'
+        // },
         {
           name: '意见反馈',
           message: '',
@@ -115,17 +115,5 @@ Page({
     this.setData({
       stu_info: tmpInfo
     });
-  },
-  onReady () {
-    // TODO: onReady
-  },
-  onShow () {
-    // TODO: onShow
-  },
-  onHide () {
-    // TODO: onHide
-  },
-  onUnload () {
-    // TODO: onUnload
   }
 });
