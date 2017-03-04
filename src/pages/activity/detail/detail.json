@@ -1,7 +1,7 @@
 {
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "xxy",
+  "navigationBarTitleText": "活动详情",
   "backgroundColor": "#000000",
   "backgroundTextStyle": "light",
   "enablePullDownRefresh": false

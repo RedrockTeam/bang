@@ -46,7 +46,7 @@
   </view>
   <view class="activity--list">
     <block wx:for="{{actList}}">
-      <view class="activity--list-item">
+      <navigator class="activity--list-item" url="../detail/detail?act_id={{item.id}}">
         <view class="item-left">
           <view class="item__title">
             {{item.title}}
@@ -64,7 +64,7 @@
         <image class="item__image"
                 src="{{item.img}}"
                 mode="aspectFill"/>
-      </view>
+      </navigator>
     </block>
   </view>
 </view>
