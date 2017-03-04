@@ -1,3 +1,6 @@
+const encodeFormated = require('../../../utils/util').encodeFormated;
+const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
+
 Page({
   data: {
     imgUrl: '../../../images',
@@ -34,119 +37,110 @@ Page({
     this.setData({
       index: e.detail.value
     });
-    console.log(this.data.index);
     this.dataRequest();
-    // this.onLoad();
   },
-  // setInterval(onLoad,3000);
   onLoad: function onLoad (params) {
-    // console.log(params);
-    // 确定当前周数
-    let self = this;
-    self.setData({
-      stuNumber: params.stuNumber,
-      name: params.stuName
+    wx.showToast({
+      title: '数据获取中',
+      icon: 'loading',
+      duration: 10000
     });
-    wx.request({
-      url: 'http://hongyan.cqupt.edu.cn/redapi2/api/kebiao',
-      method: 'post',
-      data: {
-        stuNum: self.data.stuNumber,
-        idNum: '',
-        week: ''
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-        self.setData({
-          index: res.data.nowWeek
-        });
-        if (self.data.index > 20) {
-          self.setData({
-            index: 0
-          });
-        }
-      // console.log(self.data.index);
-      }
+    let week = 0;
+    if (params.week) {
+      week = params.week;
+    }
+    this.setData({
+      stuNumber: params.stuNumber,
+      name: params.stuName,
+      index: week
     });
     this.dataRequest();
   },
   // 数据请求
-  dataRequest: function dataRequest (e) {
+  dataRequest: function dataRequest () {
     let self = this;
-    let dataIndex = parseInt(self.data.index);
     wx.request({
-      url: 'http://hongyan.cqupt.edu.cn/redapi2/api/kebiao',
+      url: `${apiPrefix}/Course/getKebiao`,
       method: 'post',
-      data: {
-        stuNum: self.data.stuNumber,
-        idNum: '',
-        week: dataIndex
-      },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
+      data: {
+        params: encodeFormated(`${wx.getStorageSync('session')}&${self.data.index}&${self.data.stuNumber}`)
+      },
       success: function success (res) {
-        console.log(res.data);
-        let classData = res.data.data;
-        let classLen = classData.length;
-        let classWeek = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
-        let classTime = ['一二节', '三四节', '五六节', '七八节', '九十节', '十一十二节'];
-        let className = [[], [], [], [], [], []];
-        let classRoom = [[], [], [], [], [], []];
-        let color = [[], [], [], [], [], []];
-        // 课表数据绑定
-        for (let i = 0; i < classLen; i++) {
-          // console.log(classData[i].day);
-          for (let t = 0; t < classTime.length; t++) {
-            if (classData[i].lesson === classTime[t]) {
-              for (let j = 0; j < classWeek.length; j++) {
-                if (classData[i].day === classWeek[j]) {
-                  className[t][j] = classData[i].course;
-                  classRoom[t][j] = classData[i].classroom;
+        if (res.data.status_code === 200) {
+          self.setData({
+            index: res.data.bags.week
+          });
+          let classData = res.data.bags.courses;
+          let classLen = classData.length;
+          let classWeek = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+          let classTime = ['一二节', '三四节', '五六节', '七八节', '九十节', '十一十二节'];
+          let className = [[], [], [], [], [], []];
+          let classRoom = [[], [], [], [], [], []];
+          let color = [[], [], [], [], [], []];
+          // 课表数据绑定
+          for (let i = 0; i < classLen; i++) {
+            for (let t = 0; t < classTime.length; t++) {
+              if (classData[i].lesson === classTime[t]) {
+                for (let j = 0; j < classWeek.length; j++) {
+                  if (classData[i].day === classWeek[j]) {
+                    className[t][j] = classData[i].course;
+                    classRoom[t][j] = classData[i].classroom;
+                  }
                 }
               }
             }
           }
-        }
-        // 背景颜色绑定
-        for (let a = 0; a < classTime.length; a++) {
-          for (let b = 0; b < classWeek.length; b++) {
-            if (!className[a][b]) {
-              color[a][b] = '#fff';
+          // 背景颜色绑定
+          for (let a = 0; a < classTime.length; a++) {
+            for (let b = 0; b < classWeek.length; b++) {
+              if (!className[a][b]) {
+                color[a][b] = '#fff';
+              }
             }
           }
-          // console.log(className);
+          // 设置数据
+          self.setData({
+            'className.oneT': className[0],
+            'className.threeF': className[1],
+            'className.fiveS': className[2],
+            'className.sevenE': className[3],
+            'className.nineT': className[4],
+            'className.elevenT': className[5],
+            'classRoom.oneT': classRoom[0],
+            'classRoom.threeF': classRoom[1],
+            'classRoom.fiveS': classRoom[2],
+            'classRoom.sevenE': classRoom[3],
+            'classRoom.nineT': classRoom[4],
+            'classRoom.elevenT': classRoom[5],
+            color: color
+          });
+        } else {
+          console.log('获取课表信息失败1', res.data.status_text);
+          wx.showModal({
+            title: '网络错误,请重试',
+            showCancel: false,
+            confirmText: '确认'
+          });
         }
-        // console.log(color);
-        // 设置数据
-        self.setData({
-          'className.oneT': className[0],
-          'className.threeF': className[1],
-          'className.fiveS': className[2],
-          'className.sevenE': className[3],
-          'className.nineT': className[4],
-          'className.elevenT': className[5],
-          'classRoom.oneT': classRoom[0],
-          'classRoom.threeF': classRoom[1],
-          'classRoom.fiveS': classRoom[2],
-          'classRoom.sevenE': classRoom[3],
-          'classRoom.nineT': classRoom[4],
-          'classRoom.elevenT': classRoom[5],
-          color: color
+      },
+      fail: function (res) {
+        console.log('获取课表信息失败2', res);
+        wx.showModal({
+          title: '网络错误,请重试',
+          showCancel: false,
+          confirmText: '确认'
         });
-        // if (self.data.classRoom.oneT[4] == "") {
-        //   self.setData({
-        //     className.oneT: className[0]
-        //   });
-        // }
+      },
+      complete: function (res) {
+        wx.hideToast();
       }
     });
   },
   // 弹窗出现
   bindAppear: function bindAppear (e) {
-    // console.log(e);
     if (e.currentTarget.dataset.classname) {
       this.setData({
         hiddenFlag: !this.data.hiddenFlag,
