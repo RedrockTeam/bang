@@ -24,20 +24,22 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success (res) {
-        let actInfo = {};
-        let dateStr = res.date.bags.split('-')[1];
+        console.log(res.data.bags[0]);
+        let newActInfo = {};
+        let dateStr = res.date.bags[0].date.split('-')[1];
         if (dateStr < 10) {
           dateStr = '0' + dateStr;
         }
-        // dateStr = dateStr + '/' + item.date.split('-')[2];
-        actInfo.date = dateStr;
-        actInfo.title = res.data.bags.title;
-        actInfo.place = res.data.bags.place;
-        actInfo.img = res.data.bags.img;
-        actInfo.detail = res.data.bags.detail;
+        dateStr = dateStr + '/' + item.date.split('-')[2];
+        newActInfo.img = res.data.bags[0].img;
+        newActInfo.date = dateStr;
+        newActInfo.place = res.data.bags[0].place;
+        newActInfo.detail = res.data.bags[0].detail;
         that.setData({
-          actInfo: actInfo
-        });
+          title: res.data.bags[0].title,
+          actInfo: newActInfo
+        })
+
       }
     });
   }
