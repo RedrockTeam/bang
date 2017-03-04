@@ -1,4 +1,5 @@
 const encodeFormated = require('./utils/util').encodeFormated;
+const Promise = require('./utils/es6-promise');
 
 App({
   data: {
@@ -11,6 +12,11 @@ App({
       grade: '',
       classNum: '',
       idNum: ''
+    },
+    userInfo: {
+      avatar: '',
+      city: '',
+      country: ''
     }
   },
   loginApp () {
@@ -25,7 +31,6 @@ App({
         }
       }
     });
-
     /**
      * login 方法获取 code
      * 下一步交给 getSession 获取第三方 session
@@ -33,11 +38,10 @@ App({
   },
   getSession (code) {
     const self = this;
-    const authUrl = 'https://redrock.cqupt.edu.cn/weapp/auth/codeAuth';
 
     wx.request({
       method: 'post',
-      url: authUrl,
+      url: 'https://redrock.cqupt.edu.cn/weapp/auth/codeAuth',
       data: {
         params: encodeFormated(code)
       },
@@ -48,7 +52,7 @@ App({
         const retSession = res.data.bags.thirdSession;
 
         wx.setStorageSync('session', retSession);
-        self.userInfo();
+        self.getUserInfo();
       }
     });
 
@@ -56,6 +60,82 @@ App({
      * from login
      * 获取第三方 session 并存储到本地
      */
+  },
+  getUserInfo () {
+    const self = this;
+
+    return new Promise((resolve, reject) => {
+      wx.getUserInfo({
+        success (res) {
+          const { rawData, signature, encryptedData, iv } = res;
+          const thirdSession = wx.getStorageSync('session');
+          const obj = {
+            infoStr: encodeFormated(`${rawData}&${signature}&${thirdSession}`),
+            userStr: encodeFormated(`${encryptedData}&${iv}&${thirdSession}`)
+          };
+
+          resolve(obj);
+        },
+        fail () {
+          console.log('获取 userInfo 失败');
+        }
+      });
+    }).then((obj) => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          method: 'post',
+          url: 'https://redrock.cqupt.edu.cn/weapp/auth/checkInfo',
+          data: {
+            params: obj.infoStr
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success (res) {
+            if (res.data.status_code !== 200) {
+              console.log('code 过期，需要重新获取');
+              self.loginApp();
+            } else {
+              console.log('code 有效，可以继续使用');
+              resolve(obj);
+            }
+          }
+        });
+      });
+
+      /**
+       * 检查 info
+       * 返回新的 promise
+       */
+    }).then((obj) => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          method: 'post',
+          url: 'https://redrock.cqupt.edu.cn/weapp/auth/decryptData',
+          data: {
+            params: obj.userStr
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success (res) {
+            const info = {
+              avatar: res.data.bags.avatarUrl,
+              city: res.data.bags.city,
+              country: res.data.bags.country
+            };
+
+            resolve(info);
+          }
+        });
+      });
+    }).then((info) => {
+      for (let key in info) {
+        self.data.userInfo[key] = info[key];
+      }
+    }).catch((err) => {
+      throw new Error(err);
+    });
   },
   getOpenId () {
     const openIdUrl = 'https://redrock.cqupt.edu.cn/weapp/auth/getOpenid';
@@ -74,33 +154,7 @@ App({
       }
     });
   },
-  checkInfo (str) {
-    const self = this;
-
-    wx.request({
-      method: 'post',
-      url: 'https://redrock.cqupt.edu.cn/weapp/auth/checkInfo',
-      data: {
-        params: str
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success (res) {
-        if (res.data.status_code !== 200) {
-          console.log('code 过期，需要重新获取');
-          self.loginApp();
-        } else {
-
-        }
-      }
-    });
-
-    /**
-     * 检查用户状态是否有效
-     */
-  },
-  stuInfo () {
+  getStuInfo () {
     const self = this;
     const str = encodeFormated(wx.getStorageSync('session'));
 
@@ -121,45 +175,26 @@ App({
       }
     });
   },
-  userInfo () {
-    const self = this;
-
-    wx.getUserInfo({
-      success (res) {
-        const { rawData, signature } = res;
-        const thirdSession = wx.getStorageSync('session');
-        const str = encodeFormated(`${rawData}&${signature}&${thirdSession}`);
-
-        self.checkInfo(str);
-      },
-      fail () {
-        console.log('userInfo fail');
-      }
-    });
-  },
   onLaunch () {
     const self = this;
 
     wx.checkSession({
       success () {
         console.log('session 有效，直接登录');
-        self.userInfo();
+        self.getUserInfo();
+        self.getStuInfo();
       },
       fail () {
         console.log('session 无效，需要重新获取');
         self.loginApp();
+        self.getStuInfo();
       }
     });
-
-    self.stuInfo();
 
     /**
      * 登录 检查 session 是否有效
      * 有效则获取信息，无效则先拿 code
      */
-  },
-  onShow () {
-
   },
   gotoLogin (url) {
     wx.showModal({
