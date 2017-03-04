@@ -91,18 +91,22 @@ Page({
       phone: this.data.phone,
       imgSrc: this.data.imgSrc
     };
+    const actType = ['school', 'academy', 'class'];
     const key = wx.getStorageSync('session');
-    let str = encodeFormated(`${key}&${data.type}&${data.headline}&${data.place}&${data.host}&${data.title}&${data.detail}&${data.date}&${data.phone}&${data.imgSrc}`);
-    wx.request({
-      method: 'post',
+    wx.uploadFile({
       url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Apply/fileUpload',
-      data: {
-        params: encodeFormated(`${key}&${data.imgSrc}`)
-      },
+      filePath: data.imgSrc,
+      name: 'file',
       header: {
-        'content-type': 'application/x-www-form-urlencoded'
+        'content-type': 'multipart/form-data'
+      },
+      formData: {
+        key: key,
+        file: data.imgSrc
       },
       success (res) {
+        let path = JSON.parse(res.data).bags.path;
+        let str = encodeFormated(`${key}&${data.title}&${data.host}&${data.date}&${data.place}&${actType[data.type]}&${data.headline}&${data.detail}&${data.phone}&${path}`);
         wx.request({
           method: 'post',
           url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Apply/upload',
@@ -113,7 +117,7 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            console.log(res);
+            console.log(res.data);
           }
         });
       }
