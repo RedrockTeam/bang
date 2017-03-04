@@ -5,6 +5,7 @@ const encodeFormated = require('../../utils/util').encodeFormated;
 Page({
   data: {
     logout: imgPrefix + 'logout.png',
+    avatar: '',
     stu_info: {
       stuid: '',
       detail_info: [
@@ -99,11 +100,6 @@ Page({
         }
       ],
       room_feedback_info: [
-        // {
-        //   name: '寝室信息',
-        //   message: '',
-        //   url: imgPrefix + 'arrow.png'
-        // },
         {
           name: '意见反馈',
           message: '',
@@ -114,6 +110,9 @@ Page({
 
     this.setData({
       stu_info: tmpInfo
+    });
+    this.setData({
+      avatar: app.data.userInfo.avatar
     });
   }
 });
