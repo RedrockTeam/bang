@@ -126,7 +126,6 @@ Page({
       success: function (res) {
         if (res.data.status_code === 200) {
           let resData = res.data.bags.courses;
-          console.log('resData', resData);
           let day = new Date().getDay() - 1;
 
           let courseToday = resData.filter((item) => {
@@ -181,7 +180,6 @@ Page({
              * stageIndex: 上午 中午 下午
              * detailIndex: 每个阶段有两节大课
              */
-
             courseTmp[stageIndex][detailIndex] = {
               class: item.lesson,
               room: item.classroom,
@@ -201,17 +199,17 @@ Page({
         } else {
           console.log('首页获取课表失败1', res.data.status_text);
           wx.hideToast();
-          wx.showModal({
-            title: '获取课表信息失败，请重试',
-            showCancel: false,
-            confirmText: '确认'
-          });
+          app.gotoLogin();
         }
         return false;
       },
       fail: function (res) {
+        wx.showModal({
+          title: '获取课表信息失败，请重试',
+          showCancel: false,
+          confirmText: '确认'
+        });
         console.log('首页获取课表失败2', res);
-        app.gotoLogin();
       },
       complete: res => {
         wx.hideToast();
