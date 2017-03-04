@@ -27,7 +27,8 @@
       <text>{{week}}周</text>
       <text>今日课程</text>
       <navigator class="index--course__nav"
-                  hover-class="none">
+                  hover-class="none"
+                  url="/pages/date/class/class?stuNumber={{stuNumber}}&stuName={{stuName}}&week={{week}}">
         完整课表
       </navigator>
     </view>

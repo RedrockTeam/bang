@@ -2,7 +2,7 @@
 <view class="wrapper">
   <view class="header">
     <view class="header__desc">
-      {{elecState.elec_spend}}
+      {{eleCost}}
       <text class="header__text">度</text>
     </view>
   </view>

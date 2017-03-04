@@ -7,6 +7,8 @@ Page({
     title: 'past',
     elecState: {}, // 返回xml的数据
     cost: [],
+    realCost: [],
+    eleCost: 0, // 当前月份的钱
     start: 0, // 开始月份
     focusIndex: 1,
     lastFocusIndex: 0,
@@ -42,6 +44,10 @@ Page({
           });
         }
         return Number(val.spend);
+      });
+      this.setData({
+        realCost: cost,
+        eleCost: cost[0]
       });
 
       let costMin = Math.min.apply(null, cost);
@@ -79,7 +85,10 @@ Page({
             }
             return Number(val.spend);
           });
-
+          this.setData({
+            realCost: cost,
+            eleCost: cost[0]
+          });
           // 对接口的时候发现的BUG 不知道当时是怎么写的canvas，后来发现，cost数据中没1就会bug，目测这样改简单了。
           let costMin = Math.min.apply(null, cost);
           cost = cost.map(val => val / costMin);
@@ -342,10 +351,11 @@ Page({
       if (monthsConHeight.yStart <= y && y <= monthsConHeight.yEnd) {
         monthsConWidth.forEach((val, idx, arr) => {
           if (val.xStart <= x && x <= val.xEnd) {
-            if (idx + 1 !== this.data.focusIndex) {  // 两个if，判断时候点击了月份
+            if (idx + 1 !== this.data.focusIndex) {  // 两个if，判断是否点击了月份
               this.setData({
                 lastFocusIndex: this.data.focusIndex,
-                focusIndex: idx + 1
+                focusIndex: idx + 1,
+                eleCost: this.data.realCost[idx]
               });
               this.getPath();
             }

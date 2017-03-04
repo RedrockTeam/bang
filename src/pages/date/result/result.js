@@ -1,3 +1,5 @@
+const encodeFormated = require('../../../utils/util').encodeFormated;
+const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
 // const app = getApp();
 
 Page({
@@ -27,44 +29,22 @@ Page({
     this.setData({
       index: e.detail.value
     });
-    // console.log(this.data.index);
     this.dataRequest();
   },
   onLoad: function onLoad (params) {
     let self = this;
     // 获取缓存数据
+    wx.showToast({
+      title: '数据获取中',
+      icon: 'loading',
+      duration: 10000
+    });
     wx.getStorage({
       key: 'key',
       success: function (res) {
-        console.log(res.data);
         self.setData({
           stuName: res.data.stuName,
           stuNumber: res.data.stuNum
-        });
-        // 确定当前周数
-        console.log(self.data.stuNumber[0]);
-        wx.request({
-          url: 'http://hongyan.cqupt.edu.cn/redapi2/api/kebiao',
-          method: 'post',
-          data: {
-            stuNum: self.data.stuNumber[0],
-            idNum: '',
-            week: ''
-          },
-          header: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          success: function (res) {
-            console.log(res.data);
-            self.setData({
-              index: res.data.nowWeek
-            });
-            if (self.data.index > 20) {
-              self.setData({
-                index: 0
-              });
-            }
-          }
         });
         self.dataRequest();
       }
@@ -74,78 +54,96 @@ Page({
   dataRequest: function dataRequest (e) {
     let self = this;
     let dataIndex = parseInt(self.data.index);
-    console.log(self.data.stuName.length);
+    if (!dataIndex) {
+      dataIndex = 0;
+    }
     let className = [[], [], [], [], [], []];
     for (let stuI = 0; stuI < self.data.stuNumber.length; stuI++) {
       wx.request({
-        url: 'http://hongyan.cqupt.edu.cn/redapi2/api/kebiao',
+        url: `${apiPrefix}/Course/getKebiao`,
         method: 'post',
         data: {
-          stuNum: self.data.stuNumber[stuI],
-          idNum: '',
-          week: dataIndex
+          params: encodeFormated(`${wx.getStorageSync('session')}&${dataIndex}&${self.data.stuNumber[stuI]}`)
         },
         header: {
           'content-type': 'application/x-www-form-urlencoded'
         },
         success: function success (res) {
-          console.log(res.data);
-          let classData = res.data.data;
-          let classLen = classData.length;
-          let classWeek = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
-          let classTime = ['一二节', '三四节', '五六节', '七八节', '九十节', '十一十二节'];
-          let temclassName = [[], [], [], [], [], []];
-          // 课表数据绑定
-          for (let i = 0; i < classLen; i++) {
-          // console.log(classData[i].day);
-            for (let t = 0; t < classTime.length; t++) {
-              if (classData[i].lesson === classTime[t]) {
-                for (let j = 0; j < classWeek.length; j++) {
-                  if (classData[i].day === classWeek[j]) {
-                    temclassName[t][j] = '';
+          if (res.data.status_code === 200) {
+            self.setData({
+              index: res.data.bags.week
+            });
+            let classData = res.data.bags.courses;
+            let classLen = classData.length;
+            let classWeek = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+            let classTime = ['一二节', '三四节', '五六节', '七八节', '九十节', '十一十二节'];
+            let temclassName = [[], [], [], [], [], []];
+            // 课表数据绑定
+            for (let i = 0; i < classLen; i++) {
+              for (let t = 0; t < classTime.length; t++) {
+                if (classData[i].lesson === classTime[t]) {
+                  for (let j = 0; j < classWeek.length; j++) {
+                    if (classData[i].day === classWeek[j]) {
+                      temclassName[t][j] = '';
+                    }
                   }
                 }
               }
             }
-          }
-          // console.log(temclassName);
-          for (let a = 0; a < classTime.length; a++) {
-            for (let b = 0; b < classWeek.length; b++) {
-              if (temclassName[a][b] !== '') {
-                if (className[a][b]) {
-                  className[a][b].push(self.data.stuName[stuI]);
-                } else {
-                  className[a][b] = [];
-                  className[a][b].push(self.data.stuName[stuI]);
+            for (let a = 0; a < classTime.length; a++) {
+              for (let b = 0; b < classWeek.length; b++) {
+                if (temclassName[a][b] !== '') {
+                  if (className[a][b]) {
+                    className[a][b].push(self.data.stuName[stuI]);
+                  } else {
+                    className[a][b] = [];
+                    className[a][b].push(self.data.stuName[stuI]);
+                  }
                 }
               }
             }
-          }
-          // console.log(className);
-          let color = [[], [], [], [], [], []];
-          for (let colorI = 0; colorI < 6; colorI++) {
-            for (let colorJ = 0; colorJ < 7; colorJ++) {
-              // console.log(typeof className[colorI][colorJ]);
-              if (!(className[colorI][colorJ] instanceof Object)) {
-                color[colorI][colorJ] = '#fff';
+            let color = [[], [], [], [], [], []];
+            for (let colorI = 0; colorI < 6; colorI++) {
+              for (let colorJ = 0; colorJ < 7; colorJ++) {
+                if (!(className[colorI][colorJ] instanceof Object)) {
+                  color[colorI][colorJ] = '#fff';
+                }
               }
             }
+            self.setData({
+              'className.oneT': className[0],
+              'className.threeF': className[1],
+              'className.fiveS': className[2],
+              'className.sevenE': className[3],
+              'className.nineT': className[4],
+              'className.elevenT': className[5],
+              color: color
+            });
+          } else {
+            wx.hideToast();
+            console.log('获取无课表信息失败1', res.status_text);
+            wx.showModal({
+              title: '网络错误,请重试',
+              showCancel: false,
+              confirmText: '确认'
+            });
           }
-          self.setData({
-            'className.oneT': className[0],
-            'className.threeF': className[1],
-            'className.fiveS': className[2],
-            'className.sevenE': className[3],
-            'className.nineT': className[4],
-            'className.elevenT': className[5],
-            color: color
+        },
+        fail: res => {
+          console.log('获取无课表信息失败2', res);
+          wx.showModal({
+            title: '网络错误,请重试',
+            showCancel: false,
+            confirmText: '确认'
           });
+        },
+        complete: res => {
+          wx.hideToast();
         }
       });
     }
   },
   bindAppear: function bindAppear (e) {
-    console.log(e);
     if (e.currentTarget.dataset.classname) {
       this.setData({
         hiddenFlag: !this.data.hiddenFlag,
