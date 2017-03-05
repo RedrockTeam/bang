@@ -37,40 +37,23 @@ Page({
   actTypeChange (e) {
     const key = wx.getStorageSync('session');
     const actType = ['null', 'school', 'academy', 'class'];
-    let type = actType[this.data.actIndex];
     let that = this;
-    this.setData({
+    that.setData({
       actIndex: e.target.dataset.actIndex,
       page: 1
     });
-    console.log(type);
+    let type = actType[that.data.actIndex];
     wx.request({
       method: 'post',
       url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Show/getList',
       data: {
-        params: encodeFormated(`${key}&${actType[type]}&${1}`)
+        params: encodeFormated(`${key}&${type}&${1}`)
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       success (res) {
         let newActList = [];
-        // for (let item of res.data.bags) {
-        //   let listItem = {};
-        //   let weekDay = week[new Date(item.date).getDay()];
-        //   let dateStr = item.date.split('-')[1];
-        //   if (dateStr < 10) {
-        //     dateStr = '0' + dateStr;
-        //   }
-        //   dateStr = dateStr + '/' + item.date.split('-')[2];
-        //   listItem.title = item.title;
-        //   listItem.date = dateStr;
-        //   listItem.day = weekDay;
-        //   listItem.place = item.place;
-        //   listItem.img = item.img;
-        //   listItem.id = item.id;
-        //   newActList.push(listItem);
-        // }
         that.handleData(res.data.bags, newActList);
         that.setData({
           actList: newActList
@@ -106,8 +89,7 @@ Page({
       },
       success (res) {
         let newImgUrls = [];
-        let type = 'school';
-        // let page = 1;
+        let type = 'null';
         let str = encodeFormated(`${key}&${type}&${that.data.page}`);
         wx.hideToast();
 
@@ -158,10 +140,14 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success (res) {
-        that.handleData(res.data.bags, newActList);
-        that.setData({
-          actList: newActList
-        });
+        if (res.data.bags.length > 0) {
+          that.handleData(res.data.bags, newActList);
+          that.setData({
+            actList: newActList
+          });
+        } else {
+          return;
+        }
       }
     });
   },
