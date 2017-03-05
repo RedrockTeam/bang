@@ -52,7 +52,7 @@
     <view class="service-item"
           wx:else>
       <view class="service-item__icon icon--pic"></view>
-      <image class="show-img" src="https://static.mengniang.org/common/thumb/4/41/Nicky.jpg/250px-Nicky.jpg"></image>
+      <image class="show-img" src="{{imgSrc}}"></image>
     </view>
     <navigator class="submit-btn btn-back"
                 wx:if="{{status < 4}}"

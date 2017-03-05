@@ -97,15 +97,26 @@ Page({
     week: 0,
     currentSwiper: 0
   },
-  onLoad () {
-    let userInfor = app.data.stuInfo;
+  onShow () {
+    const self = this;
+    app.getStuInfo().then(res => {
+      if (res && app.data.stuInfo.name) {
+        let userInfor = app.data.stuInfo;
 
-    this.setData({
-      stuNumber: userInfor.stuNum,
-      stuName: userInfor.name
+        this.setData({
+          stuNumber: userInfor.stuNum,
+          stuName: userInfor.name
+        });
+        self.getKebiaoFunc();
+      } else {
+        app.gotoLogin();
+      }
+    }).catch(err => {
+      console.log('获取学生信息失败, ', err);
+      app.gotoLogin();
     });
   },
-  onShow () {
+  getKebiaoFunc () {
     let self = this;
 
     wx.showToast({
