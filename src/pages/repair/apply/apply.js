@@ -1,4 +1,6 @@
-// const app = getApp();
+const app = getApp();
+const encodeFormated = require('../../../utils/util').encodeFormated;
+const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
 
 Page({
   data: {
@@ -74,7 +76,7 @@ Page({
       '学生公寓区'
     ],
     areaVal: '请选择区域',
-    name: '桥本奈奈未',
+    name: '',
     phone: '',
     place: '',
     title: '',
@@ -82,7 +84,17 @@ Page({
     // 是否显示已上传图片
     showImg: false,
     // 上传图片地址
-    imgSrc: ''
+    imgSrc: '../../../images/wt.jpg'
+  },
+  onLoad () {
+    let name = app.data.stuInfo.name;
+    if (name) {
+      this.setData({
+        name
+      });
+    } else {
+      app.gotoLogin();
+    }
   },
   bindServiceChange (e) {
     this.setData({
@@ -101,9 +113,18 @@ Page({
     });
   },
   bindPhone (e) {
-    this.setData({
-      phone: e.detail.value
-    });
+    let phone = e.detail.value;
+    if ((/^1[34578]\d{9}$/.test(phone))) {
+      this.setData({
+        phone
+      });
+    } else {
+      wx.showModal({
+        title: '电话号码格式不对，请重新输入',
+        showCancel: false,
+        confirmText: '确认'
+      });
+    }
   },
   bindPlace (e) {
     this.setData({
@@ -137,30 +158,96 @@ Page({
       }
     });
   },
-  // 差一个上传图片的接口
+  // 差一个反馈，打分的接口
   submitApply () {
-    let self = this;
-    let data = {
-      ip: '',
-      name: '',
-      stuId: '',
-      bt: self.data.title,
-      bxdh: self.data.phone,
-      bxdd: self.data.place,
-      bxnr: self.data.text,
-      fwqy: self.data.areaVal,
-      fwxm: self.data.detailVal,
-      pic: ''
-    };
-
-    /**
-     *  服务项目字段应该有两个的...少一个
-     *  请求报修提交接口
-     *  应该会返回单号之类的，然后根据单号查看情况什么的
-     */
-    console.log(data);
-    wx.redirectTo({
-      url: '../info/info'
+    const self = this;
+    const {name, title, phone, place, text, areaVal, detailVal} = self.data;
+    if (name && title && phone && place && text && areaVal && detailVal) {
+      wx.showToast({
+        title: '正在上传报修信息',
+        icon: 'loading',
+        duration: 10000
+      });
+      // 如果显示了图片，说明选取了图片，否则使用默认图片
+      if (this.data.showImg) {
+        wx.uploadFile({
+          url: `${apiPrefix}/Common/upload`,
+          filePath: self.data.imgSrc,
+          name: 'file',
+          success (res) {
+            let resData = JSON.parse(res.data);
+            if (resData.bags) {
+              self.uploadApplyInfo(name, title, phone, place, text, areaVal, detailVal, resData.bags);
+            } else {
+              console.log('图片上传失败-报修1', resData);
+              wx.hideToast();
+              wx.showModal({
+                title: '图片上传失败，请重试',
+                showCancel: false,
+                confirmText: '确认'
+              });
+              return false;
+            }
+          },
+          fail (res) {
+            wx.hideToast();
+            console.log('图片上传失败-报修2', res);
+            wx.showModal({
+              title: '图片上传失败，请重试',
+              showCancel: false,
+              confirmText: '确认'
+            });
+          }
+        });
+      } else {
+        self.uploadApplyInfo(name, title, phone, place, text, areaVal, detailVal);
+      }
+    } else {
+      wx.showModal({
+        title: '请把内容填写完整',
+        showCancel: false,
+        confirmText: '确认'
+      });
+    }
+  },
+  uploadApplyInfo (name, title, phone, place, text, areaVal, detailVal, imgUrl) {
+    if (!imgUrl) {
+      imgUrl = this.data.imgSrc;
+    }
+    wx.request({
+      url: `${apiPrefix}/Repair/saveInfo`,
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        params: encodeFormated(`${wx.getStorageSync('session')}&${name}&${title}&${phone}&${place}&${text}&${areaVal}&${detailVal}&${imgUrl}`)
+      },
+      success (res) {
+        if (res.data.status_code === 200) {
+          wx.redirectTo({
+            url: '../info/info'
+          });
+        } else {
+          console.log('报修申请失败1', res.data.status_text);
+          wx.showModal({
+            title: '网络错误,请重试',
+            showCancel: false,
+            confirmText: '确认'
+          });
+        }
+      },
+      fail: res => {
+        console.log('报修申请失败2', res);
+        wx.showModal({
+          title: '网络错误,请重试',
+          showCancel: false,
+          confirmText: '确认'
+        });
+      },
+      complete: res => {
+        wx.hideToast();
+      }
     });
   }
 });
