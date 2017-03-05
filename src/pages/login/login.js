@@ -1,4 +1,4 @@
-// const app = getApp();
+const app = getApp();
 // let imgPrefix = 'https://app.liuwenxi.me/';
 const encodeFormated = require('../../utils/util').encodeFormated;
 
@@ -19,13 +19,28 @@ Page({
     });
   },
   loginAction () {
+    wx.showToast({
+      title: '登录中',
+      icon: 'loading',
+      duration: 10000
+    });
+    const self = this;
+    if (!wx.getStorageSync('session')) {
+      // 获取session
+      app.loginApp().then(res => {
+        self.loginFunction();
+      });
+    } else {
+      self.loginFunction();
+    }
+  },
+  loginFunction () {
     let info = {
       user: this.data.stunum,
       password: this.data.id,
       key: wx.getStorageSync('session')
     };
     const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
-
     wx.request({
       method: 'post',
       header: {
@@ -36,12 +51,23 @@ Page({
         params: encodeFormated(`${info.user}&${info.password}&${info.key}`)
       },
       success: function (res) {
-        console.log(res);
-        wx.removeStorageSync('session');
-        wx.switchTab({
-          url: '../index/index'
-        });
-        console.log('redirect');
+        if (res.data.status_code === 200) {
+          wx.hideToast();
+          wx.showModal({
+            title: '恭喜，绑定成功！',
+            showCancel: false,
+            confirmText: '继续',
+            success (res) {
+              if (res.confirm) {
+                console.log('redirect');
+                // wx.removeStorageSync('session');
+                wx.switchTab({
+                  url: '../index/index'
+                });
+              }
+            }
+          });
+        }
       }
     });
   },

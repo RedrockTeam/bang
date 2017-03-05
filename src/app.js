@@ -21,46 +21,75 @@ App({
   },
   loginApp () {
     const self = this;
+    return new Promise((resolve, reject) => {
+      wx.login({
+        success (res) {
+          if (res.code) {
+            console.log('code 获取成功');
 
-    wx.login({
-      success (res) {
-        if (res.code) {
-          console.log('code 获取成功');
-
-          self.getSession(res.code);
+            // self.getSession(res.code);
+            resolve(res.code);
+          }
         }
-      }
+      });
+    }).then(code => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          method: 'post',
+          url: 'https://redrock.cqupt.edu.cn/weapp/auth/codeAuth',
+          data: {
+            params: encodeFormated(code)
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success (res) {
+            const retSession = res.data.bags.thirdSession;
+
+            wx.setStorageSync('session', retSession);
+            self.getUserInfo();
+            resolve();
+          }
+        });
+      });
     });
     /**
      * login 方法获取 code
      * 下一步交给 getSession 获取第三方 session
      */
   },
-  getSession (code) {
-    const self = this;
+  // getSession (code) {
+  //   const self = this;
+  //   return new Promise((resolve, reject) => {
+  //     wx.request({
+  //       method: 'post',
+  //       url: 'https://redrock.cqupt.edu.cn/weapp/auth/codeAuth',
+  //       data: {
+  //         params: encodeFormated(code)
+  //       },
+  //       header: {
+  //         'content-type': 'application/x-www-form-urlencoded'
+  //       },
+  //       success (res) {
+  //         const retSession = res.data.bags.thirdSession;
 
-    wx.request({
-      method: 'post',
-      url: 'https://redrock.cqupt.edu.cn/weapp/auth/codeAuth',
-      data: {
-        params: encodeFormated(code)
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success (res) {
-        const retSession = res.data.bags.thirdSession;
+  //         wx.setStorageSync('session', retSession);
+  //         self.getUserInfo();
+  //         resolve();
+  //       }
+  //     });
+  //   }).then(() => {
+  //     return {
+  //       code: 1,
+  //       status: 'get session success'
+  //     };
+  //   });
 
-        wx.setStorageSync('session', retSession);
-        self.getUserInfo();
-      }
-    });
-
-    /**
-     * from login
-     * 获取第三方 session 并存储到本地
-     */
-  },
+  //   /**
+  //    * from login
+  //    * 获取第三方 session 并存储到本地
+  //    */
+  // },
   getUserInfo () {
     const self = this;
 
@@ -157,22 +186,29 @@ App({
   getStuInfo () {
     const self = this;
     const str = encodeFormated(wx.getStorageSync('session'));
-
-    wx.request({
-      method: 'post',
-      url: 'https://redrock.cqupt.edu.cn/weapp/User/getUserInfo',
-      data: {
-        params: str
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success (res) {
-        for (let key in res.data.bags) {
-          self.data.stuInfo[key] = res.data.bags[key];
+    return new Promise((resolve, reject) => {
+      wx.request({
+        method: 'post',
+        url: 'https://redrock.cqupt.edu.cn/weapp/User/getUserInfo',
+        data: {
+          params: str
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success (res) {
+          for (let key in res.data.bags) {
+            self.data.stuInfo[key] = res.data.bags[key];
+          }
+          // 获取学生信息
+          resolve();
         }
-        // 获取学生信息
-      }
+      });
+    }).then(() => {
+      return {
+        code: 1,
+        status: 'bind success, llp'
+      };
     });
   },
   onLaunch () {

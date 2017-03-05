@@ -58,7 +58,8 @@ Page({
       }
     });
   },
-  onLoad () {
+  onShow () {
+    const self = this;
     const openIdUrl = 'https://redrock.cqupt.edu.cn/weapp/auth/getOpenid';
 
     wx.request({
@@ -71,48 +72,52 @@ Page({
         params: encodeFormated(wx.getStorageSync('session'))
       },
       success (res) {
-        if (res.data.bags.stuid === 'empty') {
+        if (res.data.status_code !== 200 || res.data.bags.stuid === 'empty') {
           wx.redirectTo({
             url: '../login/login'
           });
+        } else {
+          app.getStuInfo().then(res => {
+            if (res.code === 1) {
+              const stuInfo = app.data.stuInfo;
+              const tmpInfo = {
+                stuid: stuInfo.stuNum,
+                detail_info: [
+                  {
+                    name: '学院',
+                    message: stuInfo.college
+                  },
+                  {
+                    name: '专业',
+                    message: stuInfo.major
+                  },
+                  {
+                    name: '年级',
+                    message: stuInfo.grade
+                  },
+                  {
+                    name: '班级',
+                    message: stuInfo.classNum
+                  }
+                ],
+                room_feedback_info: [
+                  {
+                    name: '意见反馈',
+                    message: '',
+                    url: imgPrefix + 'arrow.png'
+                  }
+                ]
+              };
+              self.setData({
+                stu_info: tmpInfo
+              });
+              self.setData({
+                avatar: app.data.userInfo.avatar
+              });
+            }
+          });
         }
       }
-    });
-
-    const tmpInfo = {
-      stuid: app.data.stuInfo.stuNum,
-      detail_info: [
-        {
-          name: '学院',
-          message: app.data.stuInfo.college
-        },
-        {
-          name: '专业',
-          message: app.data.stuInfo.major
-        },
-        {
-          name: '年级',
-          message: app.data.stuInfo.grade
-        },
-        {
-          name: '班级',
-          message: app.data.stuInfo.classNum
-        }
-      ],
-      room_feedback_info: [
-        {
-          name: '意见反馈',
-          message: '',
-          url: imgPrefix + 'arrow.png'
-        }
-      ]
-    };
-
-    this.setData({
-      stu_info: tmpInfo
-    });
-    this.setData({
-      avatar: app.data.userInfo.avatar
     });
   }
 });
