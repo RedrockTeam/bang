@@ -22,7 +22,8 @@
     "pages/repair/info/info",
     "pages/activity/index/index",
     "pages/activity/apply/apply",
-    "pages/activity/detail/detail"
+    "pages/activity/detail/detail",
+    "pages/activity/info/info"
     // Dont remove this comment
   ],
   "window": {

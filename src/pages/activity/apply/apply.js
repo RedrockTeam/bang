@@ -118,6 +118,9 @@ Page({
           },
           success (res) {
             console.log(res.data);
+            wx.redirectTo({
+              url: '../info/info'
+            });
           }
         });
       }
