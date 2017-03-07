@@ -7,8 +7,8 @@ Page({
     hiddenFlag: true,
     array: ['本学期', '第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周', '第八周', '第九周', '第十周', '第十一周', '第十二周', '第十三周', '第十四周', '第十五周', '第十六周', '第十七周', '第十八周', '第十九周', '第二十周'],
     index: 0,
-    name: '曾玉',
-    stuNumber: '2014210104',
+    name: '',
+    stuNumber: '',
     color: [[], [], [], [], [], []],
     className: {
       oneT: [],
@@ -30,7 +30,8 @@ Page({
     detailWeek: '',
     detailTime: '',
     detailClassname: '',
-    detailClassroom: ''
+    detailClassroom: '',
+    getAllClasses: false
   },
   // 切换周数
   bindPickerChange: function bindPickerChange (e) {
@@ -103,6 +104,7 @@ Page({
           }
           // 设置数据
           self.setData({
+            getAllClasses: true,
             'className.oneT': className[0],
             'className.threeF': className[1],
             'className.fiveS': className[2],
