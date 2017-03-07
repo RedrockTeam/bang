@@ -6,8 +6,8 @@ const app = getApp();
 Page({
   data: {
     imgUrls: [
-      `${imgPrefix}/banner copy 2.png`,
-      `${imgPrefix}/banner copy.png`,
+      `${imgPrefix}/bannercopy2.png`,
+      `${imgPrefix}/bannercopy.png`,
       `${imgPrefix}/banner.png`
     ],
     course: [
