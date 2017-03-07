@@ -4,7 +4,7 @@ const app = getApp();
 
 Page({
   data: {
-    imgUrl: '../../../images',
+    imgUrl: 'https://redrock.cqupt.edu.cn/weapp/images',
     firstHidden: true,
     deleteHidden: true,
     resultHidden: true,

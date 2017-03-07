@@ -1,4 +1,4 @@
-const imgPrefix = 'http://kjcx.yaerma.com/static/imgs/wxapp/images';
+const imgPrefix = 'https://redrock.cqupt.edu.cn/weapp/images';
 const encodeFormated = require('../../utils/util').encodeFormated;
 const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
 const app = getApp();
@@ -231,5 +231,11 @@ Page({
     this.setData({
       currentSwiper: e.detail.current
     });
+  },
+  onShareAppMessage () {
+    return {
+      title: '自定义分享标题',
+      path: '/page/index/index'
+    };
   }
 });

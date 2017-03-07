@@ -75,7 +75,7 @@ Page({
     // 是否显示已上传图片
     showImg: false,
     // 上传图片地址
-    imgSrc: '../../../images/wt.jpg'
+    imgSrc: 'https://redrock.cqupt.edu.cn/weapp/images/wt.jpg'
   },
   onLoad () {
     let name = app.data.stuInfo.name;

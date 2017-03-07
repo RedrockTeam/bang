@@ -99,7 +99,6 @@ Page({
         that.setData({
           imgUrls: newImgUrls
         });
-        console.log(newImgUrls);
         wx.request({
           method: 'post',
           url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Show/getList',
