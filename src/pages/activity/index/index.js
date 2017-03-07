@@ -2,11 +2,7 @@ const encodeFormated = require('../../../utils/util').encodeFormated;
 
 Page({
   data: {
-    imgUrls: [
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-    ],
+    imgUrls: [],
     currentSwiper: 0,
     actType: [
       {
@@ -29,7 +25,7 @@ Page({
         date: '00/00',
         day: '未定',
         place: '获取中',
-        img: 'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+        img: ''
       }
     ],
     page: 1
@@ -109,6 +105,7 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
+            console.log(res, '2313');
             let newActList = [];
             that.handleData(res.data.bags, newActList);
             that.setData({
@@ -156,9 +153,6 @@ Page({
       let listItem = {};
       let weekDay = week[new Date(item.date).getDay()];
       let dateStr = item.date.split('-')[1];
-      if (dateStr < 10) {
-        dateStr = '0' + dateStr;
-      }
       dateStr = dateStr + '/' + item.date.split('-')[2];
       listItem.title = item.title;
       listItem.date = dateStr;

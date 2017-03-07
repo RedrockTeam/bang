@@ -6,9 +6,9 @@ const app = getApp();
 Page({
   data: {
     imgUrls: [
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      `${imgPrefix}/bannercopy2.png`,
+      `${imgPrefix}/bannercopy.png`,
+      `${imgPrefix}/banner.png`
     ],
     course: [
       [
@@ -68,7 +68,7 @@ Page({
         {
           name: '失物招领',
           url: '',
-          img: `${imgPrefix}/index__icon-laf.png`
+          img: `${imgPrefix}/index__icon-lose.png`
         }
       ],
       [
