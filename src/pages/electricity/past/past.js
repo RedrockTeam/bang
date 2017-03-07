@@ -22,7 +22,7 @@ Page({
       delta: 1
     });
   },
-  onLoad () {
+  onShow () {
     // 获取屏幕宽度
     let windowWidth = 0;
     wx.getSystemInfo({

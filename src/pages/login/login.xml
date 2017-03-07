@@ -10,6 +10,9 @@
         <input type="text"
                 placeholder="身份证后6位"
                 bindchange="changeId"/>
-        <button bindtap="loginAction">登 录</button>
+        <view class="btn">
+          <button bindtap="backToIndex">返 回</button>
+          <button bindtap="loginAction">登 录</button>
+        </view>
     </view>
 </view>

@@ -1,10 +1,10 @@
 const app = getApp();
-// let imgPrefix = 'https://app.liuwenxi.me/';
+let imgPrefix = 'https://redrock.cqupt.edu.cn/weapp/images';
 const encodeFormated = require('../../utils/util').encodeFormated;
 
 Page({
   data: {
-    header: 'login-header.png',
+    header: imgPrefix + '/logo.png',
     stunum: '',
     id: ''
   },
@@ -16,6 +16,11 @@ Page({
   changeId (e) {
     this.setData({
       id: e.detail.value
+    });
+  },
+  backToIndex () {
+    wx.switchTab({
+      url: '/pages/index/index'
     });
   },
   loginAction () {
@@ -51,39 +56,28 @@ Page({
         params: encodeFormated(`${info.user}&${info.password}&${info.key}`)
       },
       success: function (res) {
+        wx.hideToast();
         if (res.data.status_code === 200) {
-          wx.hideToast();
           wx.showModal({
             title: '恭喜，绑定成功！',
             showCancel: false,
             confirmText: '继续',
             success (res) {
               if (res.confirm) {
-                console.log('redirect');
-                // wx.removeStorageSync('session');
                 wx.switchTab({
                   url: '../index/index'
                 });
               }
             }
           });
+        } else {
+          wx.showModal({
+            title: '账号或者密码错误！',
+            showCancel: false,
+            confirmText: '重试'
+          });
         }
       }
     });
-  },
-  onLoad () {
-    // TODO: onLoad
-  },
-  onReady () {
-    // TODO: onReady
-  },
-  onShow () {
-    // TODO: onShow
-  },
-  onHide () {
-    // TODO: onHide
-  },
-  onUnload () {
-    // TODO: onUnload
   }
 });

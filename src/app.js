@@ -212,6 +212,13 @@ App({
     });
   },
   onLaunch () {
+    // 每次进入清空图书馆查询，电费查询清空缓存
+    ['myinfor_library', 'rankList_library', 'myinfor_electricity'].forEach(key => {
+      wx.removeStorage({
+        key
+      });
+    });
+
     const self = this;
 
     wx.checkSession({
@@ -255,27 +262,5 @@ App({
         }));
       }
     });
-  },
-  onHide () {
-    // 图书馆查询，电费查询清空缓存
-    ['myinfor_library', 'rankList_library', 'myinfor_electricity'].forEach(value => {
-      this.removeStorages(value);
-    });
-    // wx.removeStorage({
-    //   key: 'myinfor_library',
-    //   success: res => {
-    //     console.log('---------removestorage', wx.getStorage({
-    //       key: 'myinfor_library'
-    //     }));
-    //   }
-    // });
-    // wx.removeStorage({
-    //   key: 'rankList_library',
-    //   success: res => {
-    //     console.log('---------removestorage', wx.getStorage({
-    //       key: 'rankList_library'
-    //     }));
-    //   }
-    // });
   }
 });
