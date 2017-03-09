@@ -26,12 +26,15 @@ App({
         success (res) {
           if (res.code) {
             console.log('code 获取成功');
-
             // self.getSession(res.code);
             resolve(res.code);
           }
         }
       });
+/**
+ * login 方法获取 code
+ * 下一步交给 getSession 获取第三方 session
+ */
     }).then(code => {
       return new Promise((resolve, reject) => {
         wx.request({
@@ -44,6 +47,9 @@ App({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
+            if (res.statusCode !== 200) {
+              self.getError();
+            }
             const retSession = res.data.bags.thirdSession;
 
             wx.setStorageSync('session', retSession);
@@ -53,43 +59,11 @@ App({
         });
       });
     });
-    /**
-     * login 方法获取 code
-     * 下一步交给 getSession 获取第三方 session
-     */
+  /**
+   * from login
+   * 获取第三方 session 并存储到本地
+   */
   },
-  // getSession (code) {
-  //   const self = this;
-  //   return new Promise((resolve, reject) => {
-  //     wx.request({
-  //       method: 'post',
-  //       url: 'https://redrock.cqupt.edu.cn/weapp/auth/codeAuth',
-  //       data: {
-  //         params: encodeFormated(code)
-  //       },
-  //       header: {
-  //         'content-type': 'application/x-www-form-urlencoded'
-  //       },
-  //       success (res) {
-  //         const retSession = res.data.bags.thirdSession;
-
-  //         wx.setStorageSync('session', retSession);
-  //         self.getUserInfo();
-  //         resolve();
-  //       }
-  //     });
-  //   }).then(() => {
-  //     return {
-  //       code: 1,
-  //       status: 'get session success'
-  //     };
-  //   });
-
-  //   /**
-  //    * from login
-  //    * 获取第三方 session 并存储到本地
-  //    */
-  // },
   getUserInfo () {
     const self = this;
 
@@ -121,6 +95,9 @@ App({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
+            if (res.statusCode !== 200) {
+              self.getError();
+            }
             if (res.data.status_code !== 200) {
               console.log('code 过期，需要重新获取');
               self.loginApp();
@@ -128,14 +105,16 @@ App({
               console.log('code 有效，可以继续使用');
               resolve(obj);
             }
+          },
+          fail () {
+            self.getError();
           }
         });
       });
-
-      /**
-       * 检查 info
-       * 返回新的 promise
-       */
+/**
+ * 检查 info
+ * 返回新的 promise
+ */
     }).then((obj) => {
       return new Promise((resolve, reject) => {
         wx.request({
@@ -148,6 +127,9 @@ App({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
+            if (res.statusCode !== 200) {
+              self.getError();
+            }
             const info = {
               avatar: res.data.bags.avatarUrl,
               city: res.data.bags.city,
@@ -167,6 +149,7 @@ App({
     });
   },
   getOpenId () {
+    const self = this;
     const openIdUrl = 'https://redrock.cqupt.edu.cn/weapp/auth/getOpenid';
 
     wx.request({
@@ -179,6 +162,9 @@ App({
         params: encodeFormated(wx.getStorageSync('session'))
       },
       success (res) {
+        if (res.statusCode !== 200) {
+          self.getError();
+        }
         // console.log(res.data.bags.stuid);
       }
     });
@@ -197,6 +183,9 @@ App({
           'content-type': 'application/x-www-form-urlencoded'
         },
         success (res) {
+          if (res.statusCode !== 200) {
+            self.getError();
+          }
           for (let key in res.data.bags) {
             self.data.stuInfo[key] = res.data.bags[key];
           }
@@ -249,6 +238,18 @@ App({
           wx.redirectTo({
             url: '/pages/login/login'
           });
+        }
+      }
+    });
+  },
+  getError () {
+    wx.showModal({
+      title: '网络错误',
+      showCancel: false,
+      confirmText: '确认',
+      success: res => {
+        if (res.confirm) {
+          return false;
         }
       }
     });

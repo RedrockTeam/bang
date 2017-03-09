@@ -89,7 +89,10 @@ Page({
       stars: e.target.dataset.starIndex
     });
   },
-  sendAdvise (e) {
-
+  onShareAppMessage () {
+    return {
+      title: '重邮帮',
+      path: '/page/index/index'
+    };
   }
 });

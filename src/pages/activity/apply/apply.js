@@ -125,11 +125,11 @@ Page({
         });
       }
     });
-
-    /**
-     *  服务项目字段应该有两个的...少一个
-     *  请求报修提交接口
-     */
-    console.log(data);
+  },
+  onShareAppMessage () {
+    return {
+      title: '重邮帮',
+      path: '/page/index/index'
+    };
   }
 });

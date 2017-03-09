@@ -162,5 +162,11 @@ Page({
       listItem.id = item.id;
       newActList.push(listItem);
     };
+  },
+  onShareAppMessage () {
+    return {
+      title: '重邮帮',
+      path: '/page/index/index'
+    };
   }
 });
