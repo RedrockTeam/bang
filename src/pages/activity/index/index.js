@@ -105,7 +105,6 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            console.log(res, '2313');
             let newActList = [];
             that.handleData(res.data.bags, newActList);
             that.setData({
@@ -161,6 +160,12 @@ Page({
       listItem.img = item.img;
       listItem.id = item.id;
       newActList.push(listItem);
+    };
+  },
+  onShareAppMessage () {
+    return {
+      title: '重邮帮',
+      path: '/page/index/index'
     };
   }
 });

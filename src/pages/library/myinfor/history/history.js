@@ -23,5 +23,11 @@ Page({
         utils.getBookInfor(this, 'historyBook');
       }
     });
+  },
+  onShareAppMessage () {
+    return {
+      title: '重邮帮',
+      path: '/page/index/index'
+    };
   }
 });

@@ -157,5 +157,11 @@ Page({
     this.setData({
       hiddenFlag: !this.data.hiddenFlag
     });
+  },
+  onShareAppMessage () {
+    return {
+      title: '重邮帮',
+      path: '/page/index/index'
+    };
   }
 });

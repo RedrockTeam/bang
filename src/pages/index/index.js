@@ -68,7 +68,7 @@ Page({
         {
           name: '失物招领',
           url: '',
-          img: `${imgPrefix}/index__icon-lose.png`
+          img: `${imgPrefix}/index_icon_-lose.png`
         }
       ],
       [
@@ -99,22 +99,21 @@ Page({
   },
   onShow () {
     const self = this;
-    app.getStuInfo().then(res => {
-      if (res && app.data.stuInfo.name) {
+    // 挂个定时器
+    setTimeout(() => {
+      if (app.data.stuInfo.name) {
         let userInfor = app.data.stuInfo;
 
-        this.setData({
+        self.setData({
           stuNumber: userInfor.stuNum,
           stuName: userInfor.name
         });
         self.getKebiaoFunc();
       } else {
+        console.log('获取学生信息失败1', 323434);
         app.gotoLogin();
       }
-    }).catch(err => {
-      console.log('获取学生信息失败, ', err);
-      app.gotoLogin();
-    });
+    }, 1);
   },
   getKebiaoFunc () {
     let self = this;
@@ -135,6 +134,9 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
+        if (res.statusCode !== 200) {
+          app.getError();
+        }
         if (res.data.status_code === 200) {
           let resData = res.data.bags.courses;
           let day = new Date().getDay() - 1;
@@ -234,7 +236,7 @@ Page({
   },
   onShareAppMessage () {
     return {
-      title: '自定义分享标题',
+      title: '重邮帮',
       path: '/page/index/index'
     };
   }

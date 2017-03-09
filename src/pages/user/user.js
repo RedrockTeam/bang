@@ -113,6 +113,9 @@ Page({
           params: encodeFormated(wx.getStorageSync('session'))
         },
         success (res) {
+          if (res.statusCode !== 200) {
+            app.getError();
+          }
           if (res.data.status_code !== 200 || res.data.bags.stuid === 'empty') {
             wx.redirectTo({
               url: '../login/login'
@@ -161,11 +164,11 @@ Page({
         }
       });
     }
+  },
+  onShareAppMessage () {
+    return {
+      title: '重邮帮',
+      path: '/page/index/index'
+    };
   }
-  // onShareAppMessage () {
-  //   return {
-  //     title: '自定义分享标题',
-  //     path: '/page/user?id=123'
-  //   }
-  // }
 });
