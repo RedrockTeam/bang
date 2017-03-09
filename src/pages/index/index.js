@@ -68,7 +68,7 @@ Page({
         {
           name: '失物招领',
           url: '',
-          img: `${imgPrefix}/index__icon-lose.png`
+          img: `${imgPrefix}/index_icon_-lose.png`
         }
       ],
       [
@@ -99,18 +99,21 @@ Page({
   },
   onShow () {
     const self = this;
-    if (app.data.stuInfo.name) {
-      let userInfor = app.data.stuInfo;
+    // 挂个定时器
+    setTimeout(() => {
+      if (app.data.stuInfo.name) {
+        let userInfor = app.data.stuInfo;
 
-      this.setData({
-        stuNumber: userInfor.stuNum,
-        stuName: userInfor.name
-      });
-      self.getKebiaoFunc();
-    } else {
-      console.log('获取学生信息失败1');
-      app.gotoLogin();
-    }
+        self.setData({
+          stuNumber: userInfor.stuNum,
+          stuName: userInfor.name
+        });
+        self.getKebiaoFunc();
+      } else {
+        console.log('获取学生信息失败1', 323434);
+        app.gotoLogin();
+      }
+    }, 1);
   },
   getKebiaoFunc () {
     let self = this;

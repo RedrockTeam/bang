@@ -105,7 +105,6 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            console.log(res, '2313');
             let newActList = [];
             that.handleData(res.data.bags, newActList);
             that.setData({
