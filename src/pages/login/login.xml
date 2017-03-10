@@ -6,13 +6,24 @@
     <view class='login--info'>
         <input type="text"
                 placeholder="学号"
+                placeholder-style="color: #e6e6e6"
+                type="number"
                 bindchange="changeStu"/>
         <input type="text"
                 placeholder="身份证后6位"
+                placeholder-style="color: #e6e6e6"
+                type="number"
+                password="true"
                 bindchange="changeId"/>
         <view class="btn">
-          <button bindtap="backToIndex">返 回</button>
-          <button bindtap="loginAction">登 录</button>
+          <button bindtap="loginAction">
+            <text>登</text>
+            <text>录</text>
+          </button>
+          <button bindtap="backToIndex">
+            <text>返</text>
+            <text>回</text>
+          </button>
         </view>
     </view>
 </view>
