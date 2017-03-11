@@ -1,7 +1,10 @@
+const encodeFormated = require('../../../utils/util').encodeFormated;
+const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
+const app = getApp();
 
 Page({
   data: {
-    imgUrl: '../../../images',
+    imgUrl: 'https://redrock.cqupt.edu.cn/weapp/images',
     firstHidden: true,
     deleteHidden: true,
     resultHidden: true,
@@ -24,25 +27,14 @@ Page({
     deleteIndex: '',
     deleteName: ''
   },
-  onLoad (params) {
-    // wx.request({
-    //   url: 'http://hongyan.cqupt.edu.cn/api/stuinfo',
-    //   method: 'get',
-    //   data: {
-    //     searchKey: '2014210104'
-    //   },
-    //   header: {
-    //     'content-type': 'application/x-www-form-urlencoded'
-    //   },
-    //   success: function (res) {
-    //     console.log(res.data);
-    //   // console.log(self.data.index);
-    //   }
-    // });
+  onLoad: function onLoad () {
+    let stuInfo = app.data.stuInfo;
+    this.setData({
+      stuInfo
+    });
   },
   bindinputChange: function bindinputChange (e) {
     let value = e.detail.value;
-    // console.log(value);
     this.setData({
       inputValue: value
     });
@@ -57,39 +49,62 @@ Page({
       duration: 10000
     });
     wx.request({
-      url: 'http://hongyan.cqupt.edu.cn/api/stuinfo',
-      method: 'get',
-      data: {
-        searchKey: self.data.inputValue
-      },
+      url: `${apiPrefix}/Course/getStuInfo`,
+      method: 'POST',
       header: {
-        'content-type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        params: encodeFormated(`${wx.getStorageSync('session')}&${self.data.inputValue}`)
       },
       success: function (res) {
-        wx.hideToast();
-        let result = res.data.data;
-        console.log(res.data.data);
-        for (let resultI = 0; resultI < result.length; resultI++) {
-          stuName.push(res.data.data[resultI].name);
-          stuNum.push(res.data.data[resultI].stuNum);
-        }
-        if (result.length >= 7) {
+        if (res.data.status_code === 200) {
+          let resData = res.data.bags;
+          if (resData.length === 0) {
+            wx.showModal({
+              title: '暂无此人信息',
+              showCancel: false,
+              confirmText: '确认'
+            });
+            return;
+          }
+          for (let resultI = 0; resultI < resData.length; resultI++) {
+            stuName.push(resData[resultI].name);
+            stuNum.push(resData[resultI].stuNum);
+          }
+          if (resData.length >= 7) {
+            self.setData({
+              resultHight: '710rpx'
+            });
+          } else {
+            self.setData({
+              resultHight: ''
+            });
+          }
           self.setData({
-            resultHight: '710rpx'
+            'searchResult.stuName': stuName,
+            'searchResult.stuNum': stuNum,
+            resultHidden: false
           });
         } else {
-          self.setData({
-            resultHight: ''
+          console.log('获取学生信息失败1', res.data.status_text);
+          wx.showModal({
+            title: '网络错误,请重试',
+            showCancel: false,
+            confirmText: '确认'
           });
         }
-        // console.log(stuName);
-        // console.log(stuNum);
-        self.setData({
-          'searchResult.stuName': stuName,
-          'searchResult.stuNum': stuNum,
-          resultHidden: false
+      },
+      fail: function (res) {
+        console.log('获取学生信息失败2', res);
+        wx.showModal({
+          title: '网络错误,请重试',
+          showCancel: false,
+          confirmText: '确认'
         });
-      // console.log(self.data.index);
+      },
+      complete: function (res) {
+        wx.hideToast();
       }
     });
   },
@@ -109,49 +124,77 @@ Page({
       somebodyHidden: false,
       resultHidden: true
     });
-    console.log(e.currentTarget.dataset.stunum);
+    let stuId = e.currentTarget.dataset.stunum;
     wx.request({
-      url: 'http://hongyan.cqupt.edu.cn/api/stuinfo',
-      method: 'get',
+      url: `${apiPrefix}/Course/getStuInfo`,
+      method: 'post',
       data: {
-        searchKey: e.currentTarget.dataset.stunum
+        params: encodeFormated(`${wx.getStorageSync('session')}&${stuId}`)
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        console.log(res.data);
-        wx.hideToast();
-        if (self.addstuNum.indexOf(res.data.data[0].stuNum) === -1 && self.addstuName.length < 6) {
-          self.addstuName.push(res.data.data[0].name);
-          self.addstuNum.push(res.data.data[0].stuNum);
-          self.addstuMajor.push(res.data.data[0].college);
-          self.addstuClass.push(res.data.data[0].class);
-          self.setData({
-            'addStu.stuName': self.addstuName,
-            'addStu.stuNum': self.addstuNum,
-            'addStu.stuMajor': self.addstuMajor,
-            'addStu.stuClass': self.addstuClass,
-            anotherAdd: self.data.anotherAdd - 1
-          });
-          console.log(self.addstuName.length);
-          if (self.addstuName.length === 6) {
+        if (res.data.status_code === 200) {
+          let resData = res.data.bags;
+          if (self.addstuNum.indexOf(resData[0].stuNum) === -1 && self.addstuName.length < 6) {
+            self.addstuName.push(resData[0].name);
+            self.addstuNum.push(resData[0].stuNum);
+            self.addstuMajor.push(resData[0].college);
+            self.addstuClass.push(resData[0].class);
             self.setData({
-              coverHidden: false
+              'addStu.stuName': self.addstuName,
+              'addStu.stuNum': self.addstuNum,
+              'addStu.stuMajor': self.addstuMajor,
+              'addStu.stuClass': self.addstuClass,
+              anotherAdd: self.data.anotherAdd - 1
             });
-          } else {
-            self.setData({
-              coverHidden: true
-            });
+            if (self.addstuName.length === 6) {
+              self.setData({
+                coverHidden: false
+              });
+            } else {
+              self.setData({
+                coverHidden: true
+              });
+            }
           }
-          console.log(res.data.data[0].name);
+        } else {
+          console.log('获取学生信息失败3', res.data.status_text);
+          wx.showModal({
+            title: '网络错误,请重试',
+            showCancel: false,
+            confirmText: '确认'
+          });
         }
+      },
+      fail: res => {
+        console.log('获取学生信息失败4', res);
+        wx.showModal({
+          title: '网络错误,请重试',
+          showCancel: false,
+          confirmText: '确认'
+        });
+      },
+      complete: res => {
+        wx.hideToast();
       }
     });
   },
   bindtapData: function bindtapData (e) {
     let stuData = this.data.addStu;
-    console.log(this.data.addStu);
+    let hasSelf = false;
+    stuData.stuNum.forEach(val => {
+      if (val === this.data.stuInfo.stuNum) {
+        hasSelf = true;
+      }
+    });
+    if (!hasSelf) {
+      stuData.stuClass.push(this.data.stuInfo.classNum + '班');
+      stuData.stuMajor.push(this.data.stuInfo.college);
+      stuData.stuName.push(this.data.stuInfo.name);
+      stuData.stuNum.push(this.data.stuInfo.stuNum);
+    }
     wx.setStorage({
       key: 'key',
       data: stuData
@@ -167,7 +210,6 @@ Page({
     }
   },
   bindtapClass: function bindtapClass (e) {
-    console.log(e.currentTarget.dataset);
     wx.navigateTo({
       url: '../class/class?stuNumber=' + e.currentTarget.dataset.stunumber + '&stuName=' + e.currentTarget.dataset.stuname
     });
@@ -178,7 +220,6 @@ Page({
     });
   },
   bindtapDelete: function bindtapDelete (e) {
-    console.log(e);
     let self = this;
     self.setData({
       deleteIndex: e.currentTarget.dataset.index,
@@ -210,5 +251,11 @@ Page({
         somebodyHidden: true
       });
     }
+  },
+  onShareAppMessage () {
+    return {
+      title: '重邮帮',
+      path: '/page/index/index'
+    };
   }
 });

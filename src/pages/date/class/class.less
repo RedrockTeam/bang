@@ -21,12 +21,8 @@
       width: 26rpx;
       height: 18rpx;
       padding-left: 26rpx;
-      // float: right;
-      // margin-top: 12rpx;
     }
   }
-  
-
 }
 .table {
   box-sizing: border-box;
@@ -44,6 +40,9 @@
   .class-body {
     margin-top: 35rpx;
     .class12,.class34,.class56,.class78,.class910,.class1112 {
+      height: 170rpx;
+      float: left;
+      overflow: visible;
       .class-con {
         box-sizing: border-box;
         width: 90rpx;
@@ -52,11 +51,9 @@
         margin-right: 10rpx;
         float: left;
         margin-bottom: 10rpx;
-        // padding: 0 5rpx;
         position: relative;
         overflow: hidden;
         view {
-          // height: 150rpx;
           position: absolute;
           top:50%;
           left:50%;
@@ -68,21 +65,14 @@
           display: -webkit-box;
           -webkit-box-orient: vertical;
           text-overflow: ellipsis;
+          line-height: 1;
           color: #fff;
           text {
             color: #fff;
             font-size: 22rpx;
-            // display: block;
-            
             text-align: center;
-
-            // display: inline-flex;
-            // justify-content:center;
-            // align-items:center; 
-
-          }    
+          }
         }
-        
         .class-name {
           padding-bottom: 10rpx;
         }
@@ -112,9 +102,8 @@
       .class-con {
         background-color: #09dee0;
       }
-    }  
+    }
   }
-  
 }
 .class-detail {
   width: 100%;
@@ -123,6 +112,7 @@
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
   .detail-con {
     width: 516rpx;
     height: 396rpx;
@@ -131,13 +121,13 @@
     margin: 0 auto;
     margin-top: 324rpx;
     overflow: hidden;
+    padding: 0 40rpx;
     .detail-time {
       text-align: center;
       margin-top: 65rpx;
       text {
         color: #000;
         font-size: 36rpx;
-        
       }
       .detail-week {
         padding-right: 30rpx;

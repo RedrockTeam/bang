@@ -11,16 +11,16 @@
       <view class="result" hidden="{{resultHidden ? true : false}}">
         <view class="line"></view>
         <scroll-view class="word-con" scroll-y="true" style="height: {{resultHight}}">
-          <view class="result-word" wx:for="{{searchResult.stuName}}" bindtap="bindtapAdd" data-stuNum="{{searchResult.stuNum[index]}}">
+          <view class="result-word" wx:for="{{searchResult.stuName}}" bindtap="bindtapAdd" data-stuNum="{{searchResult.stuNum[index]}}" wx:key="*this">
             <text>{{searchResult.stuName[index]}}</text>
             <text>{{searchResult.stuNum[index]}}</text>
           </view>
         </scroll-view>
-        <image src="{{imgUrl}}/white.png"></image> 
+        <image src="{{imgUrl}}/white.png"></image>
 
       </view>
     </view>
-    
+
   </view>
 
   <!-- 中间 -->
@@ -36,7 +36,7 @@
     <!-- 添加人时 -->
     <view class="added-con"  hidden="{{somebodyHidden ? true : false}}">
       <scroll-view class="added" scroll-y="true">
-        <view class="add-detail" wx:for="{{addStu.stuName}}">
+        <view class="add-detail" wx:for="{{addStu.stuName}}" wx:key="*this">
           <view class="detail-name">
             <text>{{addStu.stuName[index]}}</text>
             <text>{{addStu.stuNum[index]}}</text>
@@ -47,20 +47,20 @@
           </view>
           <image src="{{imgUrl}}/class.png"
                   class="image-class"
-                  bindtap="bindtapClass" 
-                  data-stuNumber="{{addStu.stuNum[index]}}" 
+                  bindtap="bindtapClass"
+                  data-stuNumber="{{addStu.stuNum[index]}}"
                   data-stuName="{{addStu.stuName[index]}}"></image>
           <image class="image-delete"
                   src="{{imgUrl}}/delete.png"
                   bindtap="bindtapDelete"
                   data-index="{{index}}"></image>
         </view>
-        
+
         <text class="another">还可添加{{anotherAdd}}人</text>
-      </scroll-view> 
-      <image class="cover" src="{{imgUrl}}/white.png" hidden="{{coverHidden ? true : false}}"></image> 
+      </scroll-view>
+      <image class="cover" src="{{imgUrl}}/white.png" hidden="{{coverHidden ? true : false}}"></image>
     </view>
-    
+
   </view>
 
   <!-- 请先添加小伙伴 -->
