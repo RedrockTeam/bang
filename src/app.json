@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/login/login",
     "pages/user/user",
     "pages/date/index/index",
     "pages/date/result/result",
@@ -20,7 +21,9 @@
     "pages/repair/feedback/feedback",
     "pages/repair/info/info",
     "pages/activity/index/index",
-    "pages/activity/apply/apply"
+    "pages/activity/apply/apply",
+    "pages/activity/detail/detail",
+    "pages/activity/info/info"
     // Dont remove this comment
   ],
   "window": {
@@ -51,7 +54,7 @@
       },
       {
         "text": "我的",
-        "pagePath": "pages/electricity/index/index",
+        "pagePath": "pages/user/user",
         "iconPath": "images/tab--my__blur.png",
         "selectedIconPath": "images/tab--my__focus.png"
       }

@@ -36,7 +36,7 @@
   <!-- 搜索无结果 -->
   <block wx:else>
     <view class="no-result__con">
-      <image src="../../../images/library/search_not_found.png" class="no-result__img"></image>
+      <image src="https://redrock.cqupt.edu.cn/weapp/images/library/search_not_found.png" class="no-result__img"></image>
       <text class="no-result__text">抱歉，未找到相关结果</text>
     </view>
   </block>

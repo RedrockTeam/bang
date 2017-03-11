@@ -1,9 +1,12 @@
+const app = getApp();
+const urlPrefix = 'https://redrock.cqupt.edu.cn/weapp';
+const encodeFormated = require('../../../utils/util').encodeFormated;
+
 /* toggleSearchIcon 点击搜索框切换搜索🔍图标显示
 * search_focus:  是否输入了字符
 */
 const toggleSearchIcon = function (event) {
   let value = event.detail.value;
-  console.log(value);
   if (value === '') {
     this.setData({
       search_focus: false
@@ -42,26 +45,28 @@ const getSearchResult = function (self, searchValue) {
     icon: 'loading'
   });
   wx.request({
-    url: 'http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ApiForWx/GetLibInfo/getBookInfo',
+    url: urlPrefix + '/Library/getBookInfo',
     method: 'POST',
     data: {
-      content: searchValue
+      params: encodeFormated(`${wx.getStorageSync('session')}&${searchValue}`)
     },
     header: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     success: res => {
-      if (res.statusCode === 200) {
+      if (res.data.status_code === 200) {
         self.setData({
-          searchItems: res.data.data.data
+          searchItems: res.data.bags
         });
         wx.hideToast();
       } else {
-        console.log('网络错误!搜索失败2');
+        console.log('网络错误!搜索失败1: ', res.data.status_text);
+        app.gotoLogin();
       }
     },
     fail: res => {
-      console.log('fail to search: ', res);
+      console.log('搜索失败2: ', res);
+      app.gotoLogin();
     }
   });
 };
@@ -71,63 +76,80 @@ const getSearchResult = function (self, searchValue) {
 */
 const getBookInfor = function (self, tag) {
   wx.request({
-    url: 'http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ApiForWx/GetLibInfo/getUserInfo',
+    url: urlPrefix + '/Library/getUserInfo',
     method: 'POST',
     header: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     data: {
-      stuId: 2015210342
+      params: encodeFormated(wx.getStorageSync('session'))
     },
     success: res => {
-      if (res.statusCode === 200) {
-        let data = res.data.data;
+      res = res.data;
+      if (res.status_code === 200) {
+        let data = res.bags;
         let bookItems = data[tag];
         let readerInfo = data.readerInfo;
+
         self.setData({
-          bookItems: bookItems,
-          readerInfo: readerInfo
+          bookItems,
+          readerInfo
         });
         wx.hideToast();
         wx.setStorage({
           key: 'myinfor_library',
           data: data
         });
-        // wx.clearStorage();
+      } else {
+        console.log('获取图书馆信息(我的信息)失败1: ', res.status_text);
+        app.gotoLogin();
       }
     },
     fail: res => {
-      console.log('fail to get user information of library：', res);
+      console.log('获取图书馆信息(我的信息)失败2：', res);
+      app.gotoLogin();
     }
   });
 };
 // getBookInfor 获取图书借阅排名
 const getRankList = function (self) {
   wx.request({
-    url: 'http://hongyan.cqupt.edu.cn/MagicLoop/index.php?s=/addon/ApiForWx/GetLibInfo/getBoard',
+    url: urlPrefix + '/Library/getBoard',
     method: 'POST',
+    data: {
+      params: encodeFormated(wx.getStorageSync('session'))
+    },
+    header: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
     success: res => {
-      let rankList = res.data.data;
+      if (res.data.status_code === 200) {
+        let rankList = res.data.bags;
 
-      self.setData({
-        rankList: rankList
-      });
+        self.setData({
+          rankList: rankList
+        });
+        wx.setStorage({
+          key: 'rankList_library',
+          data: rankList
+        });
+      } else {
+        console.log('获取图书馆排名失败：', res.data.status_text);
+        app.gotoLogin();
+      }
       wx.hideToast();
-      wx.setStorage({
-        key: 'rankList_library',
-        data: rankList
-      });
     },
     fail: res => {
-      console.log('fail to get user rank list of library：', res);
+      console.log('获取图书馆排名失败：', res);
+      app.gotoLogin();
     }
   });
 };
 
 module.exports = {
-  gotoSearch: gotoSearch,
-  getBookInfor: getBookInfor,
-  getRankList: getRankList,
-  getSearchResult: getSearchResult,
-  toggleSearchIcon: toggleSearchIcon
+  gotoSearch,
+  getBookInfor,
+  getRankList,
+  getSearchResult,
+  toggleSearchIcon
 };

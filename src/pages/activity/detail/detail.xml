@@ -1,0 +1,22 @@
+<view class="container">
+    <view class="content">
+        <view class="title">
+            <view>
+                {{title}}
+            </view>
+        </view>
+        <view class="vice-title">
+            <navigator url="##" class="copyright">
+                红岩网校工作站
+            </navigator>
+            {{actInfo.date}}
+            <text class="place">{{actInfo.place}}</text>
+        </view>
+        <view class="cover">
+            <image src="{{actInfo.img}}"></image>
+        </view>
+        <view class="context">
+            {{actInfo.detail}}
+        </view>
+    </view>
+</view>

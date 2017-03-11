@@ -1,7 +1,10 @@
 @prefix: index;
-@img_url: "http://kjcx.yaerma.com/static/imgs/wxapp/images";
+@img_url: "https://redrock.cqupt.edu.cn/weapp/images";
 // 图片外链 暂存地址
 
+page {
+  background-color: #fff;
+}
 .@{prefix} {
   font-family: "PingFangSC-Regular",
                 "Hiragino Sans GB",
@@ -126,6 +129,10 @@
       text:nth-of-type(2) {
         width: 95rpx;
         text-align: center;
+        text-align: right;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       text:last-of-type {
         width: 155rpx;

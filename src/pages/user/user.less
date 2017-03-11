@@ -1,3 +1,87 @@
-.title {
-  font-size: 40rpx;
+@font_family: ".PingFangSC-Medium";
+
+page {
+  background-color: #fff;
+}
+.user {
+    &--logout {
+        height: 52rpx;
+        image {
+            width: 40rpx;
+            height: 40rpx;
+            margin-top: 12rpx;
+            margin-right: 32rpx;
+            float: right;
+        }
+    }
+    &--header {
+        text-align: center;
+        image {
+            width: 160rpx;
+            height: 160rpx;
+            border-radius: 50%;
+        }
+        &__cqupt {
+            display: block;
+            font-family: @font_family;
+            font-weight: blod;
+            font-size: 36rpx;
+            margin-top: 24rpx;
+            color: #000;
+        }
+        &__stuid {
+            font-family: @font_family;
+            font-size: 28rpx;
+            color: #666;
+            letter-spacing: 0;
+        }
+    }
+    &--info {
+        width: 590rpx;
+        margin: 0 auto;
+        &__list {
+            margin-top: 4rpx;
+        }
+        &__item {
+            margin: 80rpx auto;
+            overflow: hidden;
+            height: 38rpx;
+            line-height: 38rpx;
+        }
+        &__name {
+            font-family: @font_family;
+            font-size: 32rpx;
+            color: #000;
+            letter-spacing: 64rpx;
+            float: left;
+        }
+        .ext {
+            letter-spacing: 0;
+        }
+        &__other {
+            font-family: @font_family;
+            font-size: 32rpx;
+            color: #000;
+            letter-spacing: 0;
+            float: left;
+        }
+        &__message {
+            font-family: @font_family;
+            font-size: 32rpx;
+            color: #666;
+            letter-spacing: 0;
+            float: right;
+        }
+        &__arrow {
+            width: 28rpx;
+            height: 38rpx;
+            line-height: 38rpx;
+            float: right;
+            margin-left: 6rpx;
+            image {
+                width: 28rpx;
+                height: 28rpx;
+            }
+        }
+    }
 }

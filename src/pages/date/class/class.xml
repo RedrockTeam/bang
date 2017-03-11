@@ -5,6 +5,7 @@
     <text class="title-num">{{stuNumber}}</text>
 
 
+
     <picker class="title-week" bindchange="bindPickerChange" value="{{index-1}}" range="{{array}}">
       <view>
         <text>{{array[index]}}</text>
@@ -32,7 +33,6 @@
           <text>1</text>
           <text>2</text>
         </view>
-
         <view wx:for="{{[0,1,2,3,4,5]}}" 
           style="background-color:{{color[0][item]}}; height: {{height[0][item]}}; z-index: {{zIndex[0][item]}};" 
           class="class-con" 
@@ -92,7 +92,6 @@
           <text>5</text>
           <text>6</text>
         </view>
-
         <view wx:for="{{[0,1,2,3,4,5]}}" 
           style="background-color:{{color[2][item]}}; height: {{height[2][item]}}; z-index: {{zIndex[2][item]}};" 
           class="class-con" 

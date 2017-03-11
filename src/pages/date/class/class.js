@@ -95,7 +95,6 @@ Page({
                   if (classData[i].day === classWeek[j]) {
                     className[t][j] = classData[i].course;
                     classRoom[t][j] = classData[i].classroom;
-                    // console.log(classData[i].period);
                     if (classData[i].period === 3) {
                       height[t][j] = '265rpx';
                       zIndex[t][j] = 3;

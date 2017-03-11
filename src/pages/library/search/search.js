@@ -19,5 +19,11 @@ Page({
       searchItems: searchItems
     });
   },
-  gotoSearch: utils.gotoSearch
+  gotoSearch: utils.gotoSearch,
+  onShareAppMessage () {
+    return {
+      title: '重邮帮',
+      path: '/page/index/index'
+    };
+  }
 });

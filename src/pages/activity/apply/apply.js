@@ -1,4 +1,4 @@
-// const app = getApp();
+const encodeFormated = require('../../../utils/util').encodeFormated;
 
 Page({
   data: {
@@ -88,13 +88,48 @@ Page({
       title: this.data.title,
       detail: this.data.detail,
       date: this.data.date,
-      phone: this.data.phone
+      phone: this.data.phone,
+      imgSrc: this.data.imgSrc
     };
-
-    /**
-     *  服务项目字段应该有两个的...少一个
-     *  请求报修提交接口
-     */
-    console.log(data);
+    const actType = ['school', 'academy', 'class'];
+    const key = wx.getStorageSync('session');
+    wx.uploadFile({
+      url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Apply/fileUpload',
+      filePath: data.imgSrc,
+      name: 'file',
+      header: {
+        'content-type': 'multipart/form-data'
+      },
+      formData: {
+        key: key,
+        file: data.imgSrc
+      },
+      success (res) {
+        let path = JSON.parse(res.data).bags.path;
+        let str = encodeFormated(`${key}&${data.title}&${data.host}&${data.date}&${data.place}&${actType[data.type]}&${data.headline}&${data.detail}&${data.phone}&${path}`);
+        wx.request({
+          method: 'post',
+          url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Apply/upload',
+          data: {
+            params: str
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success (res) {
+            console.log(res.data);
+            wx.redirectTo({
+              url: '../info/info'
+            });
+          }
+        });
+      }
+    });
+  },
+  onShareAppMessage () {
+    return {
+      title: '重邮帮',
+      path: '/page/index/index'
+    };
   }
 });

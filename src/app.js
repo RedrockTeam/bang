@@ -1,49 +1,265 @@
-const wechat = require('./utils/wechat');
+const encodeFormated = require('./utils/util').encodeFormated;
 const Promise = require('./utils/es6-promise');
 
 App({
   data: {
-    name: 'CQUPT Bang',
-    version: '0.1.0',
-    userInfo: null
+    stuInfo: {
+      name: '',
+      college: '',
+      stuNum: '',
+      gender: '',
+      major: '',
+      grade: '',
+      classNum: '',
+      idNum: ''
+    },
+    userInfo: {
+      avatar: '',
+      city: '',
+      country: ''
+    }
   },
-  other: 'other variables',
-  getUserInfo () {
+  loginApp () {
+    const self = this;
     return new Promise((resolve, reject) => {
-      if (this.data.userInfo) {
-        return reject(this.data.userInfo);
+      wx.login({
+        success (res) {
+          if (res.code) {
+            console.log('code 获取成功');
+            // self.getSession(res.code);
+            resolve(res.code);
+          }
+        }
+      });
+/**
+ * login 方法获取 code
+ * 下一步交给 getSession 获取第三方 session
+ */
+    }).then(code => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          method: 'post',
+          url: 'https://redrock.cqupt.edu.cn/weapp/auth/codeAuth',
+          data: {
+            params: encodeFormated(code)
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success (res) {
+            if (res.statusCode !== 200) {
+              self.getError();
+            }
+            const retSession = res.data.bags.thirdSession;
+
+            wx.setStorageSync('session', retSession);
+            self.getUserInfo();
+            resolve();
+          }
+        });
+      });
+    });
+  /**
+   * from login
+   * 获取第三方 session 并存储到本地
+   */
+  },
+  getUserInfo () {
+    const self = this;
+
+    return new Promise((resolve, reject) => {
+      wx.getUserInfo({
+        success (res) {
+          const { rawData, signature, encryptedData, iv } = res;
+          const thirdSession = wx.getStorageSync('session');
+          const obj = {
+            infoStr: encodeFormated(`${rawData}&${signature}&${thirdSession}`),
+            userStr: encodeFormated(`${encryptedData}&${iv}&${thirdSession}`)
+          };
+
+          resolve(obj);
+        },
+        fail () {
+          console.log('获取 userInfo 失败');
+        }
+      });
+    }).then((obj) => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          method: 'post',
+          url: 'https://redrock.cqupt.edu.cn/weapp/auth/checkInfo',
+          data: {
+            params: obj.infoStr
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success (res) {
+            if (res.statusCode !== 200) {
+              self.getError();
+            }
+            if (res.data.status_code !== 200) {
+              console.log('code 过期，需要重新获取');
+              self.loginApp();
+            } else {
+              console.log('code 有效，可以继续使用');
+              resolve(obj);
+            }
+          },
+          fail () {
+            self.getError();
+          }
+        });
+      });
+/**
+ * 检查 info
+ * 返回新的 promise
+ */
+    }).then((obj) => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          method: 'post',
+          url: 'https://redrock.cqupt.edu.cn/weapp/auth/decryptData',
+          data: {
+            params: obj.userStr
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success (res) {
+            if (res.statusCode !== 200) {
+              self.getError();
+            }
+            const info = {
+              avatar: res.data.bags.avatarUrl,
+              city: res.data.bags.city,
+              country: res.data.bags.country
+            };
+
+            resolve(info);
+          }
+        });
+      });
+    }).then((info) => {
+      for (let key in info) {
+        self.data.userInfo[key] = info[key];
       }
-      wechat.login()
-        .then(() => wechat.getUserInfo())
-        .then(res => res.userInfo)
-        .then(info => (this.data.userInfo = info))
-        .then(info => {
-          resolve(info);
-        })
-        .catch(error => console.error('failed to get user info, error: ' + error));
+    }).catch((err) => {
+      throw new Error(err);
+    });
+  },
+  getOpenId () {
+    const self = this;
+    const openIdUrl = 'https://redrock.cqupt.edu.cn/weapp/auth/getOpenid';
+
+    wx.request({
+      method: 'post',
+      url: openIdUrl,
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        params: encodeFormated(wx.getStorageSync('session'))
+      },
+      success (res) {
+        if (res.statusCode !== 200) {
+          self.getError();
+        }
+        // console.log(res.data.bags.stuid);
+      }
+    });
+  },
+  getStuInfo () {
+    const self = this;
+    const str = encodeFormated(wx.getStorageSync('session'));
+    return new Promise((resolve, reject) => {
+      wx.request({
+        method: 'post',
+        url: 'https://redrock.cqupt.edu.cn/weapp/User/getUserInfo',
+        data: {
+          params: str
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success (res) {
+          if (res.statusCode !== 200) {
+            self.getError();
+          }
+          for (let key in res.data.bags) {
+            self.data.stuInfo[key] = res.data.bags[key];
+          }
+          // 获取学生信息
+          resolve();
+        }
+      });
+    }).then(() => {
+      return {
+        code: 1,
+        status: 'bind success, llp'
+      };
     });
   },
   onLaunch () {
-    // 初始化完成
-  },
-  onShow () {
-    // 显示
-  },
-  onHide () {
-    // 图书馆查询清空缓存
-    wx.removeStorage({
-      key: 'myinfor_library',
-      success: res => {
-        console.log('---------removestorage', wx.getStorage({
-          key: 'myinfor_library'
-        }));
+    // 每次进入清空图书馆查询，电费查询清空缓存
+    ['myinfor_library', 'rankList_library', 'myinfor_electricity'].forEach(key => {
+      wx.removeStorage({
+        key
+      });
+    });
+
+    const self = this;
+
+    wx.checkSession({
+      success () {
+        console.log('session 有效，直接登录');
+        self.getUserInfo();
+        self.getStuInfo();
+      },
+      fail () {
+        console.log('session 无效，需要重新获取');
+        self.loginApp();
+        self.getStuInfo();
       }
     });
+
+    /**
+     * 登录 检查 session 是否有效
+     * 有效则获取信息，无效则先拿 code
+     */
+  },
+  gotoLogin (url) {
+    wx.showModal({
+      title: '请先登录',
+      showCancel: true,
+      confirmText: '确认',
+      success: res => {
+        if (res.confirm) {
+          wx.redirectTo({
+            url: '/pages/login/login'
+          });
+        }
+      }
+    });
+  },
+  getError () {
+    wx.showModal({
+      title: '网络错误',
+      showCancel: false,
+      confirmText: '确认',
+      success: res => {
+        if (res.confirm) {
+          return false;
+        }
+      }
+    });
+  },
+  removeStorages (key) {
     wx.removeStorage({
-      key: 'rankList_library',
+      key: key,
       success: res => {
         console.log('---------removestorage', wx.getStorage({
-          key: 'rankList_library'
+          key: key
         }));
       }
     });

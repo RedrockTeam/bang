@@ -1,15 +1,18 @@
 @prefix: activity;
-@img_url: "http://kjcx.yaerma.com/static/imgs/wxapp/images";
+@img_url: "https://redrock.cqupt.edu.cn/weapp/images";
 // 图片外链 暂存地址
 
+page {
+  background-color: #fff;
+}
 .@{prefix} {
   box-sizing: border-box;
   padding-top: 30rpx;
   width: 100%;
   &--nav {
     padding: 0 30rpx;
-    line-height: 30rpx;
     margin-bottom: 40rpx;
+    line-height: 30rpx;
   }
   &--nav-item {
     display: inline-block;
@@ -96,6 +99,7 @@
       display: inline-block;
     }
     .item__title {
+      min-width: 100%;
       display: inline-block;
       height: 76rpx;
       line-height: 38rpx;
