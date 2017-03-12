@@ -121,7 +121,8 @@ Page({
 
     if (currentHour >= 12) {
       courseTime = 1;
-    } else if (currentHour >= 18) {
+    }
+    if (currentHour >= 18) {
       courseTime = 2;
     }
 
