@@ -31,9 +31,6 @@ Page({
         let newActInfo = {};
         let dateStr = res.data.bags[0].date.split('-')[1];
         wx.hideToast();
-        if (dateStr < 10) {
-          dateStr = dateStr;
-        }
         dateStr = dateStr + '/' + res.data.bags[0].date.split('-')[2];
         newActInfo.img = res.data.bags[0].img;
         newActInfo.date = dateStr;
