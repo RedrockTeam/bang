@@ -95,10 +95,14 @@ Page({
       ]
     ],
     week: 0,
-    currentSwiper: 0
+    currentSwiper: 0,
+    courseScroll: 0
   },
   onShow () {
     const self = this;
+    let courseTime = 0;
+    let currentHour = new Date().getHours();
+
     // 挂个定时器
     setTimeout(() => {
       if (app.data.stuInfo.name) {
@@ -114,6 +118,16 @@ Page({
         app.gotoLogin();
       }
     }, 1);
+
+    if (currentHour >= 12) {
+      courseTime = 1;
+    } else if (currentHour >= 18) {
+      courseTime = 2;
+    }
+
+    self.setData({
+      courseScroll: 130 * courseTime
+    });
   },
   getKebiaoFunc () {
     let self = this;
