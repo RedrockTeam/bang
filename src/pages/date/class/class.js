@@ -5,11 +5,14 @@ Page({
   data: {
     imgUrl: 'https://redrock.cqupt.edu.cn/weapp/images',
     hiddenFlag: true,
-    array: ['本学期', '第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周', '第八周', '第九周', '第十周', '第十一周', '第十二周', '第十三周', '第十四周', '第十五周', '第十六周', '第十七周', '第十八周', '第十九周', '第二十周'],
+    array: [' ', '第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周', '第八周', '第九周', '第十周', '第十一周', '第十二周', '第十三周', '第十四周', '第十五周', '第十六周', '第十七周', '第十八周', '第十九周', '第二十周'],
     index: 0,
     name: '',
     stuNumber: '',
     color: [[], [], [], [], [], []],
+    height: [[], [], [], [], [], []],
+    zIndex: [[], [], [], [], [], []],
+    webkitLineClamp: [[], [], [], [], [], []],
     className: {
       oneT: [],
       threeF: [],
@@ -36,7 +39,7 @@ Page({
   // 切换周数
   bindPickerChange: function bindPickerChange (e) {
     this.setData({
-      index: e.detail.value
+      index: parseInt(e.detail.value) + 1
     });
     this.dataRequest();
   },
@@ -81,6 +84,9 @@ Page({
           let className = [[], [], [], [], [], []];
           let classRoom = [[], [], [], [], [], []];
           let color = [[], [], [], [], [], []];
+          let height = [[], [], [], [], [], []];
+          let zIndex = [[], [], [], [], [], []];
+          let webkitLineClamp = [[], [], [], [], [], []];
           // 课表数据绑定
           for (let i = 0; i < classLen; i++) {
             for (let t = 0; t < classTime.length; t++) {
@@ -89,6 +95,15 @@ Page({
                   if (classData[i].day === classWeek[j]) {
                     className[t][j] = classData[i].course;
                     classRoom[t][j] = classData[i].classroom;
+                    if (classData[i].period === 3) {
+                      height[t][j] = '265rpx';
+                      zIndex[t][j] = 3;
+                      webkitLineClamp[t][j] = 6;
+                    } else if (classData[i].period === 4) {
+                      height[t][j] = '330rpx';
+                      zIndex[t][j] = 3;
+                      webkitLineClamp[t][j] = 8;
+                    }
                   }
                 }
               }
@@ -117,7 +132,10 @@ Page({
             'classRoom.sevenE': classRoom[3],
             'classRoom.nineT': classRoom[4],
             'classRoom.elevenT': classRoom[5],
-            color: color
+            color: color,
+            height: height,
+            zIndex: zIndex,
+            webkitLineClamp: webkitLineClamp
           });
         } else {
           console.log('获取课表信息失败1', res.data.status_text);
@@ -144,6 +162,45 @@ Page({
   // 弹窗出现
   bindAppear: function bindAppear (e) {
     if (e.currentTarget.dataset.classname) {
+      if (e.currentTarget.dataset.classheight === '265rpx') {
+        switch (e.currentTarget.dataset.classtime) {
+        case '12节':
+          e.currentTarget.dataset.classtime = '123节';
+          break;
+        case '34节':
+          e.currentTarget.dataset.classtime = '345节';
+          break;
+        case '56节':
+          e.currentTarget.dataset.classtime = '567节';
+          break;
+        case '78节':
+          e.currentTarget.dataset.classtime = '789节';
+          break;
+        case '910节':
+          e.currentTarget.dataset.classtime = '91011节';
+          break;
+        default: break;
+        }
+      } else if (e.currentTarget.dataset.classheight === '330rpx') {
+        switch (e.currentTarget.dataset.classtime) {
+        case '12节':
+          e.currentTarget.dataset.classtime = '1234节';
+          break;
+        case '34节':
+          e.currentTarget.dataset.classtime = '3456节';
+          break;
+        case '56节':
+          e.currentTarget.dataset.classtime = '5678节';
+          break;
+        case '78节':
+          e.currentTarget.dataset.classtime = '78910节';
+          break;
+        case '910节':
+          e.currentTarget.dataset.classtime = '9101112节';
+          break;
+        default: break;
+        }
+      }
       this.setData({
         hiddenFlag: !this.data.hiddenFlag,
         detailWeek: e.currentTarget.dataset.classweek,
