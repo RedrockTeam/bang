@@ -34,7 +34,8 @@
     </view>
     <view class="index--course__scroll">
       <scroll-view scroll-x="true"
-                    class="index--course__scroll-view">
+                    class="index--course__scroll-view"
+                    scroll-left="{{courseScroll}}">
         <view id="course__morning"
               class="index--course__scroll-item">
           <block wx:for="{{course[0]}}"
