@@ -101,6 +101,7 @@ Page({
   onLoad () {
     wx.showModal({
       title: '我的->退出->重新登录',
+      content: '这个会一直都有，暂时请忽略',
       showCancel: false,
       confirmText: '确认'
     });
