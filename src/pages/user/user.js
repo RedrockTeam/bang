@@ -1,4 +1,4 @@
-// const app = getApp();
+const app = getApp();
 let imgPrefix = 'https://app.liuwenxi.me/';
 const encodeFormated = require('../../utils/util').encodeFormated;
 
@@ -119,9 +119,11 @@ Page({
       if (stuInfo) {
         self.setStuInfo(stuInfo);
       } else {
-        wx.redirectTo({
-          url: '../login/login'
-        });
+        // 测试
+        // wx.redirectTo({
+        //   url: '../login/login'
+        // });
+        app.gotoLogin();
       }
     } catch (e) {
       // Do something when catch error

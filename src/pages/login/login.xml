@@ -12,7 +12,6 @@
         <input type="text"
                 placeholder="身份证后6位"
                 placeholder-style="color: #e6e6e6"
-                type="number"
                 password="true"
                 bindchange="changeId"/>
         <view class="btn">
