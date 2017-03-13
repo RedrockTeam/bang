@@ -99,6 +99,11 @@ Page({
     courseScroll: 0
   },
   onLoad () {
+    wx.showModal({
+      title: '我的->退出->重新登录',
+      showCancel: false,
+      confirmText: '确认'
+    });
     this.setData({
       courseCopy: this.data.course
     });
