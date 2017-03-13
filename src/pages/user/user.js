@@ -1,6 +1,6 @@
 // const app = getApp();
 let imgPrefix = 'https://app.liuwenxi.me/';
-// const encodeFormated = require('../../utils/util').encodeFormated;
+const encodeFormated = require('../../utils/util').encodeFormated;
 
 Page({
   data: {
@@ -41,37 +41,37 @@ Page({
     }
   },
   logoutAction () {
-    // wx.request({
-    //   method: 'post',
-    //   header: {
-    //     'content-type': 'application/x-www-form-urlencoded'
-    //   },
-    //   url: 'https://redrock.cqupt.edu.cn/weapp/bind/cancleBind',
-    //   data: {
-    //     params: encodeFormated(wx.getStorageSync('session'))
-    //   },
-    //   success: function (res) {
-    //     wx.clearStorage('session');
-    //     wx.showModal({
-    //       title: '退出成功，点击返回',
-    //       showCancel: false,
-    //       confirmText: '确认',
-    //       success: function (res) {
-    //         if (res.confirm) {
-    //           wx.switchTab({
-    //             url: '../index/index'
-    //           });
-    //         }
-    //       }
-    //     });
-    //   }
-    // });
-    wx.showModal({
-      title: '目前正处于测试阶段',
-      content: '个人中心暂不支持解绑，敬请谅解',
-      showCancel: false,
-      confirmText: '确认'
+    wx.request({
+      method: 'post',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      url: 'https://redrock.cqupt.edu.cn/weapp/bind/cancleBind',
+      data: {
+        params: encodeFormated(wx.getStorageSync('session'))
+      },
+      success: function (res) {
+        wx.clearStorage();
+        wx.showModal({
+          title: '退出成功，点击返回',
+          showCancel: false,
+          confirmText: '确认',
+          success: function (res) {
+            if (res.confirm) {
+              wx.switchTab({
+                url: '../index/index'
+              });
+            }
+          }
+        });
+      }
     });
+    // wx.showModal({
+    //   title: '目前正处于测试阶段',
+    //   content: '个人中心暂不支持解绑，敬请谅解',
+    //   showCancel: false,
+    //   confirmText: '确认'
+    // });
   },
   setStuInfo (stuInfo) {
     const tmpInfo = {

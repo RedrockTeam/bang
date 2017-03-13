@@ -28,7 +28,6 @@ App({
     return new Promise((resolve, reject) => {
       wx.login({
         success (res) {
-          console.log(res);
           if (res.code) {
             console.log('code 获取成功');
             resolve(res.code);
@@ -57,7 +56,6 @@ App({
             const retSession = res.data.bags.thirdSession;
             wx.setStorageSync('session', retSession);
 
-            console.log(22222222);
             resolve();
           }
         });
@@ -69,7 +67,6 @@ App({
     // }).then(self.getUserInfo);
   },
   getUserInfo () {
-    console.log(1111111);
     const self = this;
 
     return new Promise((resolve, reject) => {
@@ -167,14 +164,13 @@ App({
               self.getError();
               return;
             }
-            console.log('app', self);
+            for (let key in res.data.bags) {
+              self.data.stuInfo[key] = res.data.bags[key];
+            }
             wx.setStorage({
               key: 'stuInfo',
               data: Object.assign(res.data.bags, self.data.userInfo)
             });
-            for (let key in res.data.bags) {
-              self.data.stuInfo[key] = res.data.bags[key];
-            }
             // 获取学生信息
             resolve();
           }
@@ -240,13 +236,22 @@ App({
   //   });
   // },
   onLaunch () {
+    const self = this;
     // 每次进入清空图书馆查询，电费查询清空缓存
     ['myinfor_library', 'rankList_library', 'myinfor_electricity'].forEach(key => {
       wx.removeStorage({
         key
       });
     });
-    // const self = this;
+
+    const storages = wx.getStorageInfoSync();
+
+    storages.keys.forEach(key => {
+      let value = wx.getStorageSync(key);
+      if (value) {
+        self.data[key] = value;
+      }
+    });
 
     // wx.checkSession({
     //   success () {
