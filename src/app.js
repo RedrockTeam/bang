@@ -19,23 +19,27 @@ App({
       country: ''
     }
   },
+  /**
+   * login 方法获取 code
+   * 下一步交给 getSession 获取第三方 session
+   */
   loginApp () {
     const self = this;
     return new Promise((resolve, reject) => {
       wx.login({
         success (res) {
+          console.log(res);
           if (res.code) {
             console.log('code 获取成功');
-            // self.getSession(res.code);
             resolve(res.code);
           }
         }
       });
-/**
- * login 方法获取 code
- * 下一步交给 getSession 获取第三方 session
- */
     }).then(code => {
+    /**
+     * 获取第三方 session 并存储到本地
+     * 到这里
+     */
       return new Promise((resolve, reject) => {
         wx.request({
           method: 'post',
@@ -51,20 +55,21 @@ App({
               self.getError();
             }
             const retSession = res.data.bags.thirdSession;
-
             wx.setStorageSync('session', retSession);
-            self.getUserInfo();
+
+            console.log(22222222);
             resolve();
           }
         });
       });
     });
-  /**
-   * from login
-   * 获取第三方 session 并存储到本地
-   */
+  },
+  getSession (code) {
+    // const self = this;
+    // }).then(self.getUserInfo);
   },
   getUserInfo () {
+    console.log(1111111);
     const self = this;
 
     return new Promise((resolve, reject) => {
@@ -112,7 +117,7 @@ App({
         });
       });
 /**
- * 检查 info
+ * 检查 userInfo
  * 返回新的 promise
  */
     }).then((obj) => {
@@ -129,11 +134,13 @@ App({
           success (res) {
             if (res.statusCode !== 200) {
               self.getError();
+              return;
             }
+            const resData = res.data.bags;
             const info = {
-              avatar: res.data.bags.avatarUrl,
-              city: res.data.bags.city,
-              country: res.data.bags.country
+              avatar: resData.avatarUrl,
+              city: resData.city,
+              country: resData.country
             };
 
             resolve(info);
@@ -144,6 +151,35 @@ App({
       for (let key in info) {
         self.data.userInfo[key] = info[key];
       }
+    }).then(() => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          method: 'post',
+          url: 'https://redrock.cqupt.edu.cn/weapp/User/getUserInfo',
+          data: {
+            params: encodeFormated(wx.getStorageSync('session'))
+          },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          success (res) {
+            if (res.statusCode !== 200) {
+              self.getError();
+              return;
+            }
+            console.log('app', self);
+            wx.setStorage({
+              key: 'stuInfo',
+              data: Object.assign(res.data.bags, self.data.userInfo)
+            });
+            for (let key in res.data.bags) {
+              self.data.stuInfo[key] = res.data.bags[key];
+            }
+            // 获取学生信息
+            resolve();
+          }
+        });
+      });
     }).catch((err) => {
       throw new Error(err);
     });
@@ -165,41 +201,44 @@ App({
         if (res.statusCode !== 200) {
           self.getError();
         }
-        // console.log(res.data.bags.stuid);
       }
     });
   },
-  getStuInfo () {
-    const self = this;
-    const str = encodeFormated(wx.getStorageSync('session'));
-    return new Promise((resolve, reject) => {
-      wx.request({
-        method: 'post',
-        url: 'https://redrock.cqupt.edu.cn/weapp/User/getUserInfo',
-        data: {
-          params: str
-        },
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        success (res) {
-          if (res.statusCode !== 200) {
-            self.getError();
-          }
-          for (let key in res.data.bags) {
-            self.data.stuInfo[key] = res.data.bags[key];
-          }
-          // 获取学生信息
-          resolve();
-        }
-      });
-    }).then(() => {
-      return {
-        code: 1,
-        status: 'bind success, llp'
-      };
-    });
-  },
+  // getStuInfo () {
+  //   const self = this;
+  //   return new Promise((resolve, reject) => {
+  //     wx.request({
+  //       method: 'post',
+  //       url: 'https://redrock.cqupt.edu.cn/weapp/User/getUserInfo',
+  //       data: {
+  //         params: encodeFormated(wx.getStorageSync('session'))
+  //       },
+  //       header: {
+  //         'content-type': 'application/x-www-form-urlencoded'
+  //       },
+  //       success (res) {
+  //         if (res.statusCode !== 200) {
+  //           self.getError();
+  //           return;
+  //         }
+  //         wx.setStorage({
+  //           key: 'stuInfo',
+  //           data: res.data.bags
+  //         });
+  //         for (let key in res.data.bags) {
+  //           self.data.stuInfo[key] = res.data.bags[key];
+  //         }
+  //         // 获取学生信息
+  //         resolve();
+  //       }
+  //     });
+  //   }).then(() => {
+  //     return {
+  //       code: 1,
+  //       status: 'bind success, haha'
+  //     };
+  //   });
+  // },
   onLaunch () {
     // 每次进入清空图书馆查询，电费查询清空缓存
     ['myinfor_library', 'rankList_library', 'myinfor_electricity'].forEach(key => {
@@ -207,21 +246,20 @@ App({
         key
       });
     });
+    // const self = this;
 
-    const self = this;
-
-    wx.checkSession({
-      success () {
-        console.log('session 有效，直接登录');
-        self.getUserInfo();
-        self.getStuInfo();
-      },
-      fail () {
-        console.log('session 无效，需要重新获取');
-        self.loginApp();
-        self.getStuInfo();
-      }
-    });
+    // wx.checkSession({
+    //   success () {
+    //     console.log('session 有效，直接登录');
+    //     // self.getUserInfo();
+    //     // self.getStuInfo();
+    //   },
+    //   fail () {
+    //     console.log('session 无效，需要重新获取');
+    //     self.loginApp();
+    //     // self.getStuInfo();
+    //   }
+    // });
 
     /**
      * 登录 检查 session 是否有效

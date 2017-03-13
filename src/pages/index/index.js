@@ -98,14 +98,45 @@ Page({
     currentSwiper: 0,
     courseScroll: 0
   },
+  onLoad () {
+    this.setData({
+      courseCopy: this.data.course
+    });
+    wx.showToast({
+      title: '数据获取中',
+      icon: 'loading',
+      duration: 10000
+    });
+  },
   onShow () {
     const self = this;
-    let courseTime = 0;
-    let currentHour = new Date().getHours();
 
-    // 挂个定时器
-    setTimeout(() => {
-      if (app.data.stuInfo.name) {
+    wx.checkSession({
+      success () {
+        console.log('session 有效，直接登录');
+        // 如果微信 session 有效，但是第三方 session过期.
+        if (!wx.getStorageSync('session')) {
+          app.loginApp().then(() => {
+            self.show();
+            wx.hideToast();
+          });
+        } else {
+          self.show();
+          wx.hideToast();
+        }
+      },
+      fail () {
+        console.log('session 无效，需要重新获取');
+        app.loginApp().then(() => {
+          self.show();
+          wx.hideToast();
+        });
+      }
+    });
+
+    try {
+      const stuInfo = wx.getStorageSync('stuInfo');
+      if (stuInfo) {
         let userInfor = app.data.stuInfo;
 
         self.setData({
@@ -114,10 +145,23 @@ Page({
         });
         self.getKebiaoFunc();
       } else {
-        console.log('获取学生信息失败1', 323434);
+        console.log('获取学生信息失败1', 111111);
+        self.setData({
+          course: self.data.courseCopy
+        });
         app.gotoLogin();
+        return;
       }
-    }, 1);
+    } catch (e) {
+      console.log('获取学生信息失败2', 22222222);
+      app.getError();
+      return;
+    }
+  },
+  show () {
+    const self = this;
+    let courseTime = 0;
+    let currentHour = new Date().getHours();
 
     if (currentHour >= 12) {
       courseTime = 1;
@@ -133,12 +177,6 @@ Page({
   getKebiaoFunc () {
     let self = this;
 
-    wx.showToast({
-      title: '数据获取中',
-      icon: 'loading',
-      duration: 10000
-    });
-    // 转个菊花
     wx.request({
       url: `${apiPrefix}/Course/getKebiao`,
       method: 'post',
@@ -228,6 +266,7 @@ Page({
           console.log('首页获取课表失败1', res.data.status_text);
           wx.hideToast();
           app.gotoLogin();
+          return;
         }
         return false;
       },
