@@ -98,73 +98,24 @@ Page({
     currentSwiper: 0,
     courseScroll: 0
   },
-  onLoad () {
-    wx.showModal({
-      title: '我的->退出->重新登录',
-      content: '这个会一直都有，暂时请忽略',
-      showCancel: false,
-      confirmText: '确认'
-    });
-    this.setData({
-      courseCopy: this.data.course
-    });
+  onShow () {
+    // 测试用
+    let asdf = wx.getStorageSync('kebiao');
+    if (!asdf) {
+      wx.showModal({
+        title: '我的->退出->重新登录',
+        content: '这个会一直都有，暂时请忽略',
+        showCancel: false,
+        confirmText: '确认'
+      });
+    }
+
     wx.showToast({
       title: '数据获取中',
       icon: 'loading',
       duration: 10000
     });
-  },
-  onShow () {
-    const self = this;
 
-    wx.checkSession({
-      success () {
-        console.log('session 有效，直接登录');
-        // 如果微信 session 有效，但是第三方 session过期.
-        if (!wx.getStorageSync('session')) {
-          app.loginApp().then(() => {
-            self.show();
-            wx.hideToast();
-          });
-        } else {
-          self.show();
-          wx.hideToast();
-        }
-      },
-      fail () {
-        console.log('session 无效，需要重新获取');
-        app.loginApp().then(() => {
-          self.show();
-          wx.hideToast();
-        });
-      }
-    });
-
-    try {
-      const stuInfo = wx.getStorageSync('stuInfo');
-      if (stuInfo) {
-        let userInfor = app.data.stuInfo;
-
-        self.setData({
-          stuNumber: userInfor.stuNum,
-          stuName: userInfor.name
-        });
-        self.getKebiaoFunc();
-      } else {
-        console.log('获取学生信息失败1', 111111);
-        self.setData({
-          course: self.data.courseCopy
-        });
-        app.gotoLogin();
-        return;
-      }
-    } catch (e) {
-      console.log('获取学生信息失败2', 22222222);
-      app.getError();
-      return;
-    }
-  },
-  show () {
     const self = this;
     let courseTime = 0;
     let currentHour = new Date().getHours();
@@ -177,117 +128,168 @@ Page({
     }
 
     self.setData({
-      courseScroll: 130 * courseTime
+      courseScroll: 130 * courseTime,
+      courseCopy: self.data.course
     });
+
+    // 每次进入更换session
+    app.loginApp().then(() => {
+      const storages = wx.getStorageInfoSync();
+
+      storages.keys.forEach(key => {
+        let value = wx.getStorageSync(key);
+        if (value) {
+          self.data[key] = value;
+        }
+      });
+      self.ready();
+    });
+  },
+  ready () {
+    const self = this;
+
+    const stuInfo = wx.getStorageSync('stuInfo');
+    if (stuInfo) {
+      let userInfor = app.data.stuInfo;
+
+      self.setData({
+        stuNumber: userInfor.stuNum,
+        stuName: userInfor.name
+      });
+      self.getKebiaoFunc();
+    } else {
+      console.log('获取学生信息失败1', 111111);
+      self.setData({
+        course: self.data.courseCopy
+      });
+      wx.hideToast();
+      app.gotoLogin();
+      return;
+    }
   },
   getKebiaoFunc () {
     let self = this;
-
-    wx.request({
-      url: `${apiPrefix}/Course/getKebiao`,
-      method: 'post',
-      data: {
-        params: encodeFormated(`${wx.getStorageSync('session')}&0&empty`)
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-        if (res.statusCode !== 200) {
-          app.getError();
-        }
-        if (res.data.status_code === 200) {
-          let resData = res.data.bags.courses;
-          let day = new Date().getDay() - 1;
-
-          let courseToday = resData.filter((item) => {
-            return item.hash_day === day;
+    let kebiao = wx.getStorageSync('kebiao');
+    console.log('kebiao', kebiao);
+    if (kebiao) {
+      self.renderClass(kebiao);
+    } else {
+      wx.request({
+        url: `${apiPrefix}/Course/getKebiao`,
+        method: 'post',
+        data: {
+          params: encodeFormated(`${wx.getStorageSync('session')}&0&empty`)
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success: function (res) {
+          if (res.statusCode.toString() !== '200') {
+            app.getError();
+            return;
+          }
+          if (res.data.status_code.toString() === '200') {
+            wx.setStorage({
+              key: 'kebiao',
+              data: res.data.bags
+            });
+            self.renderClass(res.data.bags);
+          } else {
+            console.log('首页获取课表失败1', res.data.status_text);
+            wx.hideToast();
+            app.gotoLogin();
+            return;
+          }
+          return false;
+        },
+        fail: function (res) {
+          wx.showModal({
+            title: '获取课表信息失败，请重试',
+            showCancel: false,
+            confirmText: '确认'
           });
-          self.setData({
-            week: res.data.bags.week
-          });
-          let courseTmp = [
-            [
-              {
-                class: '一二节',
-                room: '',
-                name: '没有课'
-              },
-              {
-                class: '三四节',
-                room: '',
-                name: '没有课'
-              }
-            ],
-            [
-              {
-                class: '五六节',
-                room: '',
-                name: '没有课'
-              },
-              {
-                class: '七八节',
-                room: '',
-                name: '没有课'
-              }
-            ],
-            [
-              {
-                class: '九十节',
-                room: '',
-                name: '没有课'
-              },
-              {
-                class: '十一二',
-                room: '',
-                name: '没有课'
-              }
-            ]
-          ];
-
-          courseToday.map((item, index) => {
-            let stageIndex = ~~(item.begin_lesson / 4);
-            let detailIndex = (item.begin_lesson % 4 - 1) / 2;
-            /**
-             * stageIndex: 上午 中午 下午
-             * detailIndex: 每个阶段有两节大课
-             */
-            courseTmp[stageIndex][detailIndex] = {
-              class: item.lesson,
-              room: item.classroom,
-              name: item.course
-            };
-            if (item.period === 3) {
-              courseTmp[stageIndex][detailIndex + 1] = Object.assign(courseTmp[stageIndex][detailIndex + 1], {
-                room: item.classroom,
-                name: item.course
-              });
-            }
-          });
-
-          self.setData({
-            course: courseTmp
-          });
-        } else {
-          console.log('首页获取课表失败1', res.data.status_text);
+          console.log('首页获取课表失败2', res);
+        },
+        complete: res => {
           wx.hideToast();
-          app.gotoLogin();
-          return;
         }
-        return false;
-      },
-      fail: function (res) {
-        wx.showModal({
-          title: '获取课表信息失败，请重试',
-          showCancel: false,
-          confirmText: '确认'
+      });
+    }
+  },
+  renderClass (kebiao) {
+    const self = this;
+    let resData = kebiao.courses;
+    let day = new Date().getDay() - 1;
+
+    let courseToday = resData.filter((item) => {
+      return item.hash_day === day;
+    });
+    self.setData({
+      week: kebiao.week
+    });
+    let courseTmp = [
+      [
+        {
+          class: '一二节',
+          room: '',
+          name: '没有课'
+        },
+        {
+          class: '三四节',
+          room: '',
+          name: '没有课'
+        }
+      ],
+      [
+        {
+          class: '五六节',
+          room: '',
+          name: '没有课'
+        },
+        {
+          class: '七八节',
+          room: '',
+          name: '没有课'
+        }
+      ],
+      [
+        {
+          class: '九十节',
+          room: '',
+          name: '没有课'
+        },
+        {
+          class: '十一二',
+          room: '',
+          name: '没有课'
+        }
+      ]
+    ];
+
+    courseToday.map((item, index) => {
+      let stageIndex = ~~(item.begin_lesson / 4);
+      let detailIndex = (item.begin_lesson % 4 - 1) / 2;
+      /**
+       * stageIndex: 上午 中午 下午
+       * detailIndex: 每个阶段有两节大课
+       */
+      courseTmp[stageIndex][detailIndex] = {
+        class: item.lesson,
+        room: item.classroom,
+        name: item.course
+      };
+      if (item.period === 3) {
+        courseTmp[stageIndex][detailIndex + 1] = Object.assign(courseTmp[stageIndex][detailIndex + 1], {
+          room: item.classroom,
+          name: item.course
         });
-        console.log('首页获取课表失败2', res);
-      },
-      complete: res => {
-        wx.hideToast();
       }
     });
+
+    self.setData({
+      course: courseTmp
+    });
+    wx.hideToast();
   },
   swiperBar (e) {
     this.setData({

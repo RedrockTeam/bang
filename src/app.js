@@ -50,7 +50,7 @@ App({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            if (res.statusCode !== 200) {
+            if (res.statusCode.toString() !== '200') {
               self.getError();
             }
             const retSession = res.data.bags.thirdSession;
@@ -97,10 +97,10 @@ App({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            if (res.statusCode !== 200) {
+            if (res.statusCode.toString() !== '200') {
               self.getError();
             }
-            if (res.data.status_code !== 200) {
+            if (res.data.status_code.toString() !== '200') {
               console.log('code 过期，需要重新获取');
               self.loginApp();
             } else {
@@ -129,7 +129,7 @@ App({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            if (res.statusCode !== 200) {
+            if (res.statusCode.toString() !== '200') {
               self.getError();
               return;
             }
@@ -160,7 +160,7 @@ App({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            if (res.statusCode !== 200) {
+            if (res.statusCode.toString() !== '200') {
               self.getError();
               return;
             }
@@ -194,7 +194,7 @@ App({
         params: encodeFormated(wx.getStorageSync('session'))
       },
       success (res) {
-        if (res.statusCode !== 200) {
+        if (res.statusCode.toString() !== '200') {
           self.getError();
         }
       }
@@ -236,22 +236,25 @@ App({
   //   });
   // },
   onLaunch () {
-    const self = this;
+    // const self = this;
     // 每次进入清空图书馆查询，电费查询清空缓存
     ['myinfor_library', 'rankList_library', 'myinfor_electricity'].forEach(key => {
       wx.removeStorage({
         key
       });
     });
+    // self.loginApp().then(() => {
+    //   const storages = wx.getStorageInfoSync();
 
-    const storages = wx.getStorageInfoSync();
+    //   storages.keys.forEach(key => {
+    //     let value = wx.getStorageSync(key);
+    //     if (value) {
+    //       self.data[key] = value;
+    //     }
+    //   });
 
-    storages.keys.forEach(key => {
-      let value = wx.getStorageSync(key);
-      if (value) {
-        self.data[key] = value;
-      }
-    });
+    //   console.log(22222, self);
+    // });
 
     // wx.checkSession({
     //   success () {
