@@ -98,25 +98,31 @@ Page({
     currentSwiper: 0,
     courseScroll: 0
   },
-  onShow () {
-    // 测试用
-    let asdf = wx.getStorageSync('kebiao');
-    if (!asdf) {
-      wx.showModal({
-        title: '我的->退出->重新登录',
-        content: '这个会一直都有，暂时请忽略',
-        showCancel: false,
-        confirmText: '确认'
-      });
-    }
-
+  onLoad () {
     wx.showToast({
       title: '数据获取中',
       icon: 'loading',
       duration: 10000
     });
-
+  },
+  onShow () {
     const self = this;
+    const storages = wx.getStorageInfoSync();
+
+    storages.keys.forEach(key => {
+      let value = wx.getStorageSync(key);
+      if (value) {
+        self.data[key] = value;
+      }
+    });
+    // 检查是否登录
+    let stuInfo = self.data.stuInfo;
+    if (!stuInfo) {
+      wx.hideToast();
+      app.gotoLogin();
+      return;
+    }
+
     let courseTime = 0;
     let currentHour = new Date().getHours();
 
@@ -131,46 +137,26 @@ Page({
       courseScroll: 130 * courseTime,
       courseCopy: self.data.course
     });
-
+    console.log(app);
     // 每次进入更换session
     app.loginApp().then(() => {
-      const storages = wx.getStorageInfoSync();
+      const self = this;
 
-      storages.keys.forEach(key => {
-        let value = wx.getStorageSync(key);
-        if (value) {
-          self.data[key] = value;
-        }
-      });
-      self.ready();
-    });
-  },
-  ready () {
-    const self = this;
-
-    const stuInfo = wx.getStorageSync('stuInfo');
-    if (stuInfo) {
-      let userInfor = app.data.stuInfo;
+      const stuInfo = self.data.stuInfo;
 
       self.setData({
-        stuNumber: userInfor.stuNum,
-        stuName: userInfor.name
+        stuNumber: stuInfo.stuNum,
+        stuName: stuInfo.name
       });
       self.getKebiaoFunc();
-    } else {
-      console.log('获取学生信息失败1', 111111);
-      self.setData({
-        course: self.data.courseCopy
-      });
-      wx.hideToast();
-      app.gotoLogin();
-      return;
-    }
+    }).catch(err => {
+      console.log('index error ', err);
+    });
   },
   getKebiaoFunc () {
     let self = this;
     let kebiao = wx.getStorageSync('kebiao');
-    console.log('kebiao', kebiao);
+    // console.log('kebiao', kebiao);
     if (kebiao) {
       self.renderClass(kebiao);
     } else {

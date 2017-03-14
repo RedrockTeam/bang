@@ -1,6 +1,6 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
 const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
-const app = getApp();
+// const app = getApp();
 
 Page({
   data: {
@@ -28,7 +28,7 @@ Page({
     deleteName: ''
   },
   onLoad: function onLoad () {
-    let stuInfo = app.data.stuInfo;
+    let stuInfo = wx.getStorageSync('stuInfo');
     this.setData({
       stuInfo
     });
@@ -58,7 +58,7 @@ Page({
         params: encodeFormated(`${wx.getStorageSync('session')}&${self.data.inputValue}`)
       },
       success: function (res) {
-        if (res.data.status_code === 200) {
+        if (res.data.status_code.toString() === '200') {
           let resData = res.data.bags;
           if (resData.length === 0) {
             wx.showModal({
@@ -135,7 +135,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        if (res.data.status_code === 200) {
+        if (res.data.status_code.toString() === '200') {
           let resData = res.data.bags;
           if (self.addstuNum.indexOf(resData[0].stuNum) === -1 && self.addstuName.length < 6) {
             self.addstuName.push(resData[0].name);
@@ -183,17 +183,19 @@ Page({
   },
   bindtapData: function bindtapData (e) {
     let stuData = this.data.addStu;
-    let hasSelf = false;
-    stuData.stuNum.forEach(val => {
-      if (val === this.data.stuInfo.stuNum) {
-        hasSelf = true;
+    if (this.data.stuInfo) {
+      let hasSelf = false;
+      stuData.stuNum.forEach(val => {
+        if (val === this.data.stuInfo.stuNum) {
+          hasSelf = true;
+        }
+      });
+      if (!hasSelf) {
+        stuData.stuClass.push(this.data.stuInfo.classNum + '班');
+        stuData.stuMajor.push(this.data.stuInfo.college);
+        stuData.stuName.push(this.data.stuInfo.name);
+        stuData.stuNum.push(this.data.stuInfo.stuNum);
       }
-    });
-    if (!hasSelf) {
-      stuData.stuClass.push(this.data.stuInfo.classNum + '班');
-      stuData.stuMajor.push(this.data.stuInfo.college);
-      stuData.stuName.push(this.data.stuInfo.name);
-      stuData.stuNum.push(this.data.stuInfo.stuNum);
     }
     wx.setStorage({
       key: 'key',

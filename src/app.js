@@ -26,12 +26,19 @@ App({
   loginApp () {
     const self = this;
     return new Promise((resolve, reject) => {
+      console.log('loginApp function have been called');
       wx.login({
         success (res) {
           if (res.code) {
             console.log('code 获取成功');
             resolve(res.code);
+          } else {
+            console.log('获取用户登录态失败！' + res.errMsg);
           }
+        },
+        fail (err) {
+          reject(err);
+          // console.log(err);
         }
       });
     }).then(code => {
@@ -59,7 +66,12 @@ App({
             resolve();
           }
         });
+      }).catch(err => {
+        console.log(5555555, err);
       });
+    }).catch(err => {
+      console.log('登录app失败，继续', err);
+      self.loginApp();
     });
   },
   getSession (code) {
@@ -82,7 +94,8 @@ App({
           resolve(obj);
         },
         fail () {
-          console.log('获取 userInfo 失败');
+          console.log('获取 userInfo 失败, 继续');
+          self.getUserInfo();
         }
       });
     }).then((obj) => {

@@ -15,7 +15,7 @@ Page({
     windowWidth: 0,
     monthsConWidth: [],
     moving: false, // 判断圆点是否在移动的标志
-    canvasData: {} // onload中设置
+    canvasData: {}
   },
   backToIndex () {
     wx.navigateBack({
@@ -23,6 +23,11 @@ Page({
     });
   },
   onShow () {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     // 获取屏幕宽度
     let windowWidth = 0;
     wx.getSystemInfo({
@@ -93,7 +98,7 @@ Page({
           let costMin = Math.min.apply(null, cost);
           cost = cost.map(val => val / costMin);
 
-          if (res.status_code === 200) {
+          if (res.status_code.toString() === '200') {
             this.setData({
               elecState: res.bags.result.current,
               cost: cost

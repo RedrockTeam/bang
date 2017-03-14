@@ -8,6 +8,11 @@ Page({
     roomState: {}
   },
   onLoad () {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     wx.getStorage({
       key: 'myinfor_electricity',
       success: res => {
@@ -34,7 +39,7 @@ Page({
           },
           success: res => {
             res = res.data;
-            if (res.status_code === 200) {
+            if (res.status_code.toString() === '200') {
               this.setData({
                 elecState: res.bags.result.current,
                 roomState: res.bags

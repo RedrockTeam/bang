@@ -54,7 +54,7 @@ const getSearchResult = function (self, searchValue) {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     success: res => {
-      if (res.data.status_code === 200) {
+      if (res.data.status_code.toString() === '200') {
         self.setData({
           searchItems: res.data.bags
         });
@@ -86,7 +86,7 @@ const getBookInfor = function (self, tag) {
     },
     success: res => {
       res = res.data;
-      if (res.status_code === 200) {
+      if (res.status_code.toString() === '200') {
         let data = res.bags;
         let bookItems = data[tag];
         let readerInfo = data.readerInfo;
@@ -123,7 +123,7 @@ const getRankList = function (self) {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     success: res => {
-      if (res.data.status_code === 200) {
+      if (res.data.status_code.toString() === '200') {
         let rankList = res.data.bags;
 
         self.setData({

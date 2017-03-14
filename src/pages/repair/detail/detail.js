@@ -1,5 +1,5 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
-
+const app = getApp();
 Page({
   data: {
     apiPrefix: 'https://redrock.cqupt.edu.cn/weapp',
@@ -15,6 +15,11 @@ Page({
     stars: 0
   },
   onLoad (params) {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     let self = this;
     let order = params.wx_djh;
     wx.showToast({
@@ -34,7 +39,7 @@ Page({
         params: encodeFormated(`${wx.getStorageSync('session')}&${order}`)
       },
       success (res) {
-        if (res.data.status_code === 200) {
+        if (res.data.status_code.toString() === '200') {
           let data = res.data.bags;
           let status = [
             '未审核',

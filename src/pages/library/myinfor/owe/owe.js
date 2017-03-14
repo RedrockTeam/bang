@@ -1,4 +1,5 @@
 import utils from '../../utils/utils';
+const app = getApp();
 Page({
   data: {
     bookItems: []
@@ -6,6 +7,11 @@ Page({
   gotoSearch: utils.gotoSearch,
   toggleSearchIcon: utils.toggleSearchIcon,
   onLoad () {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     wx.getStorage({
       key: 'myinfor_library',
       success: res => {
