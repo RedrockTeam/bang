@@ -87,7 +87,12 @@ Page({
     imgSrc: 'https://redrock.cqupt.edu.cn/weapp/images/wt.jpg'
   },
   onLoad () {
-    let name = app.data.stuInfo.name;
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
+    let name = stuInfo.name;
     if (name) {
       this.setData({
         name
@@ -224,7 +229,7 @@ Page({
         params: encodeFormated(`${wx.getStorageSync('session')}&${name}&${title}&${phone}&${place}&${text}&${areaVal}&${detailVal}&${imgUrl}`)
       },
       success (res) {
-        if (res.data.status_code === 200) {
+        if (res.data.status_code.toString() === '200') {
           wx.redirectTo({
             url: '../info/info'
           });

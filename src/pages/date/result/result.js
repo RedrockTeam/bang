@@ -22,7 +22,8 @@ Page({
     classWeekday: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     detailWeek: '',
     detailTime: '',
-    detailClassname: []
+    detailClassname: [],
+    getAllClasses: false
   },
   // 改变周数
   bindPickerChange: function bindPickerChange (e) {
@@ -46,6 +47,7 @@ Page({
           stuName: res.data.stuName,
           stuNumber: res.data.stuNum
         });
+        // console.log()
         self.dataRequest();
       }
     });
@@ -69,7 +71,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         success: function success (res) {
-          if (res.data.status_code === 200) {
+          if (res.data.status_code.toString() === '200') {
             self.setData({
               index: res.data.bags.week
             });
@@ -111,6 +113,7 @@ Page({
               }
             }
             self.setData({
+              getAllClasses: true,
               'className.oneT': className[0],
               'className.threeF': className[1],
               'className.fiveS': className[2],

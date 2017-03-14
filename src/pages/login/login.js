@@ -32,7 +32,6 @@ Page({
     const self = this;
     if (!wx.getStorageSync('session')) {
       // 获取session
-      console.log('no session');
       app.loginApp().then(res => {
         self.loginFunction();
       });
@@ -46,7 +45,6 @@ Page({
       password: this.data.id,
       key: wx.getStorageSync('session')
     };
-    console.log(info);
     const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
     wx.request({
       method: 'post',
@@ -59,7 +57,7 @@ Page({
       },
       success: function (res) {
         wx.hideToast();
-        if (res.data.status_code === 200) {
+        if (res.data.status_code.toString() === '200') {
           app.getUserInfo().then(res => {
             wx.showModal({
               title: '恭喜，绑定成功！',
@@ -74,7 +72,7 @@ Page({
               }
             });
           });
-        } else if (res.data.status_code === 400) {
+        } else if (res.data.status_code.toString() === '400') {
           wx.showModal({
             title: '你已经绑定过，点击返回',
             showCancel: false,

@@ -54,7 +54,6 @@ Page({
         wx.clearStorage();
         wx.showModal({
           title: '退出成功，点击返回',
-          content: '暂时退出后还会有学生信息，正常',
           showCancel: false,
           confirmText: '确认',
           success: function (res) {

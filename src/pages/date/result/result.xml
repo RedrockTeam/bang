@@ -25,7 +25,7 @@
       <text>六</text>
       <text>日</text>
     </view>
-    <view class="class-body">
+    <view class="class-body" wx:if="{{getAllClasses}}">
       <!-- 12节 -->
       <view class="class12">
         <view class="table-time">

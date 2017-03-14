@@ -73,7 +73,7 @@ Page({
         params: encodeFormated(`${wx.getStorageSync('session')}&${self.data.index}&${self.data.stuNumber}`)
       },
       success: function success (res) {
-        if (res.data.status_code === 200) {
+        if (res.data.status_code.toString() === '200') {
           self.setData({
             index: res.data.bags.week
           });
