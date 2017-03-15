@@ -39,22 +39,17 @@ Page({
           },
           success: res => {
             res = res.data;
-            if (res.status_code.toString() === '200') {
-              this.setData({
-                elecState: res.bags.result.current,
-                roomState: res.bags
-              });
-              wx.setStorage({
-                key: 'myinfor_electricity',
-                data: res.bags
-              });
-            } else {
-              console.log('获取电费信息失败1', res.status_text);
-              app.gotoLogin();
-            }
+            this.setData({
+              elecState: res.bags.result.current,
+              roomState: res.bags
+            });
+            wx.setStorage({
+              key: 'myinfor_electricity',
+              data: res.bags
+            });
           },
           fail: res => {
-            console.log('获取电费信息失败2', res);
+            console.log('获取电费信息失败', res);
             wx.showModal({
               title: '网络错误,请重试',
               showCancel: false,

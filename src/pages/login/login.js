@@ -40,9 +40,10 @@ Page({
     }
   },
   loginFunction () {
+    const self = this;
     let info = {
-      user: this.data.stunum,
-      password: this.data.id,
+      user: self.data.stunum,
+      password: self.data.id,
       key: wx.getStorageSync('session')
     };
     const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
@@ -56,9 +57,16 @@ Page({
         params: encodeFormated(`${info.user}&${info.password}&${info.key}`)
       },
       success: function (res) {
+        console.log(res);
+
         wx.hideToast();
         if (res.data.status_code.toString() === '200') {
           app.getUserInfo().then(res => {
+            // 测试用storage
+            wx.setStorage({
+              key: 'cleared',
+              data: 'used by test'
+            });
             wx.showModal({
               title: '恭喜，绑定成功！',
               showCancel: false,
@@ -85,9 +93,18 @@ Page({
               }
             }
           });
-        } else {
+        } else if (res.data.status_code.toString() === '404') {
+          self.setData({
+            id: ''
+          });
           wx.showModal({
             title: '账号或者密码错误！',
+            showCancel: false,
+            confirmText: '重试'
+          });
+        } else {
+          wx.showModal({
+            title: '我也不知道是什么错误',
             showCancel: false,
             confirmText: '重试'
           });

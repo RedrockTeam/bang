@@ -8,7 +8,7 @@
 
     <picker class="title-week" bindchange="bindPickerChange" value="{{index-1}}" range="{{array}}">
       <view>
-        <text>{{array[index]}}</text>
+        <text>{{array[index-1]}}</text>
         <image src="{{imgUrl}}/down.png"></image>
       </view>
 
@@ -33,13 +33,13 @@
           <text>1</text>
           <text>2</text>
         </view>
-        <view wx:for="{{[0,1,2,3,4,5]}}" 
-          style="background-color:{{color[0][item]}}; height: {{height[0][item]}}; z-index: {{zIndex[0][item]}};" 
-          class="class-con" 
-          bindtap="bindAppear" 
-          data-classname="{{className.oneT[item]}}" 
-          data-classroom="{{classRoom.oneT[item]}}" 
-          data-classweek="{{classWeekday[item]}}" 
+        <view wx:for="{{[0,1,2,3,4,5]}}"
+          style="background-color:{{color[0][item]}}; height: {{height[0][item]}}; z-index: {{zIndex[0][item]}};"
+          class="class-con"
+          bindtap="bindAppear"
+          data-classname="{{className.oneT[item]}}"
+          data-classroom="{{classRoom.oneT[item]}}"
+          data-classweek="{{classWeekday[item]}}"
           data-classtime="12节"
           data-classheight="{{height[0][item]}}"
           wx:key="*this">
@@ -62,13 +62,13 @@
           <text>3</text>
           <text>4</text>
         </view>
-        <view wx:for="{{[0,1,2,3,4,5]}}" 
-          style="background-color:{{color[1][item]}}; height: {{height[1][item]}}; z-index: {{zIndex[1][item]}};" 
-          class="class-con" 
-          bindtap="bindAppear" 
-          data-classname="{{className.threeF[item]}}" 
-          data-classroom="{{classRoom.threeF[item]}}" 
-          data-classweek="{{classWeekday[item]}}" 
+        <view wx:for="{{[0,1,2,3,4,5]}}"
+          style="background-color:{{color[1][item]}}; height: {{height[1][item]}}; z-index: {{zIndex[1][item]}};"
+          class="class-con"
+          bindtap="bindAppear"
+          data-classname="{{className.threeF[item]}}"
+          data-classroom="{{classRoom.threeF[item]}}"
+          data-classweek="{{classWeekday[item]}}"
           data-classtime="34节"
           data-classheight="{{height[1][item]}}"
           wx:key="*this">
@@ -92,13 +92,13 @@
           <text>5</text>
           <text>6</text>
         </view>
-        <view wx:for="{{[0,1,2,3,4,5]}}" 
-          style="background-color:{{color[2][item]}}; height: {{height[2][item]}}; z-index: {{zIndex[2][item]}};" 
-          class="class-con" 
-          bindtap="bindAppear" 
-          data-classname="{{className.fiveS[item]}}" 
-          data-classroom="{{classRoom.fiveS[item]}}" 
-          data-classweek="{{classWeekday[item]}}" 
+        <view wx:for="{{[0,1,2,3,4,5]}}"
+          style="background-color:{{color[2][item]}}; height: {{height[2][item]}}; z-index: {{zIndex[2][item]}};"
+          class="class-con"
+          bindtap="bindAppear"
+          data-classname="{{className.fiveS[item]}}"
+          data-classroom="{{classRoom.fiveS[item]}}"
+          data-classweek="{{classWeekday[item]}}"
           data-classtime="56节"
           data-classheight="{{height[2][item]}}"
           wx:key="*this">
@@ -122,15 +122,15 @@
           <text>7</text>
           <text>8</text>
         </view>
-        <view wx:for="{{[0,1,2,3,4,5]}}" 
-          style="background-color:{{color[3][item]}}; height: {{height[3][item]}}; z-index: {{zIndex[3][item]}};" 
-          class="class-con" 
-          bindtap="bindAppear" 
-          data-classname="{{className.sevenE[item]}}" 
-          data-classroom="{{classRoom.sevenE[item]}}" 
-          data-classweek="{{classWeekday[item]}}" 
+        <view wx:for="{{[0,1,2,3,4,5]}}"
+          style="background-color:{{color[3][item]}}; height: {{height[3][item]}}; z-index: {{zIndex[3][item]}};"
+          class="class-con"
+          bindtap="bindAppear"
+          data-classname="{{className.sevenE[item]}}"
+          data-classroom="{{classRoom.sevenE[item]}}"
+          data-classweek="{{classWeekday[item]}}"
           data-classtime="78节"
-          data-classheight="{{height[3][item]}}" 
+          data-classheight="{{height[3][item]}}"
           wx:key="*this">
           <view  style="-webkit-line-clamp: {{webkitLineClamp[3][item]}};">
             <text class="class-name">{{className.sevenE[item]}}\n</text>
@@ -152,15 +152,15 @@
           <text>9</text>
           <text>10</text>
         </view>
-        <view wx:for="{{[0,1,2,3,4,5]}}" 
-          style="background-color:{{color[4][item]}}; height: {{height[4][item]}}; z-index: {{zIndex[4][item]}};" 
-          class="class-con" 
-          bindtap="bindAppear" 
-          data-classname="{{className.nineT[item]}}" 
-          data-classroom="{{classRoom.nineT[item]}}" 
-          data-classweek="{{classWeekday[item]}}" 
+        <view wx:for="{{[0,1,2,3,4,5]}}"
+          style="background-color:{{color[4][item]}}; height: {{height[4][item]}}; z-index: {{zIndex[4][item]}};"
+          class="class-con"
+          bindtap="bindAppear"
+          data-classname="{{className.nineT[item]}}"
+          data-classroom="{{classRoom.nineT[item]}}"
+          data-classweek="{{classWeekday[item]}}"
           data-classtime="910节"
-          data-classheight="{{height[4][item]}}" 
+          data-classheight="{{height[4][item]}}"
           wx:key="*this">
           <view style="-webkit-line-clamp: {{webkitLineClamp[4][item]}};">
             <text class="class-name">{{className.nineT[item]}}\n</text>
@@ -182,15 +182,15 @@
           <text>11</text>
           <text>12</text>
         </view>
-        <view wx:for="{{[0,1,2,3,4,5]}}" 
-          style="background-color:{{color[5][item]}}; height: {{height[5][item]}}; z-index: {{zIndex[5][item]}};" 
-          class="class-con" 
-          bindtap="bindAppear" 
-          data-classname="{{className.elevenT[item]}}" 
-          data-classroom="{{classRoom.elevenT[item]}}" 
-          data-classweek="{{classWeekday[item]}}" 
+        <view wx:for="{{[0,1,2,3,4,5]}}"
+          style="background-color:{{color[5][item]}}; height: {{height[5][item]}}; z-index: {{zIndex[5][item]}};"
+          class="class-con"
+          bindtap="bindAppear"
+          data-classname="{{className.elevenT[item]}}"
+          data-classroom="{{classRoom.elevenT[item]}}"
+          data-classweek="{{classWeekday[item]}}"
           data-classtime="1112节"
-          data-classheight="{{height[5][item]}}" 
+          data-classheight="{{height[5][item]}}"
           wx:key="*this">
           <view  style="-webkit-line-clamp: {{webkitLineClamp[5][item]}};">
             <text class="class-name">{{className.elevenT[item]}}\n</text>
