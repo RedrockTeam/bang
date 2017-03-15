@@ -144,6 +144,9 @@ Page({
 
       const stuInfo = self.data.stuInfo;
 
+      if (!stuInfo.name) {
+        return;
+      }
       self.setData({
         stuNumber: stuInfo.stuNum,
         stuName: stuInfo.name
@@ -156,7 +159,6 @@ Page({
   getKebiaoFunc () {
     let self = this;
     let kebiao = wx.getStorageSync('kebiao');
-    // console.log('kebiao', kebiao);
     if (kebiao) {
       self.renderClass(kebiao);
     } else {
@@ -186,7 +188,6 @@ Page({
             app.gotoLogin();
             return;
           }
-          return false;
         },
         fail: function (res) {
           wx.showModal({

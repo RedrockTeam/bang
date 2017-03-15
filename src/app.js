@@ -26,7 +26,6 @@ App({
   loginApp () {
     const self = this;
     return new Promise((resolve, reject) => {
-      console.log('loginApp function have been called');
       wx.login({
         success (res) {
           if (res.code) {
@@ -57,9 +56,6 @@ App({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            if (res.statusCode.toString() !== '200') {
-              self.getError();
-            }
             const retSession = res.data.bags.thirdSession;
             wx.setStorageSync('session', retSession);
 
@@ -73,10 +69,6 @@ App({
       console.log('登录app失败，继续', err);
       self.loginApp();
     });
-  },
-  getSession (code) {
-    // const self = this;
-    // }).then(self.getUserInfo);
   },
   getUserInfo () {
     const self = this;
@@ -110,9 +102,6 @@ App({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            if (res.statusCode.toString() !== '200') {
-              self.getError();
-            }
             if (res.data.status_code.toString() !== '200') {
               console.log('code 过期，需要重新获取');
               self.loginApp();
@@ -120,9 +109,6 @@ App({
               console.log('code 有效，可以继续使用');
               resolve(obj);
             }
-          },
-          fail () {
-            self.getError();
           }
         });
       });
@@ -174,7 +160,7 @@ App({
           },
           success (res) {
             if (res.statusCode.toString() !== '200') {
-              self.getError();
+              // self.getError();
               return;
             }
             for (let key in res.data.bags) {
@@ -213,79 +199,34 @@ App({
       }
     });
   },
-  // getStuInfo () {
-  //   const self = this;
-  //   return new Promise((resolve, reject) => {
-  //     wx.request({
-  //       method: 'post',
-  //       url: 'https://redrock.cqupt.edu.cn/weapp/User/getUserInfo',
-  //       data: {
-  //         params: encodeFormated(wx.getStorageSync('session'))
-  //       },
-  //       header: {
-  //         'content-type': 'application/x-www-form-urlencoded'
-  //       },
-  //       success (res) {
-  //         if (res.statusCode !== 200) {
-  //           self.getError();
-  //           return;
-  //         }
-  //         wx.setStorage({
-  //           key: 'stuInfo',
-  //           data: res.data.bags
-  //         });
-  //         for (let key in res.data.bags) {
-  //           self.data.stuInfo[key] = res.data.bags[key];
-  //         }
-  //         // 获取学生信息
-  //         resolve();
-  //       }
-  //     });
-  //   }).then(() => {
-  //     return {
-  //       code: 1,
-  //       status: 'bind success, haha'
-  //     };
-  //   });
-  // },
+
   onLaunch () {
-    // const self = this;
     // 每次进入清空图书馆查询，电费查询清空缓存
     ['myinfor_library', 'rankList_library', 'myinfor_electricity'].forEach(key => {
       wx.removeStorage({
         key
       });
     });
-    // self.loginApp().then(() => {
-    //   const storages = wx.getStorageInfoSync();
 
-    //   storages.keys.forEach(key => {
-    //     let value = wx.getStorageSync(key);
-    //     if (value) {
-    //       self.data[key] = value;
-    //     }
-    //   });
-
-    //   console.log(22222, self);
-    // });
-
-    // wx.checkSession({
-    //   success () {
-    //     console.log('session 有效，直接登录');
-    //     // self.getUserInfo();
-    //     // self.getStuInfo();
-    //   },
-    //   fail () {
-    //     console.log('session 无效，需要重新获取');
-    //     self.loginApp();
-    //     // self.getStuInfo();
-    //   }
-    // });
-
-    /**
-     * 登录 检查 session 是否有效
-     * 有效则获取信息，无效则先拿 code
-     */
+    // 测试用
+    if (wx.getStorageSync('cleared')) {
+      return;
+    }
+    wx.request({
+      method: 'post',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      url: 'https://redrock.cqupt.edu.cn/weapp/bind/cancleBind',
+      data: {
+        params: encodeFormated(wx.getStorageSync('session'))
+      },
+      success: function (res) {
+        if (!wx.getStorageSync('cleared')) {
+          wx.clearStorage();
+        }
+      }
+    });
   },
   gotoLogin (url) {
     wx.showModal({

@@ -98,23 +98,18 @@ Page({
           let costMin = Math.min.apply(null, cost);
           cost = cost.map(val => val / costMin);
 
-          if (res.status_code.toString() === '200') {
-            this.setData({
-              elecState: res.bags.result.current,
-              cost: cost
-            });
-            this.ready();
-            wx.setStorage({
-              key: 'myinfor_electricity',
-              data: res.bags
-            });
-          } else {
-            console.log('获取电费信息失败1', res.status_text);
-            app.gotoLogin();
-          }
+          this.setData({
+            elecState: res.bags.result.current,
+            cost: cost
+          });
+          this.ready();
+          wx.setStorage({
+            key: 'myinfor_electricity',
+            data: res.bags
+          });
         },
         fail: res => {
-          console.log('获取电费信息失败2', res);
+          console.log('获取电费信息失败', res);
           wx.showModal({
             title: '网络错误,请重试',
             showCancel: false,
