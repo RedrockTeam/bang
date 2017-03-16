@@ -6,7 +6,7 @@
       <navigator class="notify__box--btn"
                   url="../index/index"
                   hover-class="none"
-                  redirect="true">返回首页</navigator>
+                  open-type="switchTab">返回首页</navigator>
     </view>
   </view>
 </view>
