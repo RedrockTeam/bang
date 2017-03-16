@@ -15,9 +15,7 @@ Page({
     detail: '',
     phone: '',
     date: '请选择时间',
-    // 是否显示已上传图片
     showImg: false,
-    // 上传图片地址
     imgSrc: ''
   },
   typeChange (e) {
@@ -78,7 +76,6 @@ Page({
       }
     });
   },
-  // 差一个上传图片的接口
   submitApply () {
     let data = {
       type: this.data.typeIndex,
@@ -93,6 +90,14 @@ Page({
     };
     const actType = ['school', 'academy', 'class'];
     const key = wx.getStorageSync('session');
+
+    wx.showToast({
+      title: '申请提交中',
+      icon: 'loading',
+      mask: true,
+      duration: 10000
+    });
+
     wx.uploadFile({
       url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Apply/fileUpload',
       filePath: data.imgSrc,
@@ -107,6 +112,7 @@ Page({
       success (res) {
         let path = JSON.parse(res.data).bags.path;
         let str = encodeFormated(`${key}&${data.title}&${data.host}&${data.date}&${data.place}&${actType[data.type]}&${data.headline}&${data.detail}&${data.phone}&${path}`);
+
         wx.request({
           method: 'post',
           url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Apply/upload',
@@ -117,9 +123,16 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           success (res) {
-            console.log(res.data);
             wx.redirectTo({
               url: '../info/info'
+            });
+          },
+          fail () {
+            wx.hideToast();
+            wx.showToast({
+              title: '提交失败',
+              icon: 'loading',
+              duration: 1500
             });
           }
         });
