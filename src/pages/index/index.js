@@ -99,29 +99,35 @@ Page({
     courseScroll: 0
   },
   onLoad () {
+    const self = this;
     wx.showToast({
       title: '数据获取中',
       icon: 'loading',
       duration: 10000
     });
+    this.setData({
+      courseCopy: self.data.course
+    });
   },
   onShow () {
     const self = this;
     const storages = wx.getStorageInfoSync();
-
+    // 检查是否登录
+    if (!storages.keys.length) {
+      wx.hideToast();
+      app.gotoLogin();
+      self.setData({
+        week: 0,
+        course: self.data.courseCopy
+      });
+      return;
+    }
     storages.keys.forEach(key => {
       let value = wx.getStorageSync(key);
       if (value) {
         self.data[key] = value;
       }
     });
-    // 检查是否登录
-    let stuInfo = self.data.stuInfo;
-    if (!stuInfo) {
-      wx.hideToast();
-      app.gotoLogin();
-      return;
-    }
 
     let courseTime = 0;
     let currentHour = new Date().getHours();
@@ -134,10 +140,8 @@ Page({
     }
 
     self.setData({
-      courseScroll: 130 * courseTime,
-      courseCopy: self.data.course
+      courseScroll: 130 * courseTime
     });
-    console.log(app);
     // 每次进入更换session
     app.loginApp().then(() => {
       const self = this;

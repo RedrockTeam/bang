@@ -37,7 +37,6 @@ App({
         },
         fail (err) {
           reject(err);
-          // console.log(err);
         }
       });
     }).then(code => {
@@ -160,7 +159,6 @@ App({
           },
           success (res) {
             if (res.statusCode.toString() !== '200') {
-              // self.getError();
               return;
             }
             for (let key in res.data.bags) {
@@ -206,26 +204,6 @@ App({
       wx.removeStorage({
         key
       });
-    });
-
-    // 测试用
-    if (wx.getStorageSync('cleared')) {
-      return;
-    }
-    wx.request({
-      method: 'post',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      url: 'https://redrock.cqupt.edu.cn/weapp/bind/cancleBind',
-      data: {
-        params: encodeFormated(wx.getStorageSync('session'))
-      },
-      success: function (res) {
-        if (!wx.getStorageSync('cleared')) {
-          wx.clearStorage();
-        }
-      }
     });
   },
   gotoLogin (url) {
