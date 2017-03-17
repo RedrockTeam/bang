@@ -5,7 +5,9 @@ Page({
     bookItems: []
   },
   gotoSearch: utils.gotoSearch,
-  toggleSearchIcon: utils.toggleSearchIcon,
+  setSearchValue: utils.setSearchValue,
+  searchIconFocus: utils.searchIconFocus,
+  searchIconBlur: utils.searchIconBlur,
   onLoad () {
     let stuInfo = wx.getStorageSync('stuInfo');
     if (!stuInfo) {

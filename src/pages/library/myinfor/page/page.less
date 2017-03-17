@@ -15,20 +15,29 @@ page {
   height: 110-25rpx;
   background: linear-gradient(90deg, #b074d2, #ae73d1, #a972cd);
 }
-.search_icon {
+.search-item {
   position: absolute;
   z-index: 2;
-  top: 36.5rpx;
   left: 333rpx;
+  width: 60rpx;
+  height: 70rpx;
+}
+.search_icon {
+  position: absolute;
+  top: 15rpx;
   width: 35rpx;
   height: 35rpx;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACy0lEQVRYR82XTXIaMRCFu4cqNLvgE4ScIOYEMSeI2YC0Cj5BnBOEnCDxCYJXEmyAE4ScINwg5AZkBxuUelOaKTHMj7ADiapc5TKi9fWT+nWb6R8vDjl/MpncWmvfEtG1+0m/tiaiJTMvm83motfrbULi+XsqAbTWQ2b+SETtgMAbZr4fDAaPAXuzLYUAs9mstdvtZkR04wez1n4nImS9ZmaoAbDXuQNXQohuqBpHAFrrNjPjcByA9dtaex/H8bwoqNt/T0TvPZC1EKITAnEA4DL/5h2+EEIMQwJNp9Pr/X4/9hQJUuIAwBjzJc3EWvuolBqecp8ugaUH8SClhDqlKwNwUv7ETty1Uurg/kNBXJwVEb1wsV4ppfBuCpcPMGbmdyFfqoMxxiDrzy5WpZIZgDEGNQzqhZTytu6Qus+9eBsp5VWlAlrrG2bG44P8d0opPKZnLa11pmgURZ1+v49rOVqJAs5wvuL3qs2nEOWuoauUwuMsBRg5xyMpZZA918HkVP2klBr9vwCu2cD98AZK5arL2v9ca52pWhUzkdu52I+/+QiNMXMiQgdFUqVe4PsAGsxLtFcpZfeUbPN7nSPC1FrW2l9KqdJu6vuAb8PPuoac/KUPEOAZgKOGZcKMghpJkUruOuEpLXRSIUS7qpkdlJxP/hSI3OHg+yClhLKl66jm/ccDCGttr6qZpJFd3aOSkHmyhBBXda38CABXsd1u58z8xsMeR1H0UGSnroQxjBR1z9qrLHU938s9EDSs1NORaTo1ZVvw6l01pX+rhKgbSpEVDMVXo/A+3bw4iuN4tdvt/KEE+0shgnzfDRkYzZM2jYHUWpsqsWw0GnP/enIVlSkhpezk6YMAnmJKriKgRDIZuTWWUt758c4GgENCIM4KEAJxdgBA+LNBKn86eV0EwEHg37xk6nIrmT0vBuBBwJrXURQNUTkXBSiqpj/nII8wwqv66gAAAABJRU5ErkJggg==);
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  transition: left .15s ease;
+}
+.search_icon_focus {
+  left: 40rpx;
 }
 .search-placeholder {
   position: absolute;
-  top: 0;
+  top: 17rpx;
   left: 45rpx;
   width: 100rpx;
   font-size: 28rpx;
@@ -36,10 +45,11 @@ page {
 }
 .header-input {
   margin: 0 auto;
+  padding-left: 80rpx;
   width: 617rpx;
   height: 60rpx;
-  text-align: center;
   background: #fff;
+  line-height: 60rpx;
   border-radius: 8rpx;
   font-size: 28rpx;
   color: #a5a5a5;
@@ -158,7 +168,7 @@ page {
 .no-result__con {
   position: relative;
   width: 100%;
-  height: 600rpx;
+  height: 680rpx;
   .no-result__img {
     position: absolute;
     top: 0;

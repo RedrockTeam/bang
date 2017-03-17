@@ -1,9 +1,12 @@
 <view class="header">
-  <view wx:if="{{!search_focus}}" class="search_icon">
-    <text class="search-placeholder">搜索</text>
+  <view class="search-item {{search_input_focus ? 'search_icon_focus' : ''}}">
+    <view class="search_icon" bindtap="gotoSearch"></view>
+    <view class="search-placeholder" wx:if="{{!search_input_focus}}">搜索</view>
   </view>
   <input class="header-input"
-         bindinput="toggleSearchIcon"
+         bindfocus="searchIconFocus"
+         bindblur="searchIconBlur"
+         bindinput="setSearchValue"
          bindconfirm="gotoSearch"></input>
 </view>
 <view class="main-tags">

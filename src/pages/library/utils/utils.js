@@ -2,18 +2,25 @@ const app = getApp();
 const urlPrefix = 'https://redrock.cqupt.edu.cn/weapp';
 const encodeFormated = require('../../../utils/util').encodeFormated;
 
-/* toggleSearchIcon 点击搜索框切换搜索🔍图标显示
-* search_focus:  是否输入了字符
+/* searchIconFocus, searchIconBlur 点击搜索框切换搜索🔍图标显示
+* search_input_focus:  是否输入了字符
 */
-const toggleSearchIcon = function (event) {
+const setSearchValue = function (event) {
+  let value = event.detail.value.trim();
+  this.setData({
+    searchValue: value
+  });
+};
+const searchIconFocus = function () {
+  this.setData({
+    search_input_focus: true
+  });
+};
+const searchIconBlur = function (event) {
   let value = event.detail.value;
-  if (value === '') {
+  if (!value) {
     this.setData({
-      search_focus: false
-    });
-  } else {
-    this.setData({
-      search_focus: true
+      search_input_focus: false
     });
   }
 };
@@ -22,7 +29,7 @@ const toggleSearchIcon = function (event) {
 * flag: 是否为第一次搜索，在search.xml中设置(true)。如果是，则跳转，否则则重定向，避免无限搜索，无限返回
 */
 const gotoSearch = function (event) {
-  let value = event.detail.value;
+  let value = this.data.searchValue;
   let flag = event.currentTarget.dataset.flag;
   if (!flag) {
     wx.navigateTo({
@@ -148,5 +155,7 @@ module.exports = {
   getBookInfor,
   getRankList,
   getSearchResult,
-  toggleSearchIcon
+  setSearchValue,
+  searchIconFocus,
+  searchIconBlur
 };
