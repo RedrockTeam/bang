@@ -27,9 +27,14 @@ Page({
     wx.showToast({
       title: '登录中',
       icon: 'loading',
+      mask: true,
       duration: 10000
     });
     const self = this;
+
+    app.getUserInfo();
+    wx.clearStorageSync();
+
     if (!wx.getStorageSync('session')) {
       // 获取session
       app.loginApp().then(res => {
@@ -47,6 +52,10 @@ Page({
       key: wx.getStorageSync('session')
     };
     const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
+
+    app.getUserInfo();
+    wx.clearStorageSync();
+
     wx.request({
       method: 'post',
       header: {
