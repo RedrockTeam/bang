@@ -19,7 +19,7 @@ page {
     width: 260rpx;
     height: 265rpx;
     color: #fff;
-    font-size: 40rpx;
+    font-size: 48rpx;
     line-height: 245rpx;
     letter-spacing: 20rpx;
     text-align: center;
@@ -27,18 +27,18 @@ page {
     background-image: url('@{img_url}/repair__apply-btn.png');
     background-repeat: no-repeat;
     background-size: cover;
-
+    text-shadow: 0 6rpx 20rpx #FF9C26;
   }
   .header__feedback {
     box-sizing: border-box;
     float: right;
     margin-top: 40rpx;
     margin-right: 130rpx;
-    padding-top: 50rpx;
+    padding-top: 44rpx;
     width: 180rpx;
     height: 220rpx;
     color: #fff;
-    font-size: 25rpx;
+    font-size: 28rpx;
     letter-spacing: 15rpx;
     text-align: center;
     text-indent: 15rpx;
@@ -46,6 +46,7 @@ page {
     background-position: 0 0;
     background-repeat: no-repeat;
     background-size: contain;
+    text-shadow: 0 2rpx 12rpx #00BEAD;
     text { display: block; }
   }
 }
@@ -73,8 +74,8 @@ page {
   }
   @keyframes wave {
     0% { transform: translate(0, 0); }
-    50% { transform: translate(-12%, 8%); }
-    100% { transform: translate(12%, -8%); }
+    50% { transform: translate(-12%, 6%); }
+    100% { transform: translate(12%, -6%); }
   }
   .wave__one { animation: wave 12s ease-in-out alternate infinite; }
   .wave__two { animation: wave 15s ease-in-out 2s alternate infinite; }
@@ -138,7 +139,7 @@ page {
     float: right;
     right: 0;
     margin-top: 80rpx;
-    width: 270rpx;
+    width: 200rpx;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
