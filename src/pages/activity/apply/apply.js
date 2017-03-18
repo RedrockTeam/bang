@@ -1,5 +1,5 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
-
+const app = getApp();
 Page({
   data: {
     type: [
@@ -17,6 +17,13 @@ Page({
     date: '请选择时间',
     showImg: false,
     imgSrc: ''
+  },
+  onLoad () {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
   },
   typeChange (e) {
     this.setData({

@@ -17,7 +17,7 @@
                 </view>
             </block>
             <block wx:for="{{stu_info.room_feedback_info}}" wx:key="my-info-ext">
-                <view class="user--info__item">
+                <view bindtap="feedback" class="user--info__item">
                    <text class="user--info__name ext">{{item.name}}</text>
                    <view class="user--info__arrow">
                         <image src="{{item.url}}"></image>

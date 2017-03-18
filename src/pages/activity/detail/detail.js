@@ -1,5 +1,5 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
-
+const app = getApp();
 Page({
   data: {
     title: '加载中',
@@ -11,6 +11,11 @@ Page({
     }
   },
   onLoad (par) {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     const that = this;
     const key = wx.getStorageSync('session');
     let actId = par.act_id;

@@ -1,6 +1,6 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
 const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
-// const app = getApp();
+const app = getApp();
 
 Page({
   data: {
@@ -33,6 +33,11 @@ Page({
     this.dataRequest();
   },
   onLoad: function onLoad (params) {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     let self = this;
     // 获取缓存数据
     wx.showToast({

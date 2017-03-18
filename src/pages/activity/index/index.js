@@ -1,5 +1,5 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
-
+const app = getApp();
 Page({
   data: {
     imgUrls: [],
@@ -63,6 +63,11 @@ Page({
     });
   },
   onLoad (params) {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     wx.showToast({
       title: '加载中',
       icon: 'loading'
