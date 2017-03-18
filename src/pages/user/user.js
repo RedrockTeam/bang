@@ -28,11 +28,6 @@ Page({
         }
       ],
       room_feedback_info: [
-        // {
-        //   name: '寝室信息',
-        //   message: '',
-        //   url: imgPrefix + 'arrow.png'
-        // },
         {
           name: '意见反馈',
           message: '',
@@ -40,6 +35,14 @@ Page({
         }
       ]
     }
+  },
+  feedback () {
+    wx.showModal({
+      title: '请加入重邮帮',
+      content: '我们的反馈QQ群： 470455840',
+      showCancel: false,
+      confirmText: '确认'
+    });
   },
   logoutAction () {
     wx.request({

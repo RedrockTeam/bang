@@ -1,6 +1,6 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
 const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
-// const app = getApp();
+const app = getApp();
 
 Page({
   data: {
@@ -29,6 +29,10 @@ Page({
   },
   onLoad: function onLoad () {
     let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     this.setData({
       stuInfo
     });

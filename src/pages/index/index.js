@@ -113,9 +113,9 @@ Page({
   },
   onShow () {
     const self = this;
-    const storages = wx.getStorageInfoSync();
     // 检查是否登录
-    if (!storages.keys.length) {
+    const stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
       wx.hideToast();
       app.gotoLogin();
       self.setData({
@@ -124,6 +124,8 @@ Page({
       });
       return;
     }
+
+    const storages = wx.getStorageInfoSync();
     storages.keys.forEach(key => {
       let value = wx.getStorageSync(key);
       if (value) {
