@@ -1,7 +1,6 @@
 const app = getApp();
 const encodeFormated = require('../../../utils/util').encodeFormated;
 const electricityUrl = 'https://redrock.cqupt.edu.cn/weapp/Electric/getInfo';
-
 Page({
   data: {
     title: 'past',
@@ -57,9 +56,10 @@ Page({
 
       let costMin = Math.min.apply(null, cost);
       cost = cost.map(val => val / costMin);
-
+      // console.log(res.result.trend[this.data.focusIndex]);
       this.setData({
-        elecState: res.result.current,
+        elecStates: res.result.trend,
+        elecState: res.result.trend[0],
         cost: cost
       });
       wx.hideToast();
@@ -99,7 +99,8 @@ Page({
           cost = cost.map(val => val / costMin);
 
           this.setData({
-            elecState: res.bags.result.current,
+            elecStates: res.bags.result.trend,
+            elecState: res.bags.result.trend[0],
             cost: cost
           });
           this.ready();
@@ -211,7 +212,7 @@ Page({
     canvasData.roundCanvas.setFillStyle('#ffffff');
     canvasData.roundCanvas.setLineWidth(this.pxToRpx(2));
 
-    let circleRadius = this.pxToRpx(6);
+    let circleRadius = this.pxToRpx(4);
     circleX = circleX || canvasData.perWidth * this.data.focusIndex;
     circleY = circleY || canvasData.costHeight[this.data.focusIndex - 1];
 
@@ -355,7 +356,8 @@ Page({
               this.setData({
                 lastFocusIndex: this.data.focusIndex,
                 focusIndex: idx + 1,
-                eleCost: this.data.realCost[idx]
+                eleCost: this.data.realCost[idx],
+                elecState: this.data.elecStates[idx]
               });
               this.getPath();
             }

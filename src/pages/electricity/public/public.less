@@ -1,3 +1,4 @@
+@img_url: "https://redrock.cqupt.edu.cn/weapp/images";
 .function {
   .r(@x) {
     return: 2 * @x + 0rpx;
@@ -6,11 +7,13 @@
 page {
   background: #F8F8F8;
   font-family: 'PingFangSC-Medium', 'PingFangSC-Semibold', 'Helvetica Neue', Helvetica, Arial, sans-serif, '冬青黑';
+  margin-bottom: r(5);
 }
 .wrapper {
   margin: 0 auto;
   margin-top: r(16);
   width: r(343);
+  box-shadow: 0 r(10) r(10) #f0f3f6;
 }
 /* 电起度和电止度 */
 .main-infor__used {
@@ -24,7 +27,7 @@ page {
   .main-round {
     position: relative;
     margin: 0 auto;
-    margin-top: r(14);
+    margin-top: r(7);
     width: r(8);
     height: r(8);
     border-radius: 50%;
@@ -37,7 +40,7 @@ page {
     }
   }
   .main-infor {
-    margin-top: r(8);
+    margin-top: r(4);
     font-size: r(22);
   }
 }
@@ -70,17 +73,16 @@ page {
 /* 跳转到往期电费按钮 */
 .footer {
   position: absolute;
-  margin: r(-22) r(117-16) 0 r(118-16);
-  width: r(140);
-  height: r(44);
-  background: -webkit-linear-gradient(left, #00C5E2 , #0FF3DF); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(right, #00C5E2, #0FF3DF); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(right, #00C5E2, #0FF3DF); /* Firefox 3.6 - 15 */
-  background: linear-gradient(to right, #00C5E2 , #0FF3DF); /* 标准的语法 */
-  border-radius: r(22);
+  margin: r(-35) r(117+20-16) 0 r(118-20-16);
+  width: 360rpx;
+  height: 154rpx;
+  background: url('@{img_url}/repair__btn-submit.png') no-repeat 100% 100%;
+  background-position: 0 0;
+  background-size: cover;
+  letter-spacing: 2rpx;
   text-align: center;
-  font-size: r(16);
+  font-size: r(18);
+  font-family: 'PingFangSC-Medium';
   color: #fff;
-  line-height: r(44);
-  box-shadow: 0 0 r(5) #00C5E2, 0 r(20) r(20) rgba(6, 242, 222, .25);
+  line-height: r(140/2);
 }

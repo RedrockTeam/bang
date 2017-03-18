@@ -6,45 +6,45 @@ const app = getApp();
 Page({
   data: {
     imgUrls: [
-      `${imgPrefix}/bannercopy2.png`,
+      `${imgPrefix}/banner.png`,
       `${imgPrefix}/bannercopy.png`,
-      `${imgPrefix}/banner.png`
+      `${imgPrefix}/bannercopy2.png`
     ],
     course: [
       [
         {
           class: '一二节',
-          room: '',
-          name: '获取中'
+          room: '0000',
+          name: '暂无排课'
         },
         {
           class: '三四节',
-          room: '',
-          name: '获取中'
+          room: '0000',
+          name: '暂无排课'
         }
       ],
       [
         {
           class: '五六节',
-          room: '',
-          name: '获取中'
+          room: '0000',
+          name: '暂无排课'
         },
         {
           class: '七八节',
-          room: '',
-          name: '获取中'
+          room: '0000',
+          name: '暂无排课'
         }
       ],
       [
         {
           class: '九十节',
-          room: '',
-          name: '获取中'
+          room: '0000',
+          name: '暂无排课'
         },
         {
           class: '十一二',
-          room: '',
-          name: '获取中'
+          room: '0000',
+          name: '暂无排课'
         }
       ]
     ],
@@ -66,21 +66,23 @@ Page({
           img: `${imgPrefix}/index__icon-repair.png`
         },
         {
-          name: '失物招领',
-          url: '',
-          img: `${imgPrefix}/index_icon_-lose.png`
+          name: '没课约',
+          url: '../date/index/index',
+          img: `${imgPrefix}/index__icon-yue.png`
         }
       ],
       [
         {
-          name: '没课约',
-          url: '../date/index/index',
-          img: `${imgPrefix}/index__icon-yue.png`
+          name: '失物招领',
+          url: '',
+          img: `${imgPrefix}/index_icon_-lose.png`,
+          updating: true
         },
         {
           name: '成绩查询',
           url: '',
-          img: `${imgPrefix}/index__icon-score.png`
+          img: `${imgPrefix}/index_icon-score.png`,
+          updating: true
         },
         {
           name: '',

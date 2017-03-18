@@ -1,16 +1,11 @@
 <view class="header">
-  <!-- <input class="header-input"
-         placeholder="{{searchValue ? searchValue : '搜索'}}"
-         bindconfirm="gotoSearch"
-         data-flag="true"></input> -->
   <view class="search-item search_icon_focus">
     <view class="search_icon" bindtap="gotoSearch"></view>
-    <!-- <view class="search-placeholder">搜索</view> -->
   </view>
   <input class="header-input"
          bindfocus="searchIconFocus"
          bindblur="searchIconBlur"
-         value="{{searchValue ? searchValue : '搜索'}}"
+         value="{{searchValue}}"
          bindinput="setSearchValue"
          bindconfirm="gotoSearch"
          data-flag="true"></input>

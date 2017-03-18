@@ -84,14 +84,15 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success (res) {
+        console.log(22222, res);
         let newImgUrls = [];
         let type = 'null';
         let str = encodeFormated(`${key}&${type}&${that.data.page}`);
         wx.hideToast();
-
-        for (let item of res.data.bags) {
-          newImgUrls.push(item.img);
-        }
+        newImgUrls = res.data.bags;
+        // for (let item of res.data.bags) {
+        //   newImgUrls.push(item.img);
+        // }
         that.setData({
           imgUrls: newImgUrls
         });
