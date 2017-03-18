@@ -7,7 +7,7 @@
         </view>
         <view class="vice-title">
             <navigator url="##" class="copyright">
-                红岩网校工作站
+                {{actInfo.host}}
             </navigator>
             {{actInfo.date}}
             <text class="place">{{actInfo.place}}</text>

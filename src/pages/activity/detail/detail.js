@@ -28,19 +28,27 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success (res) {
+        if (res.data.status_code.toString() !== '200') {
+          wx.showModal({
+            title: '加载失败',
+            showCancel: false
+          });
+          return;
+        }
+        const resData = res.data.bags[0];
         let newActInfo = {};
-        let dateStr = res.data.bags[0].date.split('-')[1];
+        let dateStr = resData.date.split('-')[1];
         wx.hideToast();
-        dateStr = dateStr + '/' + res.data.bags[0].date.split('-')[2];
-        newActInfo.img = res.data.bags[0].img;
+        dateStr = dateStr + '/' + resData.date.split('-')[2];
+        newActInfo.img = resData.img;
         newActInfo.date = dateStr;
-        newActInfo.place = res.data.bags[0].place;
-        newActInfo.detail = res.data.bags[0].detail;
+        newActInfo.place = resData.place;
+        newActInfo.detail = resData.detail;
+        newActInfo.host = resData.host || '红岩网校工作站';
         that.setData({
-          title: res.data.bags[0].title,
+          title: resData.title,
           actInfo: newActInfo
         });
-        console.log(res.data);
       }
     });
   },

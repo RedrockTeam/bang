@@ -18,9 +18,24 @@ Page({
       id: e.detail.value
     });
   },
-  backToIndex () {
-    wx.switchTab({
-      url: '/pages/index/index'
+  inputNumFocus () {
+    this.setData({
+      inputNumFocus: true
+    });
+  },
+  inputNumBlur () {
+    this.setData({
+      inputNumFocus: false
+    });
+  },
+  inputPwdFocus () {
+    this.setData({
+      inputPwdFocus: true
+    });
+  },
+  inputPwdBlur () {
+    this.setData({
+      inputPwdFocus: false
     });
   },
   loginAction () {
@@ -31,9 +46,6 @@ Page({
       duration: 10000
     });
     const self = this;
-
-    app.getUserInfo();
-    // wx.clearStorageSync();
 
     if (!wx.getStorageSync('session')) {
       // 获取session
@@ -52,10 +64,6 @@ Page({
       key: wx.getStorageSync('session')
     };
     const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
-
-    app.getUserInfo();
-
-    // wx.clearStorageSync();
 
     wx.request({
       method: 'post',
@@ -96,18 +104,12 @@ Page({
               }
             }
           });
-        } else if (res.data.status_code.toString() === '404') {
+        } else {
           self.setData({
             id: ''
           });
           wx.showModal({
             title: '账号或者密码错误！',
-            showCancel: false,
-            confirmText: '重试'
-          });
-        } else {
-          wx.showModal({
-            title: '我也不知道是什么错误',
             showCancel: false,
             confirmText: '重试'
           });

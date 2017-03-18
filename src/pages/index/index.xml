@@ -84,7 +84,8 @@
                       hover-class="none">
             <image class="index--service__item-image"
                    src="{{item.img}}" />
-            <text class="index--service__item-text">{{item.name}}</text>
+            <block class=""></block>
+            <text class="index--service__item-text {{item.updating ? 'updating' : ''}}">{{item.name}}</text>
           </navigator>
         </block>
       </view>
