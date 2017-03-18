@@ -84,6 +84,9 @@
               wx:if="{{showImg}}"></image>
     </view>
     <view class="submit-btn"
-          bindtap="submitApply">提 交</view>
+          bindtap="submitApply">
+      <text>提</text>
+      <text>交</text>
+    </view>
   </view>
 </view>
