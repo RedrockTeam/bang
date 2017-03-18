@@ -5,7 +5,7 @@
     </view>
     <view class="user--header">
         <image src="{{avatar}}" />
-        <text class="user--header__cqupt">重邮帮</text>
+        <text class="user--header__cqupt">{{stu_info.stuName}}</text>
         <text class="user--header__stuid">{{stu_info.stuid}}</text>
     </view>
     <view class="user--info">
