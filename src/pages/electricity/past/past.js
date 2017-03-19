@@ -1,7 +1,6 @@
 const app = getApp();
 const encodeFormated = require('../../../utils/util').encodeFormated;
 const electricityUrl = 'https://redrock.cqupt.edu.cn/weapp/Electric/getInfo';
-
 Page({
   data: {
     title: 'past',
@@ -15,7 +14,7 @@ Page({
     windowWidth: 0,
     monthsConWidth: [],
     moving: false, // 判断圆点是否在移动的标志
-    canvasData: {} // onload中设置
+    canvasData: {}
   },
   backToIndex () {
     wx.navigateBack({
@@ -23,6 +22,11 @@ Page({
     });
   },
   onShow () {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     // 获取屏幕宽度
     let windowWidth = 0;
     wx.getSystemInfo({
@@ -52,9 +56,10 @@ Page({
 
       let costMin = Math.min.apply(null, cost);
       cost = cost.map(val => val / costMin);
-
+      // console.log(res.result.trend[this.data.focusIndex]);
       this.setData({
-        elecState: res.result.current,
+        elecStates: res.result.trend,
+        elecState: res.result.trend[0],
         cost: cost
       });
       wx.hideToast();
@@ -93,23 +98,19 @@ Page({
           let costMin = Math.min.apply(null, cost);
           cost = cost.map(val => val / costMin);
 
-          if (res.status_code === 200) {
-            this.setData({
-              elecState: res.bags.result.current,
-              cost: cost
-            });
-            this.ready();
-            wx.setStorage({
-              key: 'myinfor_electricity',
-              data: res.bags
-            });
-          } else {
-            console.log('获取电费信息失败1', res.status_text);
-            app.gotoLogin();
-          }
+          this.setData({
+            elecStates: res.bags.result.trend,
+            elecState: res.bags.result.trend[0],
+            cost: cost
+          });
+          this.ready();
+          wx.setStorage({
+            key: 'myinfor_electricity',
+            data: res.bags
+          });
         },
         fail: res => {
-          console.log('获取电费信息失败2', res);
+          console.log('获取电费信息失败', res);
           wx.showModal({
             title: '网络错误,请重试',
             showCancel: false,
@@ -211,7 +212,7 @@ Page({
     canvasData.roundCanvas.setFillStyle('#ffffff');
     canvasData.roundCanvas.setLineWidth(this.pxToRpx(2));
 
-    let circleRadius = this.pxToRpx(6);
+    let circleRadius = this.pxToRpx(4);
     circleX = circleX || canvasData.perWidth * this.data.focusIndex;
     circleY = circleY || canvasData.costHeight[this.data.focusIndex - 1];
 
@@ -355,7 +356,8 @@ Page({
               this.setData({
                 lastFocusIndex: this.data.focusIndex,
                 focusIndex: idx + 1,
-                eleCost: this.data.realCost[idx]
+                eleCost: this.data.realCost[idx],
+                elecState: this.data.elecStates[idx]
               });
               this.getPath();
             }

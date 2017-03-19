@@ -18,18 +18,35 @@ Page({
       id: e.detail.value
     });
   },
-  backToIndex () {
-    wx.switchTab({
-      url: '/pages/index/index'
+  inputNumFocus () {
+    this.setData({
+      inputNumFocus: true
+    });
+  },
+  inputNumBlur () {
+    this.setData({
+      inputNumFocus: false
+    });
+  },
+  inputPwdFocus () {
+    this.setData({
+      inputPwdFocus: true
+    });
+  },
+  inputPwdBlur () {
+    this.setData({
+      inputPwdFocus: false
     });
   },
   loginAction () {
     wx.showToast({
       title: '登录中',
       icon: 'loading',
+      mask: true,
       duration: 10000
     });
     const self = this;
+
     if (!wx.getStorageSync('session')) {
       // 获取session
       app.loginApp().then(res => {
@@ -40,12 +57,14 @@ Page({
     }
   },
   loginFunction () {
+    const self = this;
     let info = {
-      user: this.data.stunum,
-      password: this.data.id,
+      user: self.data.stunum,
+      password: self.data.id,
       key: wx.getStorageSync('session')
     };
     const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
+
     wx.request({
       method: 'post',
       header: {
@@ -57,11 +76,26 @@ Page({
       },
       success: function (res) {
         wx.hideToast();
-        if (res.data.status_code === 200) {
+        if (res.data.status_code.toString() === '200') {
+          app.getUserInfo().then(res => {
+            wx.showModal({
+              title: '恭喜，绑定成功！',
+              showCancel: false,
+              confirmText: '继续',
+              success (res) {
+                if (res.confirm) {
+                  wx.switchTab({
+                    url: '../index/index'
+                  });
+                }
+              }
+            });
+          });
+        } else if (res.data.status_code.toString() === '400') {
           wx.showModal({
-            title: '恭喜，绑定成功！',
+            title: '你已经绑定过，点击返回',
             showCancel: false,
-            confirmText: '继续',
+            confirmText: '返回',
             success (res) {
               if (res.confirm) {
                 wx.switchTab({
@@ -71,6 +105,9 @@ Page({
             }
           });
         } else {
+          self.setData({
+            id: ''
+          });
           wx.showModal({
             title: '账号或者密码错误！',
             showCancel: false,

@@ -1,9 +1,19 @@
 import utils from '../utils/utils';
+const app = getApp();
 Page({
   data: {
     searchItems: []
   },
+  gotoSearch: utils.gotoSearch,
+  setSearchValue: utils.setSearchValue,
+  searchIconFocus: utils.searchIconFocus,
+  searchIconBlur: utils.searchIconBlur,
   onLoad (req) {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     this.setData({
       searchValue: req.value
     });
@@ -19,7 +29,6 @@ Page({
       searchItems: searchItems
     });
   },
-  gotoSearch: utils.gotoSearch,
   onShareAppMessage () {
     return {
       title: '重邮帮',

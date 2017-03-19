@@ -8,21 +8,23 @@
                 placeholder="学号"
                 placeholder-style="color: #e6e6e6"
                 type="number"
-                bindchange="changeStu"/>
+                bindchange="changeStu"
+                bindfocus="inputNumFocus"
+                bindblur="inputNumBlur"
+                class="{{inputNumFocus ? 'input-focus' : ''}}" />
         <input type="text"
-                placeholder="身份证后6位"
+                placeholder="身份证后6位 X大写"
                 placeholder-style="color: #e6e6e6"
-                type="number"
                 password="true"
-                bindchange="changeId"/>
+                value="{{id}}"
+                bindchange="changeId"
+                bindfocus="inputPwdFocus"
+                bindblur="inputPwdBlur"
+                class="{{inputPwdFocus ? 'input-focus' : ''}}" />
         <view class="btn">
           <button bindtap="loginAction">
             <text>登</text>
             <text>录</text>
-          </button>
-          <button bindtap="backToIndex">
-            <text>返</text>
-            <text>回</text>
           </button>
         </view>
     </view>

@@ -1,5 +1,5 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
-
+const app = getApp();
 Page({
   data: {
     imgUrls: [],
@@ -63,6 +63,11 @@ Page({
     });
   },
   onLoad (params) {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     wx.showToast({
       title: '加载中',
       icon: 'loading'
@@ -84,14 +89,15 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success (res) {
+        console.log(22222, res);
         let newImgUrls = [];
         let type = 'null';
         let str = encodeFormated(`${key}&${type}&${that.data.page}`);
         wx.hideToast();
-
-        for (let item of res.data.bags) {
-          newImgUrls.push(item.img);
-        }
+        newImgUrls = res.data.bags;
+        // for (let item of res.data.bags) {
+        //   newImgUrls.push(item.img);
+        // }
         that.setData({
           imgUrls: newImgUrls
         });

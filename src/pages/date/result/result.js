@@ -1,6 +1,6 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
 const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
-// const app = getApp();
+const app = getApp();
 
 Page({
   data: {
@@ -22,7 +22,8 @@ Page({
     classWeekday: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     detailWeek: '',
     detailTime: '',
-    detailClassname: []
+    detailClassname: [],
+    getAllClasses: false
   },
   // 改变周数
   bindPickerChange: function bindPickerChange (e) {
@@ -32,6 +33,11 @@ Page({
     this.dataRequest();
   },
   onLoad: function onLoad (params) {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     let self = this;
     // 获取缓存数据
     wx.showToast({
@@ -46,6 +52,7 @@ Page({
           stuName: res.data.stuName,
           stuNumber: res.data.stuNum
         });
+        // console.log()
         self.dataRequest();
       }
     });
@@ -69,65 +76,56 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         success: function success (res) {
-          if (res.data.status_code === 200) {
-            self.setData({
-              index: res.data.bags.week
-            });
-            let classData = res.data.bags.courses;
-            let classLen = classData.length;
-            let classWeek = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
-            let classTime = ['一二节', '三四节', '五六节', '七八节', '九十节', '十一十二节'];
-            let temclassName = [[], [], [], [], [], []];
-            // 课表数据绑定
-            for (let i = 0; i < classLen; i++) {
-              for (let t = 0; t < classTime.length; t++) {
-                if (classData[i].lesson === classTime[t]) {
-                  for (let j = 0; j < classWeek.length; j++) {
-                    if (classData[i].day === classWeek[j]) {
-                      temclassName[t][j] = '';
-                    }
+          self.setData({
+            index: res.data.bags.week
+          });
+          let classData = res.data.bags.courses;
+          let classLen = classData.length;
+          let classWeek = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+          let classTime = ['一二节', '三四节', '五六节', '七八节', '九十节', '十一十二节'];
+          let temclassName = [[], [], [], [], [], []];
+          // 课表数据绑定
+          for (let i = 0; i < classLen; i++) {
+            for (let t = 0; t < classTime.length; t++) {
+              if (classData[i].lesson === classTime[t]) {
+                for (let j = 0; j < classWeek.length; j++) {
+                  if (classData[i].day === classWeek[j]) {
+                    temclassName[t][j] = '';
                   }
                 }
               }
             }
-            for (let a = 0; a < classTime.length; a++) {
-              for (let b = 0; b < classWeek.length; b++) {
-                if (temclassName[a][b] !== '') {
-                  if (className[a][b]) {
-                    className[a][b].push(self.data.stuName[stuI]);
-                  } else {
-                    className[a][b] = [];
-                    className[a][b].push(self.data.stuName[stuI]);
-                  }
-                }
-              }
-            }
-            let color = [[], [], [], [], [], []];
-            for (let colorI = 0; colorI < 6; colorI++) {
-              for (let colorJ = 0; colorJ < 7; colorJ++) {
-                if (!(className[colorI][colorJ] instanceof Object)) {
-                  color[colorI][colorJ] = '#fff';
-                }
-              }
-            }
-            self.setData({
-              'className.oneT': className[0],
-              'className.threeF': className[1],
-              'className.fiveS': className[2],
-              'className.sevenE': className[3],
-              'className.nineT': className[4],
-              'className.elevenT': className[5],
-              color: color
-            });
-          } else {
-            wx.hideToast();
-            console.log('获取无课表信息失败1', res.status_text);
-            wx.showModal({
-              title: '网络错误,请重试',
-              showCancel: false,
-              confirmText: '确认'
-            });
           }
+          for (let a = 0; a < classTime.length; a++) {
+            for (let b = 0; b < classWeek.length; b++) {
+              if (temclassName[a][b] !== '') {
+                if (className[a][b]) {
+                  className[a][b].push(self.data.stuName[stuI]);
+                } else {
+                  className[a][b] = [];
+                  className[a][b].push(self.data.stuName[stuI]);
+                }
+              }
+            }
+          }
+          let color = [[], [], [], [], [], []];
+          for (let colorI = 0; colorI < 6; colorI++) {
+            for (let colorJ = 0; colorJ < 7; colorJ++) {
+              if (!(className[colorI][colorJ] instanceof Object)) {
+                color[colorI][colorJ] = '#fff';
+              }
+            }
+          }
+          self.setData({
+            getAllClasses: true,
+            'className.oneT': className[0],
+            'className.threeF': className[1],
+            'className.fiveS': className[2],
+            'className.sevenE': className[3],
+            'className.nineT': className[4],
+            'className.elevenT': className[5],
+            color: color
+          });
         },
         fail: res => {
           console.log('获取无课表信息失败2', res);

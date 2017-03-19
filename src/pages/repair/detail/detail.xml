@@ -111,7 +111,10 @@
     </view>
     <view class="submit-btn"
           wx:if="{{!isFeedback}}"
-          bindtap="{{sendAdvise}}">提 交</view>
+          bindtap="{{sendAdvise}}">
+      <text>提</text>
+      <text>交</text>
+    </view>
     <navigator class="submit-btn"
                 url="../index/index"
                 hover-class="none"

@@ -5,7 +5,7 @@
     </view>
     <view class="user--header">
         <image src="{{avatar}}" />
-        <text class="user--header__cqupt">重邮帮</text>
+        <text class="user--header__cqupt">{{stu_info.stuName}}</text>
         <text class="user--header__stuid">{{stu_info.stuid}}</text>
     </view>
     <view class="user--info">
@@ -17,7 +17,7 @@
                 </view>
             </block>
             <block wx:for="{{stu_info.room_feedback_info}}" wx:key="my-info-ext">
-                <view class="user--info__item">
+                <view bindtap="feedback" class="user--info__item">
                    <text class="user--info__name ext">{{item.name}}</text>
                    <view class="user--info__arrow">
                         <image src="{{item.url}}"></image>

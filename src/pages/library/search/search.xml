@@ -1,6 +1,12 @@
 <view class="header">
+  <view class="search-item search_icon_focus">
+    <view class="search_icon" bindtap="gotoSearch"></view>
+  </view>
   <input class="header-input"
-         placeholder="{{searchValue ? searchValue : '搜索'}}"
+         bindfocus="searchIconFocus"
+         bindblur="searchIconBlur"
+         value="{{searchValue}}"
+         bindinput="setSearchValue"
          bindconfirm="gotoSearch"
          data-flag="true"></input>
 </view>
@@ -8,11 +14,11 @@
   <!-- 搜索有结果 -->
   <block wx:if="{{searchItems.length > 0}}">
     <block wx:for="{{searchItems}}" wx:key="search_{{index}}">
-      <view class="search-item">
+      <view class="search-lists">
         <view class="search-head"
               data-index="{{index}}"
               bindtap="toggleBookInfor">
-          <text class="search-head__left">{{item.bookName}}</text>
+          <text class="search-head__left {{item.hidden ? 'search-head__left-focus' : ''}}">{{item.bookName}}</text>
           <view wx:if="{{item.hidden}}" class="search-head__right"></view>
           <view wx:else class="search-head__right search-head__right-focus"></view>
         </view>

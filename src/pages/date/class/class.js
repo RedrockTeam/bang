@@ -1,6 +1,6 @@
 const encodeFormated = require('../../../utils/util').encodeFormated;
 const apiPrefix = 'https://redrock.cqupt.edu.cn/weapp';
-
+const app = getApp();
 Page({
   data: {
     imgUrl: 'https://redrock.cqupt.edu.cn/weapp/images',
@@ -48,6 +48,11 @@ Page({
     this.dataRequest();
   },
   onLoad: function onLoad (params) {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     wx.showToast({
       title: '数据获取中',
       icon: 'loading',
@@ -77,7 +82,6 @@ Page({
         params: encodeFormated(`${wx.getStorageSync('session')}&${self.data.index}&${self.data.stuNumber}`)
       },
       success: function success (res) {
-        console.log(res.data);
         self.setData({
           index: res.data.bags.week
         });
@@ -143,7 +147,7 @@ Page({
           color: color,
           height: height,
           zIndex: zIndex,
-          webkitLineClamp: webkitLineClamp,
+          webkitLineClamp: webkitLineClamp,
           'classTeacher': classTeacher,
           'classRawWeek': classRawWeek
         });

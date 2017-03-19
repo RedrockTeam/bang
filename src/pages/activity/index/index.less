@@ -23,6 +23,7 @@ page {
     transition: all .5s;
     &-active {
       position: relative;
+      font-family: 'PingFangSC-Medium';
       color: #000;
       &::after {
         content: '';
@@ -48,17 +49,20 @@ page {
     margin-top: 30rpx;
     margin-left: auto;
     margin-right: auto;
-    width: 690rpx;
-    height: 350rpx;
+    width: 343*2rpx;
+    height: 320rpx;
+    border-radius: 10rpx;
+    overflow: hidden;
     z-index: 5;
-    swiper, image {
+    box-shadow: 0 10rpx 20rpx #d7d7d7;
+    swiper, image, navigator {
       width: 100%;
       height: 100%;
-      border-radius: 10rpx;
+      border-radius: 0;
     }
     &__bar {
       position: absolute;
-      top: 320rpx;
+      top: 300rpx;
       left: 345rpx;
       margin-left: -175rpx;
       display: flex;
@@ -94,6 +98,7 @@ page {
     padding: 30rpx;
     border-radius: 10rpx;
     background-color: #fff;
+    box-shadow: 0 10rpx 15rpx #f0f3f6;
     .item-left {
       width: 400rpx;
       display: inline-block;
@@ -104,6 +109,7 @@ page {
       height: 76rpx;
       line-height: 38rpx;
       font-size: 32rpx;
+      font-family: 'PingFangSC-Medium';
       margin-bottom: 40rpx;
     }
     .item__date {

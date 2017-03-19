@@ -43,7 +43,7 @@
     </block>
     <block wx:else>
       <view class="no-result__con">
-        <image src="../../../../images/library/no_result.png" class="no-result__img"></image>
+        <image src="https://redrock.cqupt.edu.cn/weapp/images/library/no_result.png" class="no-result__img"></image>
         <text class="no-result__text">目前没有历史借阅的书目</text>
       </view>
     </block>

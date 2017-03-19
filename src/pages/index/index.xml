@@ -34,7 +34,8 @@
     </view>
     <view class="index--course__scroll">
       <scroll-view scroll-x="true"
-                    class="index--course__scroll-view">
+                    class="index--course__scroll-view"
+                    scroll-left="{{courseScroll}}">
         <view id="course__morning"
               class="index--course__scroll-item">
           <block wx:for="{{course[0]}}"
@@ -83,7 +84,8 @@
                       hover-class="none">
             <image class="index--service__item-image"
                    src="{{item.img}}" />
-            <text class="index--service__item-text">{{item.name}}</text>
+            <block class=""></block>
+            <text class="index--service__item-text {{item.updating ? 'updating' : ''}}">{{item.name}}</text>
           </navigator>
         </block>
       </view>

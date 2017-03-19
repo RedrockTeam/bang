@@ -12,6 +12,11 @@ Page({
     emptyData: true
   },
   onLoad () {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     let self = this;
 
     wx.showToast({
@@ -30,7 +35,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        if (res.data.status_code === 200) {
+        if (res.data.status_code.toString() === '200') {
           let resData = res.data.bags;
           let dataList = {};
           let dataEmpty = true;

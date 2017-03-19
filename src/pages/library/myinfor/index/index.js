@@ -1,12 +1,20 @@
 import utils from '../../utils/utils';
+const app = getApp();
 Page({
   data: {
     bookItems: [],
     readerInfo: [] // 读者的信息，借阅数目数量和目前欠费的金额
   },
   gotoSearch: utils.gotoSearch,
-  toggleSearchIcon: utils.toggleSearchIcon,
+  setSearchValue: utils.setSearchValue,
+  searchIconFocus: utils.searchIconFocus,
+  searchIconBlur: utils.searchIconBlur,
   onLoad () {
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     wx.getStorage({
       key: 'myinfor_library',
       success: res => {

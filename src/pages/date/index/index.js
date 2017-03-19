@@ -28,7 +28,11 @@ Page({
     deleteName: ''
   },
   onLoad: function onLoad () {
-    let stuInfo = app.data.stuInfo;
+    let stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      app.gotoLogin();
+      return;
+    }
     this.setData({
       stuInfo
     });
@@ -58,45 +62,36 @@ Page({
         params: encodeFormated(`${wx.getStorageSync('session')}&${self.data.inputValue}`)
       },
       success: function (res) {
-        if (res.data.status_code === 200) {
-          let resData = res.data.bags;
-          if (resData.length === 0) {
-            wx.showModal({
-              title: '暂无此人信息',
-              showCancel: false,
-              confirmText: '确认'
-            });
-            return;
-          }
-          for (let resultI = 0; resultI < resData.length; resultI++) {
-            stuName.push(resData[resultI].name);
-            stuNum.push(resData[resultI].stuNum);
-          }
-          if (resData.length >= 7) {
-            self.setData({
-              resultHight: '710rpx'
-            });
-          } else {
-            self.setData({
-              resultHight: ''
-            });
-          }
-          self.setData({
-            'searchResult.stuName': stuName,
-            'searchResult.stuNum': stuNum,
-            resultHidden: false
-          });
-        } else {
-          console.log('获取学生信息失败1', res.data.status_text);
+        let resData = res.data.bags;
+        if (resData.length === 0) {
           wx.showModal({
-            title: '网络错误,请重试',
+            title: '暂无此人信息',
             showCancel: false,
             confirmText: '确认'
           });
+          return;
         }
+        for (let resultI = 0; resultI < resData.length; resultI++) {
+          stuName.push(resData[resultI].name);
+          stuNum.push(resData[resultI].stuNum);
+        }
+        if (resData.length >= 7) {
+          self.setData({
+            resultHight: '710rpx'
+          });
+        } else {
+          self.setData({
+            resultHight: ''
+          });
+        }
+        self.setData({
+          'searchResult.stuName': stuName,
+          'searchResult.stuNum': stuNum,
+          resultHidden: false
+        });
       },
       fail: function (res) {
-        console.log('获取学生信息失败2', res);
+        console.log('获取学生信息失败', res);
         wx.showModal({
           title: '网络错误,请重试',
           showCancel: false,
@@ -135,7 +130,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        if (res.data.status_code === 200) {
+        if (res.data.status_code.toString() === '200') {
           let resData = res.data.bags;
           if (self.addstuNum.indexOf(resData[0].stuNum) === -1 && self.addstuName.length < 6) {
             self.addstuName.push(resData[0].name);
@@ -183,17 +178,19 @@ Page({
   },
   bindtapData: function bindtapData (e) {
     let stuData = this.data.addStu;
-    let hasSelf = false;
-    stuData.stuNum.forEach(val => {
-      if (val === this.data.stuInfo.stuNum) {
-        hasSelf = true;
+    if (this.data.stuInfo) {
+      let hasSelf = false;
+      stuData.stuNum.forEach(val => {
+        if (val === this.data.stuInfo.stuNum) {
+          hasSelf = true;
+        }
+      });
+      if (!hasSelf) {
+        stuData.stuClass.push(this.data.stuInfo.classNum + '班');
+        stuData.stuMajor.push(this.data.stuInfo.college);
+        stuData.stuName.push(this.data.stuInfo.name);
+        stuData.stuNum.push(this.data.stuInfo.stuNum);
       }
-    });
-    if (!hasSelf) {
-      stuData.stuClass.push(this.data.stuInfo.classNum + '班');
-      stuData.stuMajor.push(this.data.stuInfo.college);
-      stuData.stuName.push(this.data.stuInfo.name);
-      stuData.stuNum.push(this.data.stuInfo.stuNum);
     }
     wx.setStorage({
       key: 'key',
