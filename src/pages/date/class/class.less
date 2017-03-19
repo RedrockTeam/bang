@@ -114,33 +114,65 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 5;
   .detail-con {
+    box-sizing: border-box;
     width: 516rpx;
-    height: 396rpx;
+    height: 460rpx;
     background-color: #fff;
     border-radius: 14rpx;
     margin: 0 auto;
-    margin-top: 324rpx;
+    margin-top: 408rpx;
     overflow: hidden;
-    padding: 0 40rpx;
-    .detail-time {
-      text-align: center;
-      margin-top: 65rpx;
-      text {
-        color: #000;
-        font-size: 36rpx;
-      }
-      .detail-week {
-        padding-right: 30rpx;
-      }
-    }
+    padding-left: 70rpx;
+    padding-right: 70rpx;
     .detail-class {
-      margin-top: 80rpx;
-      text {
-        display: block;
-        text-align: center;
-        color: #999;
-        font-size: 30rpx;
-        padding-bottom: 20rpx;
+      margin-top: 60rpx;
+      height: 79rpx;
+      image {
+        width: 26rpx;
+        height: 28rpx;
+        float: left;
+      }
+      view {
+        width: 330rpx;
+        float: right;
+        margin-top: -5rpx;
+        text {
+          font-size: 26rpx;
+          color: #000;
+          float: right;
+          font-weight: 900;
+        }  
+      }
+      
+    }
+    .detail-name,
+    .detail-time,
+    .detail-room,
+    .detail-week {
+      height: 79rpx;
+      image {
+        width: 26rpx;
+        height: 26rpx;
+        float: left;
+      }
+      view {
+        width: 330rpx;
+        float: right;
+        margin-top: -5rpx;
+        text {
+          font-size: 26rpx;
+          color: #000;
+          float: right;
+          font-weight: 900;
+          overflow: hidden;
+          -webkit-line-clamp: 2;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis; 
+          clear: both; 
+        }
+        
+        
       }
     }
   }

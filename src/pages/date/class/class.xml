@@ -41,6 +41,8 @@
           data-classroom="{{classRoom.oneT[item]}}"
           data-classweek="{{classWeekday[item]}}"
           data-classtime="12节"
+          data-classteacher="{{classTeacher[0][item]}}" 
+          data-classrawweek="{{classRawWeek[0][item]}}"
           data-classheight="{{height[0][item]}}"
           wx:key="*this">
           <view  style="-webkit-line-clamp: {{webkitLineClamp[0][item]}};">
@@ -69,7 +71,9 @@
           data-classname="{{className.threeF[item]}}"
           data-classroom="{{classRoom.threeF[item]}}"
           data-classweek="{{classWeekday[item]}}"
-          data-classtime="34节"
+          data-classtime="34节" 
+          data-classteacher="{{classTeacher[1][item]}}" 
+          data-classrawweek="{{classRawWeek[1][item]}}"
           data-classheight="{{height[1][item]}}"
           wx:key="*this">
           <view  style="-webkit-line-clamp: {{webkitLineClamp[1][item]}};">
@@ -100,6 +104,8 @@
           data-classroom="{{classRoom.fiveS[item]}}"
           data-classweek="{{classWeekday[item]}}"
           data-classtime="56节"
+          data-classteacher="{{classTeacher[2][item]}}" 
+          data-classrawweek="{{classRawWeek[2][item]}}"
           data-classheight="{{height[2][item]}}"
           wx:key="*this">
           <view style="-webkit-line-clamp: {{webkitLineClamp[2][item]}};">
@@ -130,6 +136,8 @@
           data-classroom="{{classRoom.sevenE[item]}}"
           data-classweek="{{classWeekday[item]}}"
           data-classtime="78节"
+          data-classteacher="{{classTeacher[3][item]}}" 
+          data-classrawweek="{{classRawWeek[3][item]}}"
           data-classheight="{{height[3][item]}}"
           wx:key="*this">
           <view  style="-webkit-line-clamp: {{webkitLineClamp[3][item]}};">
@@ -160,6 +168,8 @@
           data-classroom="{{classRoom.nineT[item]}}"
           data-classweek="{{classWeekday[item]}}"
           data-classtime="910节"
+          data-classteacher="{{classTeacher[4][item]}}" 
+          data-classrawweek="{{classRawWeek[4][item]}}"
           data-classheight="{{height[4][item]}}"
           wx:key="*this">
           <view style="-webkit-line-clamp: {{webkitLineClamp[4][item]}};">
@@ -190,6 +200,8 @@
           data-classroom="{{classRoom.elevenT[item]}}"
           data-classweek="{{classWeekday[item]}}"
           data-classtime="1112节"
+          data-classteacher="{{classTeacher[5][item]}}" 
+          data-classrawweek="{{classRawWeek[5][item]}}"
           data-classheight="{{height[5][item]}}"
           wx:key="*this">
           <view  style="-webkit-line-clamp: {{webkitLineClamp[5][item]}};">
@@ -211,13 +223,39 @@
   <!-- 弹窗 -->
   <view class="class-detail" hidden="{{hiddenFlag ? true : false}}" bindtap="bindDisappear">
     <view class="detail-con">
-      <view class="detail-time">
-        <text class="detail-week">{{detailWeek}}</text>
-        <text>{{detailTime}}</text>
-      </view>
       <view class="detail-class">
-        <text>{{detailClassname}}</text>
-        <text>{{detailClassroom}}</text>
+        <image src="../../../images/className.png"></image>
+        <view>
+          <text>{{detailClassname}}</text>
+        </view>
+      </view>
+      <view class="detail-name">
+        <image src="../../../images/classTeacher.png"></image>
+        <view>
+          <text>{{detailTeacher}}</text>
+          
+        </view>
+      </view>
+      <view class="detail-time">
+        <image src="../../../images/classTime.png"></image>
+        <view>
+          <text>{{detailWeek}} {{detailTime}}</text>
+          
+        </view>
+      </view>
+      <view class="detail-room">
+        <image src="../../../images/classRoom.png"></image>
+        <view>
+          <text>{{detailClassroom}}</text>
+          
+        </view>
+      </view>
+      <view class="detail-week">
+        <image src="../../../images/classWeek.png"></image>
+        <view>
+          <text>{{detailRawWeek}}</text>
+          
+        </view>
       </view>
     </view>
   </view>
