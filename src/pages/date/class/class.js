@@ -29,11 +29,15 @@ Page({
       nineT: [],
       elevenT: []
     },
+    classTeacher: [[], [], [], [], [], []],
+    classRawWeek: [[], [], [], [], [], []],
     classWeekday: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     detailWeek: '',
     detailTime: '',
     detailClassname: '',
     detailClassroom: '',
+    detailTeacher: '',
+    detailRawWeek: '',
     getAllClasses: false
   },
   // 切换周数
@@ -87,6 +91,8 @@ Page({
         let classTime = ['一二节', '三四节', '五六节', '七八节', '九十节', '十一十二节'];
         let className = [[], [], [], [], [], []];
         let classRoom = [[], [], [], [], [], []];
+        let classTeacher = [[], [], [], [], [], []];
+        let classRawWeek = [[], [], [], [], [], []];
         let color = [[], [], [], [], [], []];
         let height = [[], [], [], [], [], []];
         let zIndex = [[], [], [], [], [], []];
@@ -99,6 +105,8 @@ Page({
                 if (classData[i].day === classWeek[j]) {
                   className[t][j] = classData[i].course;
                   classRoom[t][j] = classData[i].classroom;
+                  classTeacher[t][j] = classData[i].teacher;
+                  classRawWeek[t][j] = classData[i].rawWeek;
                   if (classData[i].period === 3) {
                     height[t][j] = '265rpx';
                     zIndex[t][j] = 3;
@@ -139,7 +147,9 @@ Page({
           color: color,
           height: height,
           zIndex: zIndex,
-          webkitLineClamp: webkitLineClamp
+          webkitLineClamp: webkitLineClamp,
+          'classTeacher': classTeacher,
+          'classRawWeek': classRawWeek
         });
       },
       fail: res => {
@@ -202,7 +212,9 @@ Page({
         detailWeek: e.currentTarget.dataset.classweek,
         detailTime: e.currentTarget.dataset.classtime,
         detailClassname: e.currentTarget.dataset.classname,
-        detailClassroom: e.currentTarget.dataset.classroom
+        detailClassroom: e.currentTarget.dataset.classroom,
+        detailTeacher: e.currentTarget.dataset.classteacher,
+        detailRawWeek: e.currentTarget.dataset.classrawweek
       });
     }
   },
