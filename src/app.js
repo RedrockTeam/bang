@@ -205,6 +205,20 @@ App({
         key
       });
     });
+    const storages = wx.getStorageInfoSync();
+    if (storages.keys.length === 1) {
+      wx.clearStorageSync();
+      wx.request({
+        method: 'post',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: 'https://redrock.cqupt.edu.cn/weapp/bind/cancleBind',
+        data: {
+          params: encodeFormated(wx.getStorageSync('session'))
+        }
+      });
+    }
   },
   gotoLogin (url) {
     wx.showModal({

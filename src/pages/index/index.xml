@@ -42,7 +42,7 @@
                   wx:key="course_0_{{index}}">
             <view class="index--course__scroll-class">
               <text>{{item.class}}</text>
-              <text>{{item.room}}</text>
+              <text class="room">{{item.room}}</text>
               <text>{{item.name}}</text>
             </view>
           </block>
@@ -53,7 +53,7 @@
                   wx:key="course_1_{{index}}">
             <view class="index--course__scroll-class">
               <text>{{item.class}}</text>
-              <text>{{item.room}}</text>
+              <text class="room">{{item.room}}</text>
               <text>{{item.name}}</text>
             </view>
           </block>
@@ -64,7 +64,7 @@
                   wx:key="course_2_{{index}}">
             <view class="index--course__scroll-class">
               <text>{{item.class}}</text>
-              <text>{{item.room}}</text>
+              <text class="room">{{item.room}}</text>
               <text>{{item.name}}</text>
             </view>
           </block>
