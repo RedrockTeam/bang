@@ -15,16 +15,20 @@ page {
     margin-top: 30rpx;
     margin-left: auto;
     margin-right: auto;
-    width: 690rpx;
-    height: 350rpx;
-    swiper, image {
+    width: 343*2rpx;
+    height: 320rpx;
+    border-radius: 10rpx;
+    overflow: hidden;
+    z-index: 5;
+    box-shadow: 0 10rpx 20rpx #d7d7d7;
+    swiper, image, navigator {
       width: 100%;
       height: 100%;
-      border-radius: 10rpx;
+      border-radius: 0;
     }
     &__bar {
       position: absolute;
-      top: 320rpx;
+      top: 300rpx;
       left: 345rpx;
       margin-left: -175rpx;
       display: flex;
@@ -88,6 +92,9 @@ page {
       height: 160rpx;
       white-space: nowrap;
       overflow: auto;
+      .room {
+        font-family: Consolas, monospace;
+      }
     }
     ::-webkit-scrollbar {
       width: 0;

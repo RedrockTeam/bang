@@ -165,51 +165,70 @@ Page({
     });
   },
   getKebiaoFunc () {
-    let self = this;
-    let kebiao = wx.getStorageSync('kebiao');
-    if (kebiao) {
-      self.renderClass(kebiao);
+    const self = this;
+    const kebiao = wx.getStorageSync('kebiao');
+
+    // 判断课表缓存是否超过一天 且 今天不为星期一上一次缓存不为周末
+    const oneDay = 86400000;  // 24 * 60 * 60 * 1000
+    const now = new Date();
+    const start = new Date(kebiao.timer);
+    const timeInterval = now - start;
+
+    if (kebiao && timeInterval < oneDay) {
+      if (start.getDay() === 0 && now.getDay() === 1) {
+        self.getKebiaoRequest();
+      } else {
+        self.renderClass(kebiao.bags);
+      }
     } else {
-      wx.request({
-        url: `${apiPrefix}/Course/getKebiao`,
-        method: 'post',
-        data: {
-          params: encodeFormated(`${wx.getStorageSync('session')}&0&empty`)
-        },
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        success: function (res) {
-          if (res.statusCode.toString() !== '200') {
-            app.getError();
-            return;
-          }
-          if (res.data.status_code.toString() === '200') {
-            wx.setStorage({
-              key: 'kebiao',
-              data: res.data.bags
-            });
-            self.renderClass(res.data.bags);
-          } else {
-            console.log('首页获取课表失败1', res.data.status_text);
-            wx.hideToast();
-            app.gotoLogin();
-            return;
-          }
-        },
-        fail: function (res) {
-          wx.showModal({
-            title: '获取课表信息失败，请重试',
-            showCancel: false,
-            confirmText: '确认'
-          });
-          console.log('首页获取课表失败2', res);
-        },
-        complete: res => {
-          wx.hideToast();
-        }
-      });
+      self.getKebiaoRequest();
     }
+  },
+  getKebiaoRequest () {
+    const self = this;
+    wx.request({
+      url: `${apiPrefix}/Course/getKebiao`,
+      method: 'post',
+      data: {
+        params: encodeFormated(`${wx.getStorageSync('session')}&0&empty`)
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if (res.statusCode.toString() !== '200') {
+          app.getError();
+          wx.hideToast();
+          return;
+        }
+        if (res.data.status_code.toString() === '200') {
+          wx.setStorage({
+            key: 'kebiao',
+            data: {
+              bags: res.data.bags,
+              timer: Date.now()
+            }
+          });
+          self.renderClass(res.data.bags);
+        } else {
+          console.log('首页获取课表失败1', res.data.status_text);
+          app.gotoLogin();
+          return;
+        }
+        wx.hideToast();
+      },
+      fail: function (res) {
+        wx.showModal({
+          title: '获取课表信息失败，请重试',
+          showCancel: false,
+          confirmText: '确认'
+        });
+        console.log('首页获取课表失败2', res);
+      },
+      complete: res => {
+        wx.hideToast();
+      }
+    });
   },
   renderClass (kebiao) {
     const self = this;
@@ -226,37 +245,37 @@ Page({
       [
         {
           class: '一二节',
-          room: '',
-          name: '没有课'
+          room: '0000',
+          name: '暂无排课'
         },
         {
           class: '三四节',
-          room: '',
-          name: '没有课'
+          room: '0000',
+          name: '暂无排课'
         }
       ],
       [
         {
           class: '五六节',
-          room: '',
-          name: '没有课'
+          room: '0000',
+          name: '暂无排课'
         },
         {
           class: '七八节',
-          room: '',
-          name: '没有课'
+          room: '0000',
+          name: '暂无排课'
         }
       ],
       [
         {
           class: '九十节',
-          room: '',
-          name: '没有课'
+          room: '0000',
+          name: '暂无排课'
         },
         {
           class: '十一二',
-          room: '',
-          name: '没有课'
+          room: '0000',
+          name: '暂无排课'
         }
       ]
     ];

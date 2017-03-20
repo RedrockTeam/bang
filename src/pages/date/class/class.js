@@ -147,7 +147,7 @@ Page({
           color: color,
           height: height,
           zIndex: zIndex,
-          webkitLineClamp: webkitLineClamp,
+          webkitLineClamp: webkitLineClamp,
           'classTeacher': classTeacher,
           'classRawWeek': classRawWeek
         });
