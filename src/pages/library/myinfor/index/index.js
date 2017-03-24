@@ -15,23 +15,20 @@ Page({
       app.gotoLogin();
       return;
     }
-    wx.getStorage({
-      key: 'myinfor_library',
-      success: res => {
-        this.setData({
-          bookItems: res.data.borrowedBook,
-          readerInfo: res.data.readerInfo
-        });
-      },
-      fail: (res) => {
-        wx.showToast({
-          title: '数据加载中...',
-          duration: 10000,
-          icon: 'loading'
-        });
-        utils.getBookInfor(this, 'borrowedBook');
-      }
-    });
+    const res = wx.getStorageSync('myinfor_library');
+    if (res) {
+      this.setData({
+        bookItems: res.borrowedBook,
+        readerInfo: res.readerInfo
+      });
+    } else {
+      wx.showToast({
+        title: '数据加载中...',
+        duration: 10000,
+        icon: 'loading'
+      });
+      utils.getBookInfor(this, 'borrowedBook');
+    }
   },
   onShareAppMessage () {
     return {
