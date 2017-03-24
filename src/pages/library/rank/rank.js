@@ -10,27 +10,24 @@ Page({
   searchIconFocus: utils.searchIconFocus,
   searchIconBlur: utils.searchIconBlur,
   onLoad () {
-    let stuInfo = wx.getStorageSync('stuInfo');
+    const stuInfo = wx.getStorageSync('stuInfo');
     if (!stuInfo) {
       app.gotoLogin();
       return;
     }
-    wx.getStorage({
-      key: 'rankList_library',
-      success: res => {
-        this.setData({
-          rankList: res.data
-        });
-      },
-      fail: () => {
-        wx.showToast({
-          title: '数据获取中',
-          duration: 10000,
-          icon: 'loading'
-        });
-        utils.getRankList(this);
-      }
-    });
+    const rankList = wx.getStorageSync('rankList_library');
+    if (rankList) {
+      this.setData({
+        rankList
+      });
+    } else {
+      wx.showToast({
+        title: '数据获取中',
+        duration: 10000,
+        icon: 'loading'
+      });
+      utils.getRankList(this);
+    }
   },
   onShareAppMessage () {
     return {
