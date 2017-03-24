@@ -1,8 +1,8 @@
 <view class="index">
   <view class="index--banner">
     <swiper autoplay="true"
-            interval="5000"
-            duration="1000"
+            interval="8000"
+            duration="1500"
             bindchange="swiperBar">
       <block wx:for="{{imgUrls}}"
               wx:key="swiper_{{index}}">
