@@ -14,23 +14,20 @@ Page({
       app.gotoLogin();
       return;
     }
-    wx.getStorage({
-      key: 'myinfor_library',
-      success: res => {
-        this.setData({
-          bookItems: res.data.owedBook,
-          readerInfo: res.data.readerInfo
-        });
-      },
-      fail: () => {
-        wx.showToast({
-          title: 'Loading',
-          duration: 10000,
-          icon: 'loading'
-        });
-        utils.getBookInfor(this, 'owedBook');
-      }
-    });
+    const res = wx.getStorageSync('myinfor_library');
+    if (res) {
+      this.setData({
+        bookItems: res.owedBook,
+        readerInfo: res.readerInfo
+      });
+    } else {
+      wx.showToast({
+        title: '数据加载中...',
+        duration: 10000,
+        icon: 'loading'
+      });
+      utils.getBookInfor(this, 'owedBook');
+    }
   },
   onShareAppMessage () {
     return {
