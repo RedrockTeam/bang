@@ -1,5 +1,5 @@
 <view class="user">
-    <view class="user--logout">
+    <view wx:if="{{isLogin}}" class="user--logout">
         <image src="{{logout}}"
                 bindtap="logoutAction"/>
     </view>
