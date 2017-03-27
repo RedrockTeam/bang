@@ -13,7 +13,7 @@
               maxlength="11"
               type="digit"
               bindblur="bindPhone"
-              placeholder-style="color: #b6b6b6" />
+              placeholder-style="color: #b6b6b6; font-family: 'PingFangSC-Medium'; font-weight: 400;" />
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--item"></view>
@@ -53,7 +53,7 @@
       <input class="service-item__value"
               placeholder="请输入详细区域"
               bindblur="bindPlace"
-              placeholder-style="color: #b6b6b6" />
+              placeholder-style="color: #b6b6b6; font-family: 'PingFangSC-Medium'; font-weight: 400;" />
     </view>
   </view>
   <view class="seperate-line"></view>
@@ -64,14 +64,14 @@
       <input class="service-item__value"
               placeholder="请输入标题"
               bindblur="bindTitle"
-              placeholder-style="color: #b6b6b6" />
+              placeholder-style="color: #b6b6b6; font-family: 'PingFangSC-Medium'; font-weight: 400;" />
     </view>
     <view class="service-item">
       <view class="service-item__icon icon--text"></view>
       <view class="service-item__title">申报内容</view>
       <textarea placeholder="请输入申报内容"
                 class="service-item__text"
-                placeholder-style="color: #b6b6b6"
+                placeholder-style="color: #b6b6b6; font-family: 'PingFangSC-Medium'; font-weight: 400;"
                 bindblur="bindText" />
     </view>
     <view class="service-item">
