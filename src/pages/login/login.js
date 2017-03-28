@@ -75,20 +75,38 @@ Page({
         params: encodeFormated(`${info.user}&${info.password}&${info.key}`)
       },
       success: function (res) {
-        wx.hideToast();
         if (res.data.status_code.toString() === '200') {
           app.getUserInfo().then(res => {
-            wx.showModal({
-              title: '恭喜，绑定成功！',
-              showCancel: false,
-              confirmText: '继续',
-              success (res) {
-                if (res.confirm) {
-                  wx.switchTab({
-                    url: '../index/index'
-                  });
+            wx.hideToast();
+            if (res) {
+              wx.showModal({
+                title: '恭喜，绑定成功！',
+                showCancel: false,
+                confirmText: '继续',
+                success (res) {
+                  if (res.confirm) {
+                    wx.switchTab({
+                      url: '../index/index'
+                    });
+                  }
                 }
-              }
+              });
+            } else {
+              wx.hideToast();
+              wx.clearStorage();
+              wx.showModal({
+                title: '网络错误,请重试',
+                showCancel: false,
+                confirmText: '确认'
+              });
+            }
+          }).catch(() => {
+            wx.hideToast();
+            wx.clearStorage();
+            wx.showModal({
+              title: '网络错误，请重试',
+              showCancel: false,
+              confirmText: '确认'
             });
           });
         } else if (res.data.status_code.toString() === '400') {
