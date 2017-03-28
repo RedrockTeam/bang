@@ -28,7 +28,8 @@ Page({
         img: ''
       }
     ],
-    page: 1
+    page: 1,
+    pageCharge: 1
   },
   actTypeChange (e) {
     const key = wx.getStorageSync('session');
@@ -36,7 +37,8 @@ Page({
     let that = this;
     that.setData({
       actIndex: e.target.dataset.actIndex,
-      page: 1
+      page: 1,
+      pageCharge: 1
     });
     let type = actType[that.data.actIndex];
     wx.request({
@@ -89,15 +91,11 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success (res) {
-        console.log(22222, res);
         let newImgUrls = [];
         let type = 'null';
         let str = encodeFormated(`${key}&${type}&${that.data.page}`);
         wx.hideToast();
         newImgUrls = res.data.bags;
-        // for (let item of res.data.bags) {
-        //   newImgUrls.push(item.img);
-        // }
         that.setData({
           imgUrls: newImgUrls
         });
@@ -131,26 +129,31 @@ Page({
     that.setData({
       page: that.data.page + 1
     });
-    wx.request({
-      method: 'post',
-      url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Show/getList',
-      data: {
-        params: encodeFormated(`${key}&${type}&${that.data.page}`)
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success (res) {
-        if (res.data.bags.length > 0) {
-          that.handleData(res.data.bags, newActList);
-          that.setData({
-            actList: newActList
-          });
-        } else {
-          return;
+    if (that.pageCharge == 1) {
+      wx.request({
+        method: 'post',
+        url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Show/getList',
+        data: {
+          params: encodeFormated(`${key}&${type}&${that.data.page}`)
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success (res) {
+          if (res.data.bags.length > 0) {
+            that.handleData(res.data.bags, newActList);
+            that.setData({
+              actList: newActList
+            });
+          } else {
+            that.setData({
+              pageCharge: 0
+            })
+            return;
+          }
         }
-      }
-    });
+      });
+    }
   },
   handleData (data, newActList) {
     const week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
