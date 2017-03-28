@@ -61,17 +61,16 @@ App({
             resolve();
           }
         });
-      }).catch(err => {
-        console.log(5555555, err);
       });
     }).catch(err => {
       console.log('登录app失败，继续', err);
       self.loginApp();
     });
   },
+  getUserInfoCount: 0,
   getUserInfo () {
     const self = this;
-
+    this.getUserInfoCount++;
     return new Promise((resolve, reject) => {
       wx.getUserInfo({
         success (res) {
@@ -85,14 +84,18 @@ App({
           resolve(obj);
         },
         fail () {
-          console.log('获取 userInfo 失败, 继续');
-          self.getUserInfo();
+          console.log('获取 userInfo 失败, 继续(三限次)');
+          if (self.getUserInfoCount <= 3) {
+            self.getUserInfo();
+          } else {
+            reject();
+          }
         }
       });
     }).then((obj) => {
       return new Promise((resolve, reject) => {
         wx.request({
-          method: 'post',
+          method: 'POST',
           url: 'https://redrock.cqupt.edu.cn/weapp/auth/checkInfo',
           data: {
             params: obj.infoStr
@@ -107,6 +110,13 @@ App({
             } else {
               console.log('code 有效，可以继续使用');
               resolve(obj);
+            }
+          },
+          fail (err) {
+            if (self.getUserInfoCount <= 3) {
+              self.getUserInfo();
+            } else {
+              reject(err);
             }
           }
         });
@@ -137,8 +147,14 @@ App({
               city: resData.city,
               country: resData.country
             };
-
             resolve(info);
+          },
+          fail (err) {
+            if (self.getUserInfoCount <= 3) {
+              self.getUserInfo();
+            } else {
+              reject(err);
+            }
           }
         });
       });
@@ -169,7 +185,14 @@ App({
               data: Object.assign(res.data.bags, self.data.userInfo)
             });
             // 获取学生信息
-            resolve();
+            resolve(true);
+          },
+          fail (err) {
+            if (self.getUserInfoCount <= 3) {
+              self.getUserInfo();
+            } else {
+              reject(err);
+            }
           }
         });
       });
@@ -205,20 +228,6 @@ App({
         key
       });
     });
-    const storages = wx.getStorageInfoSync();
-    if (storages.keys.length === 1) {
-      wx.clearStorageSync();
-      wx.request({
-        method: 'post',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        url: 'https://redrock.cqupt.edu.cn/weapp/bind/cancleBind',
-        data: {
-          params: encodeFormated(wx.getStorageSync('session'))
-        }
-      });
-    }
   },
   gotoLogin (url) {
     wx.showModal({

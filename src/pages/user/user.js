@@ -61,6 +61,9 @@ Page({
       },
       success: function (res) {
         wx.clearStorage();
+        if (res.data.status_code.toString() !== '200') {
+          return;
+        }
         wx.showModal({
           title: '退出成功，点击返回',
           showCancel: false,
@@ -216,14 +219,14 @@ Page({
     // 如果有，则绑定
     if (stuInfo) {
       self.setStuInfo(stuInfo);
-      self.setData({
-        isLogin: true
-      });
+      // self.setData({
+      //   isLogin: true
+      // });
     } else {
       app.gotoLogin();
       self.setData({
-        stu_info: self.data.stu_info_copy,
-        isLogin: false
+        stu_info: self.data.stu_info_copy
+        // isLogin: false
       });
       // wx.redirectTo({
       //   url: '../login/login'
