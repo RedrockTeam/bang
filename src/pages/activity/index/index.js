@@ -129,7 +129,7 @@ Page({
     that.setData({
       page: that.data.page + 1
     });
-    if (that.pageCharge == 1) {
+    if (that.pageCharge === 1) {
       wx.request({
         method: 'post',
         url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Show/getList',
@@ -148,7 +148,7 @@ Page({
           } else {
             that.setData({
               pageCharge: 0
-            })
+            });
             return;
           }
         }
