@@ -33,6 +33,7 @@ App({
             resolve(res.code);
           } else {
             console.log('获取用户登录态失败！' + res.errMsg);
+            reject();
           }
         },
         fail (err) {
@@ -57,7 +58,7 @@ App({
           success (res) {
             const retSession = res.data.bags.thirdSession;
             wx.setStorageSync('session', retSession);
-
+            console.log('session 存储成功');
             resolve();
           }
         });
