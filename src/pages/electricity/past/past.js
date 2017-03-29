@@ -74,7 +74,7 @@ Page({
         url: electricityUrl,
         method: 'POST',
         header: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'content-type': 'application/x-www-form-urlencoded'
         },
         data: {
           params: encodeFormated(wx.getStorageSync('session'))

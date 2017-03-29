@@ -58,7 +58,7 @@ const getSearchResult = function (self, searchValue) {
       params: encodeFormated(`${wx.getStorageSync('session')}&${searchValue}`)
     },
     header: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded'
     },
     success: res => {
       self.setData({
@@ -85,7 +85,7 @@ const getBookInfor = function (self, tag) {
     url: urlPrefix + '/Library/getUserInfo',
     method: 'POST',
     header: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded'
     },
     data: {
       params: encodeFormated(wx.getStorageSync('session'))
@@ -125,7 +125,7 @@ const getRankList = function (self) {
       params: encodeFormated(wx.getStorageSync('session'))
     },
     header: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded'
     },
     success: res => {
       let rankList = res.data.bags;
