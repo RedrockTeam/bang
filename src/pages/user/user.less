@@ -66,11 +66,16 @@ page {
             float: left;
         }
         &__message {
+            float: right;
             font-family: @font_family;
             font-size: 32rpx;
             color: #666;
             letter-spacing: 0;
-            float: right;
+            width: 380rpx;
+            text-align: right;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
         }
         &__arrow {
             width: 28rpx;

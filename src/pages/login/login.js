@@ -110,24 +110,58 @@ Page({
             });
           });
         } else if (res.data.status_code.toString() === '400') {
-          wx.showModal({
-            title: '你已经绑定过，点击返回',
-            showCancel: false,
-            confirmText: '返回',
-            success (res) {
-              if (res.confirm) {
-                wx.switchTab({
-                  url: '../index/index'
-                });
-              }
+          wx.hideToast();
+          app.getUserInfo().then(res => {
+            wx.hideToast();
+            if (res) {
+              wx.showModal({
+                title: '你已经绑定过，点击返回',
+                showCancel: false,
+                confirmText: '返回',
+                success (res) {
+                  if (res.confirm) {
+                    wx.switchTab({
+                      url: '../index/index'
+                    });
+                  }
+                }
+              });
+            } else {
+              wx.hideToast();
+              wx.clearStorage();
+              wx.showModal({
+                title: '网络错误,请重试',
+                showCancel: false,
+                confirmText: '确认'
+              });
             }
+          }).catch(() => {
+            wx.hideToast();
+            wx.clearStorage();
+            wx.showModal({
+              title: '网络错误，请重试',
+              showCancel: false,
+              confirmText: '确认'
+            });
           });
-        } else {
+        } else if (res.data.status_code.toString() === '404') {
+          wx.hideToast();
           self.setData({
             id: ''
           });
           wx.showModal({
             title: '账号或者密码错误！',
+            showCancel: false,
+            confirmText: '重试'
+          });
+        } else {
+          wx.hideToast();
+          self.setData({
+            id: ''
+          });
+          wx.showModal({
+            title: '服务器错误！',
+            content: '请稍后再试',
             showCancel: false,
             confirmText: '重试'
           });

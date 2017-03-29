@@ -219,18 +219,11 @@ Page({
     // 如果有，则绑定
     if (stuInfo) {
       self.setStuInfo(stuInfo);
-      // self.setData({
-      //   isLogin: true
-      // });
     } else {
       app.gotoLogin();
       self.setData({
         stu_info: self.data.stu_info_copy
-        // isLogin: false
       });
-      // wx.redirectTo({
-      //   url: '../login/login'
-      // });
     }
   },
   onShareAppMessage () {
