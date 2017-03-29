@@ -1,4 +1,4 @@
-<view class="class">
+<scroll-view class="class" scroll-y="true">
   <!-- 标题部分 -->
   <view class="title">
     <text class="title-name">没课约</text>
@@ -221,7 +221,11 @@
       </view>
     </view>
 
-  <!-- 弹窗 -->
+  
+
+  </view>
+</scroll-view>
+<!-- 弹窗 -->
   <view class="class-detail" hidden="{{hiddenFlag ? true : false}}" bindtap="bindDisappear">
     <view class="detail-con">
       <view class="detail-time">
@@ -233,6 +237,3 @@
       </view>
     </view>
   </view>
-
-  </view>
-</view>
