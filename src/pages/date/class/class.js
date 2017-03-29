@@ -82,12 +82,13 @@ Page({
         params: encodeFormated(`${wx.getStorageSync('session')}&${self.data.index}&${self.data.stuNumber}`)
       },
       success: function success (res) {
+        console.log(res);
         self.setData({
           index: res.data.bags.week
         });
         let classData = res.data.bags.courses;
         let classLen = classData.length;
-        let classWeek = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+        let classWeek = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'];
         let classTime = ['一二节', '三四节', '五六节', '七八节', '九十节', '十一十二节'];
         let className = [[], [], [], [], [], []];
         let classRoom = [[], [], [], [], [], []];

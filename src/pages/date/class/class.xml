@@ -48,8 +48,18 @@
             <text>{{classRoom.oneT[item]}}</text>
           </view>
         </view>
-        <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
-          <view>
+        <view class="class-con" 
+          id="sunday" 
+          style="background-color:{{color[0][6]}}; height: {{height[0][6]}}; z-index: {{zIndex[0][6]}};"
+          bindtap="bindAppear"
+          data-classname="{{className.oneT[6]}}"
+          data-classroom="{{classRoom.oneT[6]}}"
+          data-classweek="{{classWeekday[6]}}"
+          data-classtime="12节"
+          data-classteacher="{{classTeacher[0][6]}}" 
+          data-classrawweek="{{classRawWeek[0][6]}}"
+          data-classheight="{{height[0][6]}}">
+          <view style="-webkit-line-clamp: {{webkitLineClamp[0][6]}};">
             <text class="class-name">{{className.oneT[6]}}\n</text>
             <text>{{classRoom.oneT[6]}}</text>
           </view>
@@ -80,8 +90,18 @@
           </view>
 
         </view>
-        <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
-          <view>
+        <view class="class-con" 
+          id="sunday" 
+          style="background-color:{{color[1][6]}}; height: {{height[1][6]}}; z-index: {{zIndex[1][6]}};"
+          bindtap="bindAppear"
+          data-classname="{{className.threeF[6]}}"
+          data-classroom="{{classRoom.threeF[6]}}"
+          data-classweek="{{classWeekday[6]}}"
+          data-classtime="34节" 
+          data-classteacher="{{classTeacher[1][6]}}" 
+          data-classrawweek="{{classRawWeek[1][6]}}"
+          data-classheight="{{height[1][6]}}">
+          <view style="-webkit-line-clamp: {{webkitLineClamp[1][6]}};">
             <text class="class-name">{{className.threeF[6]}}\n</text>
             <text>{{classRoom.threeF[6]}}</text>
           </view>
@@ -112,8 +132,18 @@
           </view>
 
         </view>
-        <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
-          <view>
+        <view class="class-con" 
+          id="sunday" 
+          style="background-color:{{color[2][6]}}; height: {{height[2][6]}}; z-index: {{zIndex[2][6]}};"
+          bindtap="bindAppear"
+          data-classname="{{className.fiveS[6]}}"
+          data-classroom="{{classRoom.fiveS[6]}}"
+          data-classweek="{{classWeekday[6]}}"
+          data-classtime="56节"
+          data-classteacher="{{classTeacher[2][6]}}" 
+          data-classrawweek="{{classRawWeek[2][6]}}"
+          data-classheight="{{height[2][6]}}">
+          <view style="-webkit-line-clamp: {{webkitLineClamp[2][6]}};">
             <text class="class-name">{{className.fiveS[6]}}\n</text>
             <text>{{classRoom.fiveS[6]}}</text>
           </view>
@@ -144,8 +174,18 @@
           </view>
 
         </view>
-        <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
-          <view>
+        <view class="class-con" 
+          id="sunday" 
+          style="background-color:{{color[3][6]}}; height: {{height[3][6]}}; z-index: {{zIndex[3][6]}};"
+          bindtap="bindAppear"
+          data-classname="{{className.sevenE[6]}}"
+          data-classroom="{{classRoom.sevenE[6]}}"
+          data-classweek="{{classWeekday[6]}}"
+          data-classtime="78节"
+          data-classteacher="{{classTeacher[3][6]}}" 
+          data-classrawweek="{{classRawWeek[3][6]}}"
+          data-classheight="{{height[3][item]}}">
+          <view  style="-webkit-line-clamp: {{webkitLineClamp[3][6]}};">
             <text class="class-name">{{className.sevenE[6]}}\n</text>
             <text>{{classRoom.sevenE[6]}}</text>
           </view>
@@ -176,8 +216,18 @@
           </view>
 
         </view>
-        <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
-          <view>
+        <view class="class-con" 
+          id="sunday" 
+          style="background-color:{{color[4][6]}}; height: {{height[4][6]}}; z-index: {{zIndex[4][6]}};"
+          bindtap="bindAppear"
+          data-classname="{{className.nineT[6]}}"
+          data-classroom="{{classRoom.nineT[6]}}"
+          data-classweek="{{classWeekday[6]}}"
+          data-classtime="910节"
+          data-classteacher="{{classTeacher[4][6]}}" 
+          data-classrawweek="{{classRawWeek[4][6]}}"
+          data-classheight="{{height[4][6]}}">
+          <view  style="-webkit-line-clamp: {{webkitLineClamp[4][6]}};">
             <text class="class-name">{{className.nineT[6]}}\n</text>
             <text>{{classRoom.nineT[6]}}</text>
           </view>
@@ -202,14 +252,24 @@
           data-classrawweek="{{classRawWeek[5][item]}}"
           data-classheight="{{height[5][item]}}"
           wx:key="*this">
-          <view  style="-webkit-line-clamp: {{webkitLineClamp[5][item]}};">
+          <view style="-webkit-line-clamp: {{webkitLineClamp[5][item]}};">
             <text class="class-name">{{className.elevenT[item]}}\n</text>
             <text>{{classRoom.elevenT[item]}}</text>
           </view>
 
         </view>
-        <view class="class-con" id="sunday" style="background-color:{{color[0][6]}}">
-          <view>
+        <view class="class-con" 
+          id="sunday" 
+          style="background-color:{{color[5][6]}}; height: {{height[5][6]}}; z-index: {{zIndex[5][6]}};"
+          bindtap="bindAppear"
+          data-classname="{{className.elevenT[6]}}"
+          data-classroom="{{classRoom.elevenT[6]}}"
+          data-classweek="{{classWeekday[6]}}"
+          data-classtime="1112节"
+          data-classteacher="{{classTeacher[5][6]}}" 
+          data-classrawweek="{{classRawWeek[5][6]}}"
+          data-classheight="{{height[5][6]}}">
+          <view  style="-webkit-line-clamp: {{webkitLineClamp[5][6]}};">
             <text class="class-name">{{className.elevenT[6]}}\n</text>
             <text>{{classRoom.elevenT[6]}}</text>
           </view>
