@@ -110,6 +110,7 @@ Page({
             });
           });
         } else if (res.data.status_code.toString() === '400') {
+          wx.hideToast();
           wx.showModal({
             title: '你已经绑定过，点击返回',
             showCancel: false,
@@ -122,12 +123,24 @@ Page({
               }
             }
           });
-        } else {
+        } else if (res.data.status_code.toString() === '404') {
+          wx.hideToast();
           self.setData({
             id: ''
           });
           wx.showModal({
             title: '账号或者密码错误！',
+            showCancel: false,
+            confirmText: '重试'
+          });
+        } else {
+          wx.hideToast();
+          self.setData({
+            id: ''
+          });
+          wx.showModal({
+            title: '服务器错误！',
+            content: '请稍后再试',
             showCancel: false,
             confirmText: '重试'
           });
