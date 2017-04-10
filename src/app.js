@@ -233,10 +233,15 @@ App({
   gotoLogin (url) {
     wx.showModal({
       title: '请先绑定',
+      content: '点击“取消”，可浏览活动发布页面',
       success: res => {
         if (res.confirm) {
           wx.redirectTo({
             url: '/pages/login/login'
+          });
+        } else {
+          wx.switchTab({
+            url: '/pages/activity/index/index'
           });
         }
       }
