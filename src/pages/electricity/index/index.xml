@@ -24,14 +24,41 @@
     <view class="main-title">
       寝室信息
     </view>
-    <view class="main-infor">
+    <view wx:if="{{roomState}}" class="main-infor">
         {{roomState.building}} 栋 {{roomState.room}}
+    </view>
+    <view wx:else class="main-infor">
+      <view bindtap="changeRoom">
+        <view class="text">绑定寝室</view>
+        <view class="arrow"></view>
+      </view>
+      <view wx:if="{{isChangingRoom}}" class="room" id="room" bindtap="closeRoomchanging">
+        <view class="room-con">
+          <view class="main-title">选择楼栋</view>
+          <picker value="{{index}}" range="{{roomInfor}}" bindchange="changeBuilding">
+            <view class="main-infor">
+              {{myBuilding ? myBuilding : '一栋'}}
+            </view>
+          </picker>
+          <view class="main-title main-title__room">输入寝室号</view>
+          <view class="main-infor">
+            <input type="number" maxlength="3" placeholder="- - -" bindinput="bindRoomInput" />
+          </view>
+          <button class="room-submit" bindtap="submitBindRoom">绑 定</button>
+        </view>
+      </view>
     </view>
     <view class="main-title">
       抄表日期
     </view>
     <view class="main-infor">
-        {{elecState.record_time}} 08:00
+        {{elecState.record_time}}
+        <block wx:if="{{roomState}}">
+          08:00
+        </block>
+        <block wx:else>
+          00:00
+        </block>
     </view>
     <view class="main-title">
       本月免费
