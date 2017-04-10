@@ -238,6 +238,10 @@ App({
           wx.redirectTo({
             url: '/pages/login/login'
           });
+        } else {
+          wx.switchTab({
+            url: '/pages/activity/index/index'
+          });
         }
       }
     });
