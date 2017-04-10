@@ -6,7 +6,7 @@
       <input class="service-item__value"
               placeholder="请输入活动标题"
               maxlength="22"
-              placeholder-style="color: #b6b6b6"
+              placeholder-style="color: #b6b6b6; font-family: 'PingFangSC-Medium'; font-weight: 400;"
               bindchange="bindTitle" />
     </view>
     <view class="service-item">
@@ -14,7 +14,7 @@
       <view class="service-item__title">举办方</view>
       <input class="service-item__value"
               placeholder="请输入活动举办方"
-              placeholder-style="color: #b6b6b6"
+              placeholder-style="color: #b6b6b6; font-family: 'PingFangSC-Medium'; font-weight: 400;"
               bindchange="bindHost" />
     </view>
     <view class="service-item">
@@ -22,7 +22,7 @@
       <view class="service-item__title">联系方式</view>
       <input class="service-item__value"
               placeholder="请输入联系方式"
-              placeholder-style="color: #b6b6b6"
+              placeholder-style="color: #b6b6b6; font-family: 'PingFangSC-Medium'; font-weight: 400;"
               bindchange="bindPhone" />
     </view>
     <view class="service-item">
@@ -42,7 +42,7 @@
       <view class="service-item__title">地点</view>
       <input class="service-item__value"
               placeholder="请输入活动地点"
-              placeholder-style="color: #b6b6b6"
+              placeholder-style="color: #b6b6b6; font-family: 'PingFangSC-Medium'; font-weight: 400;"
               bindchange="bindPlace" />
     </view>
     <view class="service-item">
@@ -92,7 +92,7 @@
       <view class="service-item__title">活动详情</view>
       <textarea placeholder="请输入活动详情"
                 class="service-item__text"
-                placeholder-style="color: #b6b6b6"
+                placeholder-style="color: #b6b6b6; font-family: 'PingFangSC-Medium'; font-weight: 400;"
                 maxlength="-1"
                 bindblur="bindDetail" />
     </view>
