@@ -8,6 +8,14 @@ Page({
     roomState: {},
     array: [12, 34, 31, 75, 45, 23]
   },
+  isOwnEmpty (obj) {
+    for (let name in obj) {
+      if (obj.hasOwnProperty(name)) {
+        return false;
+      }
+    }
+    return true;
+  },
   onLoad () {
     let stuInfo = wx.getStorageSync('stuInfo');
     if (!stuInfo) {
@@ -38,7 +46,8 @@ Page({
         },
         success: res => {
           res = res.data;
-          if (!res.bags) {
+          console.log(this.isOwnEmpty(res.bags));
+          if (this.isOwnEmpty(res.bags)) {
             let defaultElec = {
               'result': {
                 'current': {
