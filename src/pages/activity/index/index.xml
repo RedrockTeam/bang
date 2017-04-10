@@ -15,9 +15,10 @@
         {{item.type}}
       </view>
     </block>
-    <navigator class="activity--nav-apply"
-                hover-class="none"
-                url="../apply/apply">
+    <navigator wx:if="{{isLogin}}"
+               class="activity--nav-apply"
+               hover-class="none"
+               url="../apply/apply">
       申请发布
     </navigator>
   </view>

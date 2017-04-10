@@ -232,9 +232,7 @@ App({
   },
   gotoLogin (url) {
     wx.showModal({
-      title: '请先登录',
-      showCancel: true,
-      confirmText: '确认',
+      title: '请先绑定',
       success: res => {
         if (res.confirm) {
           wx.redirectTo({

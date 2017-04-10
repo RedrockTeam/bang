@@ -64,28 +64,40 @@ Page({
       currentSwiper: e.detail.current
     });
   },
-  onLoad (params) {
-    let stuInfo = wx.getStorageSync('stuInfo');
-    if (!stuInfo) {
-      app.gotoLogin();
-      return;
-    }
+  onLoad () {
+    const that = this;
     wx.showToast({
       title: '加载中',
       icon: 'loading'
     });
-    this.getData();
+    const stuInfo = wx.getStorageSync('stuInfo');
+    if (!stuInfo) {
+      that.setData({
+        isLogin: false
+      });
+    } else {
+      that.setData({
+        isLogin: true
+      });
+    }
+    const key = wx.getStorageSync('session');
+    if (!key) {
+      app.loginApp().then(() => {
+        that.getData();
+      });
+    } else {
+      that.getData();
+    }
   },
   getData () {
     const that = this;
     const key = wx.getStorageSync('session');
-    let str = encodeFormated(wx.getStorageSync('session'));
 
     wx.request({
       method: 'post',
       url: 'https://redrock.cqupt.edu.cn/weapp/Activity/Show/getHeadline',
       data: {
-        params: str
+        params: encodeFormated(key)
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
