@@ -61,9 +61,6 @@ Page({
       },
       success: function (res) {
         wx.clearStorage();
-        if (res.data.status_code.toString() !== '200') {
-          return;
-        }
         wx.showModal({
           title: '退出成功，点击返回',
           showCancel: false,

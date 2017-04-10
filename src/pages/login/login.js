@@ -115,9 +115,9 @@ Page({
             wx.hideToast();
             if (res) {
               wx.showModal({
-                title: '你已经绑定过，点击返回',
+                title: '恭喜，绑定成功',
                 showCancel: false,
-                confirmText: '返回',
+                confirmText: '继续',
                 success (res) {
                   if (res.confirm) {
                     wx.switchTab({
