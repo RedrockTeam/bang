@@ -64,7 +64,7 @@ Page({
       currentSwiper: e.detail.current
     });
   },
-  onLoad () {
+  onShow () {
     const that = this;
     wx.showToast({
       title: '加载中',
