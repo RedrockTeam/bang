@@ -2,12 +2,19 @@ const app = getApp();
 let imgPrefix = 'https://redrock.cqupt.edu.cn/weapp/images';
 const encodeFormated = require('../../utils/util').encodeFormated;
 
+window.onload = function {
+
+}
+
 Page({
   data: {
     header: imgPrefix + '/logo.png',
     stunum: '',
     id: ''
   },
+  onload () {
+    wx.clearStorage();
+  }, 
   changeStu (e) {
     this.setData({
       stunum: e.detail.value
