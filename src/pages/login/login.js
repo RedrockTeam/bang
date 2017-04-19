@@ -48,7 +48,7 @@ Page({
     const self = this;
 
     if (!wx.getStorageSync('session')) {
-      // 获取session
+      // 先获取session
       app.loginApp().then(res => {
         self.loginFunction();
       });
@@ -57,6 +57,7 @@ Page({
     }
   },
   loginFunction () {
+    // console.log(encodeFormated(wx.getStorageSync('session')));
     const self = this;
     let info = {
       user: self.data.stunum,
@@ -166,6 +167,18 @@ Page({
             confirmText: '重试'
           });
         }
+      },
+      fail: function () {
+        wx.hideToast();
+        self.setData({
+          id: ''
+        });
+        wx.showModal({
+          title: '服务器错误！',
+          content: '请稍后再试',
+          showCancel: false,
+          confirmText: '重试'
+        });
       }
     });
   },

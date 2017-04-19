@@ -107,50 +107,49 @@ Page({
       icon: 'loading',
       duration: 10000
     });
-    this.setData({
+    self.setData({
       courseCopy: self.data.course
     });
   },
   onShow () {
     const self = this;
     // 检查是否登录
-    const stuInfo = wx.getStorageSync('stuInfo');
-    if (!stuInfo) {
-      wx.hideToast();
-      app.gotoLogin();
-      self.setData({
-        week: 0,
-        course: self.data.courseCopy
-      });
-      return;
-    }
-
-    const storages = wx.getStorageInfoSync();
-    storages.keys.forEach(key => {
-      let value = wx.getStorageSync(key);
-      if (value) {
-        self.data[key] = value;
-      }
-    });
-
-    let courseTime = 0;
-    let currentHour = new Date().getHours();
-
-    if (currentHour >= 12) {
-      courseTime = 1;
-    }
-    if (currentHour >= 18) {
-      courseTime = 2;
-    }
-
-    self.setData({
-      courseScroll: 130 * courseTime
-    });
-    // 每次进入更换session
+      // 每次进入更换session
     app.loginApp().then(() => {
-      const self = this;
+      const stuInfo = wx.getStorageSync('stuInfo');
+      if (!stuInfo) {
+        wx.hideToast();
+        app.gotoLogin();
+        self.setData({
+          week: 0,
+          course: self.data.courseCopy
+        });
+        return;
+      }
 
-      const stuInfo = self.data.stuInfo;
+      const storages = wx.getStorageInfoSync();
+      storages.keys.forEach(key => {
+        let value = wx.getStorageSync(key);
+        if (value) {
+          self.data[key] = value;
+        }
+      });
+
+      let courseTime = 0;
+      let currentHour = new Date().getHours();
+
+      if (currentHour >= 12) {
+        courseTime = 1;
+      }
+      if (currentHour >= 18) {
+        courseTime = 2;
+      }
+
+      self.setData({
+        courseScroll: 130 * courseTime
+      });
+
+      // const stuInfo = self.data.stuInfo;
 
       if (!stuInfo.name) {
         return;
